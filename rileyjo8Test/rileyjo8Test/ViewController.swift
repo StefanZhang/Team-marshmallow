@@ -23,7 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //_____________________________________________________________________________________________________
         
         // Sets text and specifies thickness of it
-        let text = SCNText(string: "Herman Miller, test, asdf", extrusionDepth: 1)
+        let text = SCNText(string: "Herman Miller, AAron", extrusionDepth: 1)
         
         let material = SCNMaterial()                // creates material object
         material.diffuse.contents = UIColor.red     // sets to red color
