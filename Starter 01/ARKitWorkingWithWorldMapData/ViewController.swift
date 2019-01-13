@@ -129,7 +129,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         // Do something with the new transform
         let currentTransform = frame.camera.transform
-        dump(currentTransform)
+        //dump(currentTransform)
 
     }
     
