@@ -563,7 +563,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       //let y2 = y? - 0.5 ?? 0.0
       let z = loc01?.z
       let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
-      let loc03 = SCNVector3(x: 0,y: 0.5,z: 0)
+      let loc03 = SCNVector3(x: 0,y: 1.5,z: 0)
       dump(loc02)
       
       //      let ball = SCNSphere(radius: 0.02)
@@ -577,13 +577,32 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       //    let loc01 = SCNVector3(loc.x,loc.y,loc.z)
       //    dump(loc01 )
       
-      shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
+      
+      //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
+      scnView.scene.rootNode.addChildNode(
+        generateBreadCrumb(loc02: loc02, loc03: loc03))
       // changed
       //dump(pose.position())
       
     }
     
     
+    
+  }
+  
+  func generateBreadCrumb(loc02: SCNVector3, loc03: SCNVector3) -> SCNNode{
+    let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
+    let geometryNode = SCNNode(geometry: geometry)
+    geometryNode.position = subtraction(left:loc02,right:loc03)
+    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+    return geometryNode
+  }
+  
+  func generateCheckpoint(){
+    
+  }
+  
+  func generateDestination(){
     
   }
   
