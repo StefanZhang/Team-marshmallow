@@ -82,7 +82,7 @@ class ShapeManager {
         return false
     }
 
-    for item in shapeArray! {
+    for item in shapeArray! { //left off here because I'm trying to keep the same color
       let x_string: String = item["shape"]!["x"]!
       let y_string: String = item["shape"]!["y"]!
       let z_string: String = item["shape"]!["z"]!
@@ -132,6 +132,35 @@ class ShapeManager {
     let shapeType: ShapeType = ShapeType.random()
     placeShape(position: position, type: shapeType)
   }
+    
+    
+  func spawnNewBreadCrumb(position1: SCNVector3, position2: SCNVector3 ){
+    let shapeType: ShapeType = ShapeType.Sphere
+    placeCrumb(pos_1: position1, pos_2: position2,  type: shapeType)
+}
+
+  func subtraction (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
+    return SCNVector3Make(left.x - right.x, left.y - right.y, left.z - right.z)
+}
+
+  func generateBreadCrumb(pos01: SCNVector3, pos02: SCNVector3) -> SCNNode{
+    let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
+    geometry.materials.first?.diffuse.contents = UIColor.red
+    let geometryNode = SCNNode(geometry: geometry)
+    geometryNode.position = subtraction(left:pos01,right:pos02)
+    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+    return geometryNode
+}
+
+  func placeCrumb(pos_1: SCNVector3, pos_2: SCNVector3, type: ShapeType) {
+    let sphereNode: SCNNode = generateBreadCrumb(pos01: pos_1, pos02: pos_2)
+        shapePositions.append(sphereNode.position)
+        shapeTypes.append(type)
+        shapeNodes.append(sphereNode)
+        scnScene.rootNode.addChildNode(sphereNode)
+        shapesDrawn = true
+    
+}
   
   func placeShape (position: SCNVector3, type: ShapeType) {
     
@@ -147,7 +176,7 @@ class ShapeManager {
   
   func createShape (position: SCNVector3, type: ShapeType) -> SCNNode {
     
-    let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: type)
+    let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: type) //might need to do this in the generate bread crumb function to retain the type
     let color = generateRandomColor()
     geometry.materials.first?.diffuse.contents = color
     
