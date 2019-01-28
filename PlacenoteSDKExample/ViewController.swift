@@ -157,9 +157,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
   }
   
-  func subtraction (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
-    return SCNVector3Make(left.x - right.x, left.y - right.y, left.z - right.z)
-  }
+  
   
   //Receive a status update when the status changes
   func onStatusChange(_ prevStatus: LibPlacenote.MappingStatus, _ currStatus: LibPlacenote.MappingStatus) {
@@ -578,9 +576,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       //    dump(loc01 )
       
       
-      //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
-      scnView.scene.rootNode.addChildNode(
-        generateBreadCrumb(loc02: loc02, loc03: loc03))
+      shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
+      //scnView.scene.rootNode.addChildNode(
+        //generateBreadCrumb(loc02: loc02, loc03: loc03))
       // changed
       //dump(pose.position())
       
@@ -590,13 +588,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
   }
   
-  func generateBreadCrumb(loc02: SCNVector3, loc03: SCNVector3) -> SCNNode{
-    let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
-    let geometryNode = SCNNode(geometry: geometry)
-    geometryNode.position = subtraction(left:loc02,right:loc03)
-    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-    return geometryNode
-  }
+  
   
   func generateCheckpoint(){
     
