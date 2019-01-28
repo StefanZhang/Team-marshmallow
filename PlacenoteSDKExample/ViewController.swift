@@ -577,6 +577,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
       
       shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
+      shapeManager.spawnNewCheckpoint(position_01: loc02)
       //scnView.scene.rootNode.addChildNode(
         //generateBreadCrumb(loc02: loc02, loc03: loc03))
       // changed
