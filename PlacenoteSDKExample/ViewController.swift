@@ -724,6 +724,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     lastLocation = locations.last
   }
+    @IBAction func dropCheckpoint(_ sender: Any) {
+        
+    }
+    @IBAction func dropDestination(_ sender: Any) {
+        
+    }
 }
 
 
