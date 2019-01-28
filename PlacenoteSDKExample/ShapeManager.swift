@@ -143,6 +143,11 @@ class ShapeManager {
     let shapeType: ShapeType = ShapeType.Box
     placeCheck(checkpoint_pos: position_01, type: shapeType)
   }
+    
+  func spawnNewDestination(position_1: SCNVector3){
+    let shapeType: ShapeType = ShapeType.Pyramid
+    placeDestination(destination_pos: position_1, type: shapeType)
+  }
   
 
   func subtraction (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
@@ -150,7 +155,7 @@ class ShapeManager {
   }
     
   func generateCheckpoint(vector_pos: SCNVector3) -> SCNNode{
-    let geometry: SCNGeometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 1)
+    let geometry: SCNGeometry = SCNBox(width: 0.5, height: 0.3, length: 0.8, chamferRadius: 1)
     geometry.materials.first?.diffuse.contents = UIColor.red
     let checkpointNode = SCNNode(geometry: geometry)
     checkpointNode.position = vector_pos
@@ -168,6 +173,15 @@ class ShapeManager {
     geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
     return geometryNode
   }
+    
+  func generateDestination(pos01: SCNVector3) -> SCNNode{
+    let geometry:SCNGeometry = SCNPyramid(width: 0.5, height: 1, length: 0.7) //meters
+    geometry.materials.first?.diffuse.contents = UIColor.red
+    let geometryNode = SCNNode(geometry: geometry)
+    geometryNode.position = pos01
+    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+    return geometryNode
+    }
     
     
   func placeCheck(checkpoint_pos: SCNVector3, type: ShapeType){
@@ -187,6 +201,16 @@ class ShapeManager {
         scnScene.rootNode.addChildNode(sphereNode)
         shapesDrawn = true
     
+  }
+    
+  func placeDestination(destination_pos: SCNVector3, type: ShapeType) {
+    let desNode: SCNNode = generateDestination(pos01: destination_pos)
+        shapePositions.append(desNode.position)
+        shapeTypes.append(type)
+        shapeNodes.append(desNode)
+        scnScene.rootNode.addChildNode(desNode)
+        shapesDrawn = true
+        
   }
   
   func placeShape (position: SCNVector3, type: ShapeType) {

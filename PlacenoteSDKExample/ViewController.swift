@@ -577,7 +577,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
       
       shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
-      shapeManager.spawnNewCheckpoint(position_01: loc02)
+      
       //scnView.scene.rootNode.addChildNode(
         //generateBreadCrumb(loc02: loc02, loc03: loc03))
       // changed
@@ -718,10 +718,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     lastLocation = locations.last
   }
     @IBAction func dropCheckpoint(_ sender: Any) {
-        
+      let frame = scnView.session.currentFrame
+      let camera = frame?.camera
+      let loc = camera?.transform
+      let loc01 = loc?.columns.3
+      let x = loc01?.x
+      let y = loc01?.y
+      //let y2 = y? - 0.5 ?? 0.0
+      let z = loc01?.z
+      let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
+      shapeManager.spawnNewCheckpoint(position_01: loc02)
     }
     @IBAction func dropDestination(_ sender: Any) {
-        
+      let frame = scnView.session.currentFrame
+      let camera = frame?.camera
+      let loc = camera?.transform
+      let loc01 = loc?.columns.3
+      let x = loc01?.x
+      let y = loc01?.y
+      //let y2 = y? - 0.5 ?? 0.0
+      let z = loc01?.z
+      let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
+      shapeManager.spawnNewDestination(position_1: loc02)
     }
 }
 
