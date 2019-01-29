@@ -13,6 +13,9 @@ import SceneKit
 import ARKit
 import PlacenoteSDK
 
+//changed
+var last_loc = SCNVector3(0,0,0)
+
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
   
@@ -576,7 +579,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       //    dump(loc01 )
       
       
-      shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
+      //shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
       
       //scnView.scene.rootNode.addChildNode(
         //generateBreadCrumb(loc02: loc02, loc03: loc03))
@@ -665,9 +668,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let pose: matrix_float4x4 = didUpdate.camera.transform
     
     //changed
-    //    let loc = pose.columns.3
-    //    let loc01 = SCNVector3(loc.x,loc.y,loc.z)
-    //    dump(loc01 )
+    let cam_loc = pose.columns.3
+    let loc01 = SCNVector3(cam_loc.x,cam_loc.y-0.8,cam_loc.z)
+    
+    if (nodeDistance(first: loc01, second: last_loc) > 1.5){
+      dump(loc01)
+      shapeManager.spawnNewBreadCrumb(position1: loc01)
+      last_loc = loc01
+    }
+    
+    //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
+    
+    
+    
     
     if (!LibPlacenote.instance.initialized()) {
       print("SDK is not initialized")
@@ -679,6 +692,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
   }
   
+  
+  func nodeDistance (first: SCNVector3, second: SCNVector3) -> Float {
+    let x = first.x - second.x
+    let y = first.y - second.y
+    let z = first.z - second.z
+    return sqrt(x*x + y*y + z*z)
+  }
   
   //Informs the delegate of changes to the quality of ARKit's device position tracking.
   func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
