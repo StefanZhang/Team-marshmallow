@@ -116,27 +116,8 @@
                                     <action selector="newSaveMapButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="0Oj-Hc-0Pi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7D-0b-WkD" userLabel="NewMap">
-                                <rect key="frame" x="230" y="612" width="145" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <state key="normal" title="Destination">
-                                    <color key="titleColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="dropDestination:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6F6-rQ-W20"/>
-                                    <action selector="newSaveMapButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="FYh-1I-BHW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Psh-J9-76A" userLabel="PickMap">
-                                <rect key="frame" x="40" y="548" width="145" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Psh-J9-76A" userLabel="PickMap">
+                                <rect key="frame" x="20" y="107" width="130" height="44"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <state key="normal" title="Checkpoint">
@@ -150,6 +131,23 @@
                                 <connections>
                                     <action selector="dropCheckpoint:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rV6-Z6-z0i"/>
                                     <action selector="pickMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="snm-ll-ob2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7D-0b-WkD" userLabel="NewMap">
+                                <rect key="frame" x="20" y="159" width="128" height="44"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <state key="normal" title="Destination">
+                                    <color key="titleColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="dropDestination:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6F6-rQ-W20"/>
+                                    <action selector="newSaveMapButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="FYh-1I-BHW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -171,11 +169,13 @@
                             <constraint firstItem="BJ5-11-JDS" firstAttribute="centerY" secondItem="snL-gx-sgu" secondAttribute="centerY" id="Sjh-dH-kmf"/>
                             <constraint firstItem="3Xz-vt-npx" firstAttribute="top" secondItem="j89-Gv-ip5" secondAttribute="bottom" constant="15" id="UEg-H0-Fpe"/>
                             <constraint firstItem="5Mu-1V-Uq4" firstAttribute="width" secondItem="BrB-h1-WRS" secondAttribute="width" multiplier="0.35" id="Urm-TF-hee"/>
+                            <constraint firstItem="c7D-0b-WkD" firstAttribute="top" secondItem="Psh-J9-76A" secondAttribute="bottom" constant="8" id="X0t-8B-Wyc"/>
                             <constraint firstItem="7Ae-0m-BXK" firstAttribute="leading" secondItem="0ka-cC-Twy" secondAttribute="leading" id="XK1-B1-hEJ"/>
                             <constraint firstItem="XLP-t5-UNJ" firstAttribute="top" secondItem="7Ae-0m-BXK" secondAttribute="bottom" id="Xcn-bQ-ZDS"/>
                             <constraint firstItem="0ka-cC-Twy" firstAttribute="centerX" secondItem="BrB-h1-WRS" secondAttribute="centerX" id="Xq3-Mf-8pd"/>
                             <constraint firstItem="BJ5-11-JDS" firstAttribute="height" secondItem="hwi-h6-3TD" secondAttribute="height" multiplier="1.5" id="ZuU-za-PZg"/>
                             <constraint firstItem="Oxp-Pf-bN1" firstAttribute="top" secondItem="hwi-h6-3TD" secondAttribute="bottom" constant="20" id="agp-f5-uWc"/>
+                            <constraint firstItem="c7D-0b-WkD" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" id="byN-Qm-dv2"/>
                             <constraint firstItem="Cc9-rN-p2h" firstAttribute="centerY" secondItem="snL-gx-sgu" secondAttribute="centerY" id="cGW-bb-Bsm"/>
                             <constraint firstItem="snL-gx-sgu" firstAttribute="leading" secondItem="5Mu-1V-Uq4" secondAttribute="leading" constant="-50" id="cR9-OE-BbP"/>
                             <constraint firstItem="HNX-Xf-wKP" firstAttribute="leading" secondItem="Cc9-rN-p2h" secondAttribute="leading" id="eGF-LE-8My"/>
@@ -184,6 +184,7 @@
                             <constraint firstItem="3Xz-vt-npx" firstAttribute="centerX" secondItem="BrB-h1-WRS" secondAttribute="centerX" id="j5W-PB-yhM"/>
                             <constraint firstItem="hwi-h6-3TD" firstAttribute="height" secondItem="BrB-h1-WRS" secondAttribute="height" multiplier="0.08" id="jIn-rx-TZX"/>
                             <constraint firstAttribute="trailing" secondItem="Cc9-rN-p2h" secondAttribute="trailing" constant="12" id="jVP-x8-swX"/>
+                            <constraint firstItem="Psh-J9-76A" firstAttribute="top" secondItem="3Xz-vt-npx" secondAttribute="bottom" constant="8" id="k1s-nL-qrS"/>
                             <constraint firstItem="XLP-t5-UNJ" firstAttribute="leading" secondItem="7Ae-0m-BXK" secondAttribute="leading" id="kHZ-BL-Ddc"/>
                             <constraint firstItem="hwi-h6-3TD" firstAttribute="width" secondItem="BrB-h1-WRS" secondAttribute="width" multiplier="0.35" id="l8w-2O-HOk"/>
                             <constraint firstItem="5Mu-1V-Uq4" firstAttribute="height" secondItem="BrB-h1-WRS" secondAttribute="height" multiplier="0.08" id="mW2-jV-Icu"/>
@@ -191,6 +192,7 @@
                             <constraint firstItem="BJ5-11-JDS" firstAttribute="width" secondItem="hwi-h6-3TD" secondAttribute="width" id="s3L-NU-ikT"/>
                             <constraint firstItem="Cc9-rN-p2h" firstAttribute="leading" secondItem="snL-gx-sgu" secondAttribute="trailing" constant="20" id="spT-u0-zdN"/>
                             <constraint firstItem="iX6-0Y-XCU" firstAttribute="top" secondItem="XLP-t5-UNJ" secondAttribute="bottom" id="uUw-eT-Yct"/>
+                            <constraint firstItem="Psh-J9-76A" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" id="uWe-22-8hY"/>
                             <constraint firstItem="iX6-0Y-XCU" firstAttribute="width" secondItem="7Ae-0m-BXK" secondAttribute="width" id="xq6-vK-EN3"/>
                         </constraints>
                     </view>
