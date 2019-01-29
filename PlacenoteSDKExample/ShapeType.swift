@@ -21,9 +21,9 @@ public enum ShapeType:Int {
   case Tube
   
   static func random() -> ShapeType {
-    let maxValue = Tube.rawValue
-    let rand = arc4random_uniform(UInt32(maxValue+1))
-    return ShapeType(rawValue: Int(rand))!
+    //let maxValue = Tube.rawValue
+    //let rand = arc4random_uniform(UInt32(maxValue+1))
+    return ShapeType(rawValue: Int(1))! // Drop Shpere all the time
   }
   
   
@@ -34,6 +34,7 @@ public enum ShapeType:Int {
     switch s_type {
     case ShapeType.Sphere: //
       geometry = SCNSphere(radius: 1.0)
+        geometry.materials.first?.diffuse.contents = UIColor.red
     case ShapeType.Capsule:
       geometry = SCNCapsule(capRadius:0.5, height:1.0)
     case ShapeType.Cone:
