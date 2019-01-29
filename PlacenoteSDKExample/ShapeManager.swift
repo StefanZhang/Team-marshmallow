@@ -134,9 +134,9 @@ class ShapeManager {
   }
     
     
-  func spawnNewBreadCrumb(position1: SCNVector3, position2: SCNVector3 ){
+  func spawnNewBreadCrumb(position1: SCNVector3){
     let shapeType: ShapeType = ShapeType.Sphere
-    placeCrumb(pos_1: position1, pos_2: position2,  type: shapeType)
+    placeCrumb(pos_1: position1, type: shapeType)
   }
     
   func spawnNewCheckpoint(position_01: SCNVector3){
@@ -165,14 +165,23 @@ class ShapeManager {
     
   
 
-  func generateBreadCrumb(pos01: SCNVector3, pos02: SCNVector3) -> SCNNode{
-    let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
-    geometry.materials.first?.diffuse.contents = UIColor.red
-    let geometryNode = SCNNode(geometry: geometry)
-    geometryNode.position = subtraction(left:pos01,right:pos02)
-    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-    return geometryNode
-  }
+//  func generateBreadCrumb(pos01: SCNVector3, pos02: SCNVector3) -> SCNNode{
+//    let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
+//    geometry.materials.first?.diffuse.contents = UIColor.red
+//    let geometryNode = SCNNode(geometry: geometry)
+//    geometryNode.position = subtraction(left:pos01,right:pos02)
+//    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+//    return geometryNode
+//  }
+    
+    func generateBreadCrumb(pos01: SCNVector3) -> SCNNode{
+        let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
+        geometry.materials.first?.diffuse.contents = UIColor.red
+        let geometryNode = SCNNode(geometry: geometry)
+        geometryNode.position = pos01
+        geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        return geometryNode
+    }
     
   func generateDestination(pos01: SCNVector3) -> SCNNode{
     let geometry:SCNGeometry = SCNPyramid(width: 0.5, height: 1, length: 0.7) //meters
@@ -193,8 +202,8 @@ class ShapeManager {
     shapesDrawn = true
   }
 
-  func placeCrumb(pos_1: SCNVector3, pos_2: SCNVector3, type: ShapeType) {
-    let sphereNode: SCNNode = generateBreadCrumb(pos01: pos_1, pos02: pos_2)
+  func placeCrumb(pos_1: SCNVector3, type: ShapeType) {
+    let sphereNode: SCNNode = generateBreadCrumb(pos01: pos_1)
         shapePositions.append(sphereNode.position)
         shapeTypes.append(type)
         shapeNodes.append(sphereNode)
@@ -228,7 +237,7 @@ class ShapeManager {
   func createShape (position: SCNVector3, type: ShapeType) -> SCNNode {
     
     let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: type) //might need to do this in the generate bread crumb function to retain the type
-    let color = generateRandomColor()
+    let color = UIColor.red
     geometry.materials.first?.diffuse.contents = color
     
     let geometryNode = SCNNode(geometry: geometry)
