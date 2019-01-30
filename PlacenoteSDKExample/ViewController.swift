@@ -737,6 +737,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     lastLocation = locations.last
   }
+
     @IBAction func dropCheckpoint(_ sender: Any) {
         let frame = scnView.session.currentFrame
         let camera = frame?.camera
@@ -762,6 +763,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewDestination(position_1: loc02)
     }
+    
     
   let adjacencyListTest = AdjacencyList<String>()
   
