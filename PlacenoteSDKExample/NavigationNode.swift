@@ -64,4 +64,11 @@ class NavigationNode {
     
     // add function here to delete node from shapeNodes currently has a bug where the shapes don't get deleted
     
+    func toString(pos01: SCNVector3) -> String{
+        let strX = NSString(format: "%.8f", pos01.x)
+        let strY = NSString(format: "%.8f", pos01.y)
+        let strZ = NSString(format: "%.8f", pos01.z)
+        return strX+","+strY+","+strZ
+    }
+    
 }
