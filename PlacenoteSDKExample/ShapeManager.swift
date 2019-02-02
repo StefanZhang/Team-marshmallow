@@ -125,8 +125,17 @@ class ShapeManager {
       node.geometry!.firstMaterial!.diffuse.contents = nil
     }
     shapeNodes.removeAll()
+    dump(String(shapeNodes.count) + " Shape Node count")
     shapePositions.removeAll()
+    dump(String(shapePositions.count) + " Shape Position count")
     shapeTypes.removeAll()
+    dump(String(shapeTypes.count) + " Shape types count" )
+    print("Here are all the children: ")
+    //
+    for child in scnScene.rootNode.childNodes{
+        child.removeFromParentNode()
+    }
+    
   }
   
   
@@ -158,6 +167,7 @@ class ShapeManager {
     return SCNVector3Make(left.x - right.x, left.y - right.y, left.z - right.z)
   }
     
+/*
   func generateCheckpoint(vector_pos: SCNVector3) -> SCNNode{
     let geometry: SCNGeometry =  SCNBox(width: 0.2, height: 0.3, length: 0.4, chamferRadius: 1.0)  //ShapeType.generateGeometry(s_type: ShapeType.Box)
     geometry.materials.first?.diffuse.contents = UIColor.red
@@ -196,33 +206,36 @@ class ShapeManager {
     return geometryNode
     }
     
-    
+*/
   func placeCheck(checkpoint_pos: SCNVector3, type: ShapeType){
-    let boxNode: SCNNode = generateCheckpoint(vector_pos: checkpoint_pos)
+    //let boxNode: SCNNode = generateCheckpoint(vector_pos: checkpoint_pos)
+    let boxNode = NavigationNode(number: 2.0, Stype: type, position: checkpoint_pos)
     shapePositions.append(boxNode.position)
-    shapeTypes.append(type)
-    shapeNodes.append(boxNode)
-    scnScene.rootNode.addChildNode(boxNode)
+    shapeTypes.append(boxNode.type)
+    shapeNodes.append(boxNode.getNode())
+    scnScene.rootNode.addChildNode(boxNode.getNode())
     shapesDrawn = true
   }
 
   func placeCrumb(pos_1: SCNVector3, type: ShapeType) {
-    let sphereNode: SCNNode = generateBreadCrumb(pos01: pos_1)
-        shapePositions.append(sphereNode.position)
-        shapeTypes.append(type)
-        shapeNodes.append(sphereNode)
-        scnScene.rootNode.addChildNode(sphereNode)
-        shapesDrawn = true
+    //let sphereNode: SCNNode = generateBreadCrumb(pos01: pos_1)
+    let sphereNode = NavigationNode(number: 1.0, Stype: type, position: pos_1)
+    shapePositions.append(sphereNode.position)
+    shapeTypes.append(type)
+    shapeNodes.append(sphereNode.getNode())
+    scnScene.rootNode.addChildNode(sphereNode.getNode())
+    shapesDrawn = true
     
   }
     
   func placeDestination(destination_pos: SCNVector3, type: ShapeType) {
-    let desNode: SCNNode = generateDestination(pos01: destination_pos)
-        shapePositions.append(desNode.position)
-        shapeTypes.append(type)
-        shapeNodes.append(desNode)
-        scnScene.rootNode.addChildNode(desNode)
-        shapesDrawn = true
+    //let desNode: SCNNode = generateDestination(pos01: destination_pos)
+    let desNode = NavigationNode(number: 3.0, Stype: type, position: destination_pos)
+    shapePositions.append(desNode.position)
+    shapeTypes.append(type)
+    shapeNodes.append(desNode.getNode())
+    scnScene.rootNode.addChildNode(desNode.getNode())
+    shapesDrawn = true
         
   }
   
