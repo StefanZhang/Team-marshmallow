@@ -57,12 +57,16 @@ class ShapeManager {
   
   public var shapesDrawn: Bool! = false
 
-  
+    
   init(scene: SCNScene, view: SCNView) {
     scnScene = scene
     scnView = view
   }
-  
+    
+  func getShapePositions() -> [SCNVector3] {
+        return shapePositions
+  }
+    
   func getShapeArray() -> [[String: [String: String]]] {
     var shapeArray: [[String: [String: String]]] = []
     if (shapePositions.count > 0) {
@@ -247,5 +251,19 @@ class ShapeManager {
     return geometryNode
   }
   
-  
+    func checkAdjacent(selfPos: SCNVector3) -> Bool {
+        for node in shapePositions{
+            if nodeDistance(first: selfPos, second: node) < 1.5{
+                return true
+            }
+        }
+        return false
+    }
+    
+    func nodeDistance (first: SCNVector3, second: SCNVector3) -> Float {
+        let x = first.x - second.x
+        let y = first.y - second.y
+        let z = first.z - second.z
+        return sqrt(x*x + y*y + z*z)
+    }
 }
