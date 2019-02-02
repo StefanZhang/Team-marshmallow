@@ -51,6 +51,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var currRadiusSearch: Float = 0.0 //m
   
   
+  
   //Application related variables
   private var shapeManager: ShapeManager!
   private var tapRecognizer: UITapGestureRecognizer? = nil //initialized after view is loaded
@@ -64,14 +65,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var planesVizNodes = [UUID: SCNNode]();
   
   private var graph  = AdjacencyList<String>()
+  //let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+  
   private var showFeatures: Bool = true
   private var planeDetection: Bool = false
   
   private var locationManager: CLLocationManager!
   private var lastLocation: CLLocation? = nil
-  
+  // Testing graph
+
   //Setup view once loaded
   override func viewDidLoad() {
+
+    
+    
     super.viewDidLoad()
     setupView()
     setupScene()
@@ -669,7 +676,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       shapeManager.spawnNewBreadCrumb(position1: loc01)
       last_loc = loc01
     }
-    
+    shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+
     //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
     
     
@@ -755,6 +763,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let z = loc01?.z
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewDestination(position_1: loc02)
+        //let strTest = NavigationNode(number: 3.0, Stype: ShapeType.Pyramid, position: loc02)
+        //graph.add(.undirected, from: graph.createVertex(data: strTest.toString()), to: graph.createVertex(data: n1.toString()), weight: 1.5)
+      
+        //dump(graph.description)
     }
     
   

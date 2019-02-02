@@ -155,7 +155,7 @@ class ShapeManager {
   }
     
   func generateCheckpoint(vector_pos: SCNVector3) -> SCNNode{
-    let geometry: SCNGeometry = ShapeType.generateGeometry(s_type: ShapeType.Box)
+    let geometry: SCNGeometry =  SCNBox(width: 0.2, height: 0.3, length: 0.4, chamferRadius: 1.0)  //ShapeType.generateGeometry(s_type: ShapeType.Box)
     geometry.materials.first?.diffuse.contents = UIColor.red
     let checkpointNode = SCNNode(geometry: geometry)
     checkpointNode.position = vector_pos
@@ -175,7 +175,7 @@ class ShapeManager {
 //  }
     
     func generateBreadCrumb(pos01: SCNVector3) -> SCNNode{
-        let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: ShapeType.Sphere)
+        let geometry:SCNGeometry = SCNSphere(radius: 0.2) //ShapeType.generateGeometry(s_type: ShapeType.Sphere)
         geometry.materials.first?.diffuse.contents = UIColor.red
         let geometryNode = SCNNode(geometry: geometry)
         geometryNode.position = pos01
@@ -184,7 +184,7 @@ class ShapeManager {
     }
     
   func generateDestination(pos01: SCNVector3) -> SCNNode{
-    let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: ShapeType.Pyramid) //meters
+    let geometry:SCNGeometry = SCNPyramid(width: 0.1, height: 0.3, length: 0.4)//ShapeType.generateGeometry(s_type: ShapeType.Pyramid) //meters
     geometry.materials.first?.diffuse.contents = UIColor.red
     let geometryNode = SCNNode(geometry: geometry)
     geometryNode.position = pos01

@@ -67,7 +67,7 @@ class NavigationNode {
         let x = NSString(format: "%.8f", self.position.x)
         let y = NSString(format: "%.8f", self.position.y)
         let z = NSString(format: "%.8f", self.position.z)
-        let s3 = NSString(format:"%@%@%@",x,y,z)
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
         let resultString = s3 as String
         return resultString
     }
