@@ -789,15 +789,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   
   func updateGraph(){
     let shapePositions = shapeManager.getShapePositions()
-    var ctr = 1
+    // load the position from breadcrums
+    var ctr = 0
     while ctr < shapePositions.count - 1{
       let vec1s = SCNV3toString(vec: shapePositions[ctr])
       let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
       let d1 = graph.createVertex(data: vec1s)
       let d2 = graph.createVertex(data: vec2s)
       graph.add(.undirected, from: d1, to: d2, weight: 1.5)
+      // insert the nodes to undirected graph
       ctr+=1
     }
+    
     print(graph.description)
   }
   
