@@ -85,4 +85,39 @@ extension AdjacencyList: Graphable {
         }
         return result
     }
+    
+    public func aStar(start: Vertex<Element>, destination: Vertex<Element>) -> Array<Vertex<Element>>{
+        var out = Array<Vertex<Element>>()
+        var frontier: Array<Vertex<Element>> = [start]
+        var expanded = Array<Vertex<Element>>()
+        var cameFrom = Dictionary<String,String> ()
+        var g = Dictionary<String,Int> ()
+        g[start.description] = 0
+        
+        var f = Dictionary<String,Int> ()
+
+        while frontier.count > 0 {
+            var frontierMin = frontier[0]
+            
+            for fr in frontier{
+                if (f[fr.description] ?? 0 < f[frontierMin.description] ?? 0){
+                    frontierMin = fr
+                }
+            }
+            
+            var current = frontierMin
+            
+            if current == destination{
+                return out
+            }
+            
+            if let index = frontier.index(of: current) {
+                frontier.remove(at: index)
+            }
+            expanded.append(current)
+            
+            
+        }
+        return out
+    }
 }
