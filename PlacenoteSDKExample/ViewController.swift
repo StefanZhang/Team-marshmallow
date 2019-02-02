@@ -757,8 +757,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewDestination(position_1: loc02)
     }
     
-    
-  let adjacencyListTest = AdjacencyList<String>()
+  
+  func updateGraph(){
+    let shapeArray = shapeManager.getShapeArray()
+    let graphAL = AdjacencyList<String>()     //graph adjacency list
+    var nodeLocations: [String] = []
+    for shape in shapeArray{
+      
+    }
+  }
   
 }
 
