@@ -599,7 +599,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //      scnView.scene.rootNode.addChildNode(generateBreadCrumb(loc02: loc02, loc03: loc03))
 //      dump(pose.position())
       
-      dump( self.shapeManager.getShapePositions() )
+      //dump( self.shapeManager.getShapePositions() ) //Matt commented this out
     }
     
     
@@ -678,13 +678,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let loc01 = SCNVector3(cam_loc.x,cam_loc.y-0.8,cam_loc.z)
     
     if (nodeDistance(first: loc01, second: last_loc) > 1.5){
-      dump(loc01)
+      //dump(loc01) Matt commented this out
       if(!self.shapeManager.checkAdjacent(selfPos: loc01)){
         shapeManager.spawnNewBreadCrumb(position1: loc01)
         last_loc = loc01
       }
     }
-    shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+    //shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
 
     //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
     
