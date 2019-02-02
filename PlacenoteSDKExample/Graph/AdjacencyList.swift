@@ -107,7 +107,7 @@ extension AdjacencyList: Graphable {
             
             var current = frontierMin
             
-            if current == destination{
+            if current == destination {
                 return out
             }
             
@@ -116,8 +116,31 @@ extension AdjacencyList: Graphable {
             }
             expanded.append(current)
             
-            
+            for neighbor in findNeighbors(node: current) {
+                if expanded.index(of: neighbor) != NSNotFound{
+                    continue
+                }
+                if frontier.index(of: neighbor) == NSNotFound{
+                    frontier.append(neighbor)
+                }
+                //if g[current.description]/* + distance(current,neighbor)*/ >= g[neighbor.description]  {
+                //    continue
+                //}
+                
+                cameFrom[neighbor.description] = current.description
+                g[neighbor.description] = g[current.description]// + distance(current,neighbor) // Distance function takes two string (x,y,z) positions
+                f[neighbor.description]  = g[neighbor.description]// + distance(neighbor,destination) // Distance function called again
+            }
         }
-        return out
+        print("Failure")
+        return Array<Vertex<Element>>()
+        
+    }
+    
+    // Returns array of neighbors
+    public func findNeighbors(node: Vertex<Element>) -> Array<Vertex<Element>>{
+        var neighbors = Array<Vertex<Element>>()
+        
+        return neighbors
     }
 }
