@@ -63,6 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var planesVizAnchors = [ARAnchor]();
   private var planesVizNodes = [UUID: SCNNode]();
   
+  private var graph  = AdjacencyList<String>()
   private var showFeatures: Bool = true
   private var planeDetection: Bool = false
   
@@ -74,7 +75,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     super.viewDidLoad()
     setupView()
     setupScene()
-    
     //App Related initializations
     shapeManager = ShapeManager(scene: scnScene, view: scnView)
     tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -275,6 +275,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             var userdata: [String:Any] = [:]
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
             metadata.userdata = userdata
+            
             
             if (!LibPlacenote.instance.setMapMetadata(mapId: mapId!, metadata: metadata, metadataSavedCb: {(success: Bool) -> Void in})) {
               print ("Failed to set map metadata")
@@ -596,15 +597,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
   }
   
-  
-  
-  func generateCheckpoint(){
-    
-  }
-  
-  func generateDestination(){
-    
-  }
+
   
   
   // MARK: - ARSCNViewDelegate
@@ -770,8 +763,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewDestination(position_1: loc02)
     }
     
-    
-  let adjacencyListTest = AdjacencyList<String>()
+  
+  func updateGraph(){
+    let shapeArray = shapeManager.getShapeArray()
+    let graphAL = AdjacencyList<String>()     //graph adjacency list
+    var nodeLocations: [String] = []
+    for shape in shapeArray{
+      
+    }
+  }
   
 }
 

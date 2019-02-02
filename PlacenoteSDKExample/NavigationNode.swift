@@ -9,7 +9,6 @@
 import Foundation
 import SceneKit
 
-
 class NavigationNode {
     var type: ShapeType
     var nodeNum: Double
@@ -63,5 +62,14 @@ class NavigationNode {
     }
     
     // add function here to delete node from shapeNodes currently has a bug where the shapes don't get deleted
+    
+    func toString() -> String{
+        let x = NSString(format: "%.8f", self.position.x)
+        let y = NSString(format: "%.8f", self.position.y)
+        let z = NSString(format: "%.8f", self.position.z)
+        let s3 = NSString(format:"%@%@%@",x,y,z)
+        let resultString = s3 as String
+        return resultString
+    }
     
 }
