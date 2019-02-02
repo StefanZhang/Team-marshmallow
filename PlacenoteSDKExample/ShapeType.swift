@@ -33,7 +33,7 @@ public enum ShapeType:Int {
     
     switch s_type {
     case ShapeType.Sphere: //
-      geometry = SCNSphere(radius: 1.0)
+      geometry = SCNSphere(radius: 0.5)
         geometry.materials.first?.diffuse.contents = UIColor.red
     case ShapeType.Capsule:
       geometry = SCNCapsule(capRadius:0.5, height:1.0)
@@ -42,13 +42,13 @@ public enum ShapeType:Int {
     case ShapeType.Cylinder:
       geometry = SCNCylinder(radius:0.5, height:1.0)
     case ShapeType.Pyramid:
-      geometry = SCNPyramid(width:1.0, height:1.0, length:1.0)
+      geometry = SCNPyramid(width:0.5, height:0.5, length:0.5)
     case ShapeType.Torus:
       geometry = SCNTorus(ringRadius:1.0, pipeRadius:0.1)
     case ShapeType.Box: //
       fallthrough
     default:
-      geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.1)
+      geometry = SCNBox(width: 0.5, height: 0.5, length: 0.5, chamferRadius: 0.01)
     }
     
     return geometry
