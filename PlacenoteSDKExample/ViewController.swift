@@ -774,14 +774,30 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
         //dump(graph.description)
     }
-    
+  
+  func SCNV3toString(vec: SCNVector3) -> String{
+    let x = NSString(format: "%.8f", vec.x)
+    let y = NSString(format: "%.8f", vec.y)
+    let z = NSString(format: "%.8f", vec.z)
+    let s3 = NSString(format:"%@,%@,%@",x,y,z)
+    let resultString = s3 as String
+    return resultString
+  }
   
   func updateGraph(){
-    let shapeArray = shapeManager.getShapeArray()
-    let graphAL = AdjacencyList<String>()     //graph adjacency list
-    var nodeLocations: [String] = []
-    for shape in shapeArray{
+    let shapePositions = shapeManager.getShapePositions()
+    var ctr = 0
+    while ctr < shapePositions.count - 1{
       
+      let vec1 = shapePositions[ctr]
+      dump("here")
+      dump(vec1)
+      //let vec2 = SCNV3toString(shapePositions[ctr+1]: <#T##SCNVector3#>)
+//      let d1 = graph.createVertex(data: vec1)
+//      let d2 = graph.createVertex(data: vec2)
+//      graph.add(.undirected, from: graph.createVertex(data: SCNV3toString(vec1: <#T##SCNVector3#>)),
+//                to: graph.createVertex(data: SCNV3toString(vec2: <#T##SCNVector3#>)), weight: 1.5)
+      ctr+=1
     }
   }
   
