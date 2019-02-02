@@ -57,12 +57,16 @@ class ShapeManager {
   
   public var shapesDrawn: Bool! = false
 
-  
+    
   init(scene: SCNScene, view: SCNView) {
     scnScene = scene
     scnView = view
   }
-  
+    
+  func getShapePositions() -> [SCNVector3] {
+        return shapePositions
+  }
+    
   func getShapeArray() -> [[String: [String: String]]] {
     var shapeArray: [[String: [String: String]]] = []
     if (shapePositions.count > 0) {

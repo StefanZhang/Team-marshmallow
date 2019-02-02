@@ -187,7 +187,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       if mappingStarted {
         statusLabel.text = "Moved too fast. Map Lost"
       }
-      tapRecognizer?.isEnabled = false
+      //changed
+      //tapRecognizer?.isEnabled = false
+      tapRecognizer?.isEnabled = true
       
     }
     
@@ -307,6 +309,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   @IBAction func pickMap(_ sender: Any) {
     
     if (localizationStarted) { // currently a map is loaded. StopSession and clearView
+      //CHANGED
+      //tapRecognizer?.isEnabled = true
+      
       shapeManager.clearShapes()
       ptViz?.reset()
       LibPlacenote.instance.stopSession()
@@ -555,37 +560,36 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let pose = LibPlacenote.instance.processPose(pose: result.worldTransform)
       //shapeManager.spawnRandomShape(position: pose.position())
       
-      let frame = scnView.session.currentFrame
-      let camera = frame?.camera
-      let loc = camera?.transform
-      let loc01 = loc?.columns.3
-      let x = loc01?.x
-      var y = loc01?.y
-      //let y2 = y? - 0.5 ?? 0.0
-      let z = loc01?.z
-      let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
-      let loc03 = SCNVector3(x: 0,y: 1.5,z: 0)
-      dump(loc02)
+// Generate Sphere according to camera's location
+//      let frame = scnView.session.currentFrame
+//      let camera = frame?.camera
+//      let loc = camera?.transform
+//      let loc01 = loc?.columns.3
+//      let x = loc01?.x
+//      var y = loc01?.y
+//      //let y2 = y? - 0.5 ?? 0.0
+//      let z = loc01?.z
+//      let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
+//      let loc03 = SCNVector3(x: 0,y: 1.5,z: 0)
+//      dump(loc02)
+//
+//      let ball = SCNSphere(radius: 0.02)
+//      var node = SCNNode(geometry: ball)
+//      node.position = SCNVector3(0,-0.5,0)
+//      scnView.pointOfView?.addChildNode(node)
+//      dump(scnView.pointOfView?.position)
+//
+//      let loc = pose.columns.3
+//      let loc01 = SCNVector3(loc.x,loc.y,loc.z)
+//      dump(loc01 )
+//
+//
+//      shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
+//
+//      scnView.scene.rootNode.addChildNode(generateBreadCrumb(loc02: loc02, loc03: loc03))
+//      dump(pose.position())
       
-      //      let ball = SCNSphere(radius: 0.02)
-      //      var node = SCNNode(geometry: ball)
-      //      node.position = SCNVector3(0,-0.5,0)
-      //      scnView.pointOfView?.addChildNode(node)
-      //      dump(scnView.pointOfView?.position)
-      
-      //changed
-      //    let loc = pose.columns.3
-      //    let loc01 = SCNVector3(loc.x,loc.y,loc.z)
-      //    dump(loc01 )
-      
-      
-      //shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
-      
-      //scnView.scene.rootNode.addChildNode(
-        //generateBreadCrumb(loc02: loc02, loc03: loc03))
-      // changed
-      //dump(pose.position())
-      
+      dump( self.shapeManager.getShapePositions() )
     }
     
     
@@ -671,7 +675,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let cam_loc = pose.columns.3
     let loc01 = SCNVector3(cam_loc.x,cam_loc.y-0.8,cam_loc.z)
     
-    if (nodeDistance(first: loc01, second: last_loc) > 1.5){
+    if (nodeDistance(first: loc01, second: last_loc) > 1.0){
       dump(loc01)
       shapeManager.spawnNewBreadCrumb(position1: loc01)
       last_loc = loc01
