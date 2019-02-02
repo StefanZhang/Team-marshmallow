@@ -188,8 +188,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         statusLabel.text = "Moved too fast. Map Lost"
       }
       //changed
-      //tapRecognizer?.isEnabled = false
-      tapRecognizer?.isEnabled = true
+      tapRecognizer?.isEnabled = false
+      //tapRecognizer?.isEnabled = true
       
     }
     
@@ -309,9 +309,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   @IBAction func pickMap(_ sender: Any) {
     
     if (localizationStarted) { // currently a map is loaded. StopSession and clearView
-      //CHANGED
-      //tapRecognizer?.isEnabled = true
-      
+
       shapeManager.clearShapes()
       ptViz?.reset()
       LibPlacenote.instance.stopSession()
@@ -323,7 +321,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       toggleMappingUI(true) //hided mapping options
       planeDetSelection.isOn = false
       planeDetection = false
+      dump(self.shapeManager.getShapePositions())
       configureSession()
+      //dump(self.shapeManager.getShapePositions())
       return
     }
     
@@ -675,10 +675,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let cam_loc = pose.columns.3
     let loc01 = SCNVector3(cam_loc.x,cam_loc.y-0.8,cam_loc.z)
     
-    if (nodeDistance(first: loc01, second: last_loc) > 1.0){
+    if (nodeDistance(first: loc01, second: last_loc) > 1.5){
       dump(loc01)
-      shapeManager.spawnNewBreadCrumb(position1: loc01)
-      last_loc = loc01
+      if(!self.shapeManager.checkAdjacent(selfPos: loc01)){
+        shapeManager.spawnNewBreadCrumb(position1: loc01)
+        last_loc = loc01
+      }
     }
     
     //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
