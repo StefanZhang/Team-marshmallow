@@ -788,15 +788,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let shapePositions = shapeManager.getShapePositions()
     var ctr = 0
     while ctr < shapePositions.count - 1{
-      
-      let vec1 = shapePositions[ctr]
-      dump("here")
-      dump(vec1)
-      //let vec2 = SCNV3toString(shapePositions[ctr+1]: <#T##SCNVector3#>)
-//      let d1 = graph.createVertex(data: vec1)
-//      let d2 = graph.createVertex(data: vec2)
-//      graph.add(.undirected, from: graph.createVertex(data: SCNV3toString(vec1: <#T##SCNVector3#>)),
-//                to: graph.createVertex(data: SCNV3toString(vec2: <#T##SCNVector3#>)), weight: 1.5)
+      let vec1s = SCNV3toString(vec: shapePositions[ctr])
+      let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
+      let d1 = graph.createVertex(data: vec1s)
+      let d2 = graph.createVertex(data: vec2s)
+      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
       ctr+=1
     }
   }
