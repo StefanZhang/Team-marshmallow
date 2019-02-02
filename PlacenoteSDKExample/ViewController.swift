@@ -312,6 +312,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       localizationStarted = false
       toggleMappingUI(true) //hide mapping UI
     }
+     updateGraph()
+    
   }
   
   @IBAction func pickMap(_ sender: Any) {
@@ -597,7 +599,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //      scnView.scene.rootNode.addChildNode(generateBreadCrumb(loc02: loc02, loc03: loc03))
 //      dump(pose.position())
       
-      dump( self.shapeManager.getShapePositions() )
+      //dump( self.shapeManager.getShapePositions() ) //Matt commented this out
     }
     
     
@@ -676,13 +678,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let loc01 = SCNVector3(cam_loc.x,cam_loc.y-0.8,cam_loc.z)
     
     if (nodeDistance(first: loc01, second: last_loc) > 1.5){
-      dump(loc01)
+      //dump(loc01) Matt commented this out
       if(!self.shapeManager.checkAdjacent(selfPos: loc01)){
         shapeManager.spawnNewBreadCrumb(position1: loc01)
         last_loc = loc01
       }
     }
-    shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+    //shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
 
     //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
     
@@ -773,16 +775,33 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         //graph.add(.undirected, from: graph.createVertex(data: strTest.toString()), to: graph.createVertex(data: n1.toString()), weight: 1.5)
       
         //dump(graph.description)
-    }
-    
-  
-  func updateGraph(){
-    let shapeArray = shapeManager.getShapeArray()
-    let graphAL = AdjacencyList<String>()     //graph adjacency list
-    var nodeLocations: [String] = []
-    for shape in shapeArray{
       
     }
+  
+  func SCNV3toString(vec: SCNVector3) -> String{
+    let x = NSString(format: "%.8f", vec.x)
+    let y = NSString(format: "%.8f", vec.y)
+    let z = NSString(format: "%.8f", vec.z)
+    let s3 = NSString(format:"%@,%@,%@",x,y,z)
+    let resultString = s3 as String
+    return resultString
+  }
+  
+  func updateGraph(){
+    let shapePositions = shapeManager.getShapePositions()
+    // load the position from breadcrums
+    var ctr = 0
+    while ctr < shapePositions.count - 1{
+      let vec1s = SCNV3toString(vec: shapePositions[ctr])
+      let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
+      let d1 = graph.createVertex(data: vec1s)
+      let d2 = graph.createVertex(data: vec2s)
+      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
+      // insert the nodes to undirected graph
+      ctr+=1
+    }
+    
+    print(graph.description)
   }
   
 }
