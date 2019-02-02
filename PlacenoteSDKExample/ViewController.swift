@@ -312,6 +312,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       localizationStarted = false
       toggleMappingUI(true) //hide mapping UI
     }
+     updateGraph()
+    
   }
   
   @IBAction func pickMap(_ sender: Any) {
@@ -773,6 +775,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         //graph.add(.undirected, from: graph.createVertex(data: strTest.toString()), to: graph.createVertex(data: n1.toString()), weight: 1.5)
       
         //dump(graph.description)
+      
     }
   
   func SCNV3toString(vec: SCNVector3) -> String{
@@ -786,7 +789,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   
   func updateGraph(){
     let shapePositions = shapeManager.getShapePositions()
-    var ctr = 0
+    var ctr = 1
     while ctr < shapePositions.count - 1{
       let vec1s = SCNV3toString(vec: shapePositions[ctr])
       let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
@@ -795,6 +798,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       graph.add(.undirected, from: d1, to: d2, weight: 1.5)
       ctr+=1
     }
+    print(graph.description)
   }
   
 }
