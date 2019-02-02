@@ -16,6 +16,9 @@ import PlacenoteSDK
 //changed
 var last_loc = SCNVector3(0,0,0)
 
+//Dictionary for hash and node pairs
+var Hash_Node_Dict = [String:SCNNode]()
+
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
   
@@ -788,19 +791,32 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
   func updateGraph(){
-    let shapePositions = shapeManager.getShapePositions()
     // load the position from breadcrums
+    let shapePositions = shapeManager.getShapePositions()
+    let shapeNodes = shapeManager.getShapeNodes()
+
     var ctr = 0
     while ctr < shapePositions.count - 1{
       let vec1s = SCNV3toString(vec: shapePositions[ctr])
       let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
       let d1 = graph.createVertex(data: vec1s)
       let d2 = graph.createVertex(data: vec2s)
-      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
+      
+      //insert the hash string as key and node as value
+      Hash_Node_Dict[vec1s] = shapeNodes[ctr]
+      Hash_Node_Dict[vec2s] = shapeNodes[ctr+1]
+      
       // insert the nodes to undirected graph
+      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
       ctr+=1
     }
     
+//    FOR DEBUG ONLY
+    for (key, value) in Hash_Node_Dict {
+      print("Key:\(key) -  Value:\(value)")
+    }
+    
+//    FOR Debug ONLY
     print(graph.description)
   }
   

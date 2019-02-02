@@ -67,6 +67,11 @@ class ShapeManager {
         return shapePositions
   }
     
+  // Getter for Nodes object
+  func getShapeNodes() -> [SCNNode] {
+        return shapeNodes
+  }
+    
   func getShapeArray() -> [[String: [String: String]]] {
     var shapeArray: [[String: [String: String]]] = []
     if (shapePositions.count > 0) {
