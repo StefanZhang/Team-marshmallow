@@ -86,15 +86,40 @@ extension AdjacencyList: Graphable {
         return result
     }
     
+    // Returns array of neighbors
+    public func findNeighbors(node: Vertex<Element>) -> Array<Vertex<Element>>{
+        var neighbors = Array<Vertex<Element>>()
+        
+        return neighbors
+    }
+    
+    func distance (first: String, second: String) -> Double {
+        let strArray = first.split(separator: ",")
+        let strArray2 = second.split(separator: ",")
+        let x1 = Double(strArray[0]) ?? 0.0
+        let y1 = Double(strArray[1]) ?? 0.0
+        let z1 = Double(strArray[2]) ?? 0.0
+        let x2 = Double(strArray2[0]) ?? 0.0
+        let y2 = Double(strArray2[1]) ?? 0.0
+        let z2 = Double(strArray2[2]) ?? 0.0
+
+        let x = x1 - x2
+        let y = y1 - y2
+        let z = z1 - z2
+        return sqrt(x*x + y*y + z*z)
+    }
+    
     public func aStar(start: Vertex<Element>, destination: Vertex<Element>) -> Array<Vertex<Element>>{
         var out = Array<Vertex<Element>>()
         var frontier: Array<Vertex<Element>> = [start]
         var expanded = Array<Vertex<Element>>()
         var cameFrom = Dictionary<String,String> ()
-        var g = Dictionary<String,Int> ()
-        g[start.description] = 0
+        var g = Dictionary<String,Double> ()
+        g[start.description] = 0.0
         
-        var f = Dictionary<String,Int> ()
+        start.data
+        
+        var f = Dictionary<String,Double> ()
 
         while frontier.count > 0 {
             var frontierMin = frontier[0]
@@ -123,13 +148,13 @@ extension AdjacencyList: Graphable {
                 if frontier.index(of: neighbor) == NSNotFound{
                     frontier.append(neighbor)
                 }
-                //if g[current.description]/* + distance(current,neighbor)*/ >= g[neighbor.description]  {
-                //    continue
-                //}
+                if g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description) >= g[neighbor.description] ?? Double(1000000) {
+                    continue
+                }
                 
                 cameFrom[neighbor.description] = current.description
-                g[neighbor.description] = g[current.description]// + distance(current,neighbor) // Distance function takes two string (x,y,z) positions
-                f[neighbor.description]  = g[neighbor.description]// + distance(neighbor,destination) // Distance function called again
+                g[neighbor.description] = g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description) // Distance function takes two string (x,y,z) positions
+                f[neighbor.description]  = g[neighbor.description] ?? 0.0 + distance(first: neighbor.description,second: destination.description) // Distance function called again
             }
         }
         print("Failure")
@@ -137,10 +162,6 @@ extension AdjacencyList: Graphable {
         
     }
     
-    // Returns array of neighbors
-    public func findNeighbors(node: Vertex<Element>) -> Array<Vertex<Element>>{
-        var neighbors = Array<Vertex<Element>>()
-        
-        return neighbors
-    }
+
 }
+
