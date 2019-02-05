@@ -317,6 +317,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
      updateGraph()
     
+    
   }
   
   @IBAction func pickMap(_ sender: Any) {
@@ -573,6 +574,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let pose = LibPlacenote.instance.processPose(pose: result.worldTransform)
       //shapeManager.spawnRandomShape(position: pose.position())
       
+      
+      
 // Generate Sphere according to camera's location
 //      let frame = scnView.session.currentFrame
 //      let camera = frame?.camera
@@ -761,6 +764,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let z = loc01?.z
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewCheckpoint(position_01: loc02)
+      updateGraph()
+      self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
     }
     
     @IBAction func dropDestination(_ sender: Any) {

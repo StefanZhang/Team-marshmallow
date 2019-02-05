@@ -117,7 +117,8 @@ extension AdjacencyList: Graphable {
         var g = Dictionary<String,Double> ()
         g[start.description] = 0.0
         
-        start.data
+        print("This should be the string")
+        print(start.description)
         
         var f = Dictionary<String,Double> ()
 
