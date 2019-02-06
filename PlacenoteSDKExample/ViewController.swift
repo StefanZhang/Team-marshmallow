@@ -70,7 +70,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var planesVizNodes = [UUID: SCNNode]();
   
   private var graph  = AdjacencyList<String>()
-  //let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+  
   
   private var showFeatures: Bool = true
   private var planeDetection: Bool = false
@@ -771,6 +771,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       // Testing
       let dest = graph.adjacencyDict.keys.randomElement()
       if dest != graph.adjacencyDict.keys.first {
+        print("Graph TEEEEEESTING--------------")
+        let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+        let n2 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+        let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+        
+        graph.add(.undirected, from: graph.createVertex(data: n1.toString()), to: graph.createVertex(data: n2.toString()), weight: 1.5)
+        graph.add(.undirected, from: graph.createVertex(data: n2.toString()), to: graph.createVertex(data: n3.toString()), weight: 1.5)
+        graph.add(.undirected, from: graph.createVertex(data: n1.toString()), to: graph.createVertex(data: n3.toString()), weight: 1.5)
+
         let out = self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
         
         var outArray = ""
@@ -801,8 +810,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let z = loc01?.z
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewDestination(position_1: loc02)
-        //let strTest = NavigationNode(number: 3.0, Stype: ShapeType.Pyramid, position: loc02)
-        //graph.add(.undirected, from: graph.createVertex(data: strTest.toString()), to: graph.createVertex(data: n1.toString()), weight: 1.5)
+
       
         //dump(graph.description)
       

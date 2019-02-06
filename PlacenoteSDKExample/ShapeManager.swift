@@ -83,6 +83,7 @@ class ShapeManager {
   }
 
   // Load shape array
+    // This is where Matthew needs to get all the nodes from
   func loadShapeArray(shapeArray: [[String: [String: String]]]?) -> Bool {
     clearShapes() //clear currently viewing shapes and delete any record of them.
 
@@ -138,6 +139,8 @@ class ShapeManager {
     print("Here are all the children: ")
     //
     for child in scnScene.rootNode.childNodes{
+        print("child")
+        print(child.position)
         child.removeFromParentNode()
     }
     
