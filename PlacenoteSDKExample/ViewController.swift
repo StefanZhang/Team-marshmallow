@@ -772,16 +772,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let dest = graph.adjacencyDict.keys.randomElement()
       if dest != graph.adjacencyDict.keys.first {
         print("Graph TEEEEEESTING--------------")
-        let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
-        let n2 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
-        let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+        var toygraph  = AdjacencyList<String>()
+        let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 0, y: 0, z: 0))
+        let n2 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
+        let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 1, z: 1))
         
-        graph.add(.undirected, from: graph.createVertex(data: n1.toString()), to: graph.createVertex(data: n2.toString()), weight: 1.5)
-        graph.add(.undirected, from: graph.createVertex(data: n2.toString()), to: graph.createVertex(data: n3.toString()), weight: 1.5)
-        graph.add(.undirected, from: graph.createVertex(data: n1.toString()), to: graph.createVertex(data: n3.toString()), weight: 1.5)
+        let v1 = toygraph.createVertex(data: n1.toString())
+        let v2 = toygraph.createVertex(data: n2.toString())
+        let v3 = toygraph.createVertex(data: n3.toString())
+        
+        let c1 = SCNVector3(x: 0, y: 0, z: 0)
+        let c2 = SCNVector3(x: 0, y: 0, z: 0)
+        let c3 = SCNVector3(x: 0, y: 0, z: 0)
+        
+        toygraph.add(.undirected, from: v1, to: v2, weight: Double(nodeDistance(first: c1, second: c2)))
+        toygraph.add(.undirected, from: v2, to: v3, weight: Double(nodeDistance(first: c2, second: c3)))
+        toygraph.add(.undirected, from: v1, to: v3, weight: Double(nodeDistance(first: c1, second: c3)))
 
-        let out = self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
-        
+        let out = toygraph.aStar(start: v1, destination: v3)
+        //let out = self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
+        print("This is the output of aStar. should be v1 to v3")
+        dump(out)
         var outArray = ""
         
         for vertex in out{
