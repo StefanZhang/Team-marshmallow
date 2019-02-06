@@ -13,6 +13,8 @@ import SceneKit
 import ARKit
 import PlacenoteSDK
 
+
+
 //changed
 var last_loc = SCNVector3(0,0,0)
 
@@ -765,7 +767,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewCheckpoint(position_01: loc02)
       updateGraph()
-      self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
+      
+      // Testing
+      let dest = graph.adjacencyDict.keys.randomElement()
+      if dest != graph.adjacencyDict.keys.first {
+        let out = self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
+        
+        var outArray = ""
+        
+        for vertex in out{
+          outArray = outArray+":"+vertex.description
+          print(outArray)
+        }
+        
+        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+          NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+        //
+      }
+      
     }
     
     @IBAction func dropDestination(_ sender: Any) {

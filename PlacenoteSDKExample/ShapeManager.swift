@@ -271,7 +271,7 @@ class ShapeManager {
   
     func checkAdjacent(selfPos: SCNVector3) -> Bool {
         for node in shapePositions{
-            if nodeDistance(first: selfPos, second: node) < 1.5{
+            if nodeDistance(first: selfPos, second: node) < 1.5 {
                 return true
             }
         }

@@ -87,9 +87,13 @@ extension AdjacencyList: Graphable {
     }
     
     // Returns array of neighbors
-    public func findNeighbors(node: Vertex<Element>) -> Array<Vertex<Element>>{
+    public func findNeighbors(node: Vertex<Element>) -> Array<Vertex<Element>> {
         var neighbors = Array<Vertex<Element>>()
-        
+        let edge_list = edges(from: node)
+        for edge in edge_list! {
+            dump(edge.destination.description)
+            neighbors.append(edge.destination)
+        }
         return neighbors
     }
     
@@ -113,7 +117,7 @@ extension AdjacencyList: Graphable {
         var out = Array<Vertex<Element>>()
         var frontier: Array<Vertex<Element>> = [start]
         var expanded = Array<Vertex<Element>>()
-        var cameFrom = Dictionary<String,String> ()
+        var cameFrom = Dictionary<String,Vertex<Element>> ()
         var g = Dictionary<String,Double> ()
         g[start.description] = 0.0
         
@@ -131,15 +135,25 @@ extension AdjacencyList: Graphable {
                 }
             }
             
-            var current = frontierMin
+            let current = frontierMin
             
             if current == destination {
+                
+                //For testing
+                var endCurrent = current
+                while cameFrom.keys.contains(endCurrent.description) {
+                    endCurrent = cameFrom[endCurrent.description]!
+                    out.append(endCurrent)
+                }
+                //
+                
                 return out
             }
-            
+            // Remove current node from frontier
             if let index = frontier.index(of: current) {
                 frontier.remove(at: index)
             }
+            // Add to expanded nodes
             expanded.append(current)
             
             for neighbor in findNeighbors(node: current) {
@@ -149,11 +163,17 @@ extension AdjacencyList: Graphable {
                 if frontier.index(of: neighbor) == NSNotFound{
                     frontier.append(neighbor)
                 }
-                if g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description) >= g[neighbor.description] ?? Double(1000000) {
+                if (g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description)) >= (g[neighbor.description] ?? Double(1000000) ){
                     continue
                 }
+                // Testing
+                print("DISTANCE")
+                print(distance(first: current.description,second: neighbor.description))
+                print(distance(first: current.description,second: destination.description))
                 
-                cameFrom[neighbor.description] = current.description
+                //
+                
+                cameFrom[neighbor.description] = current
                 g[neighbor.description] = g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description) // Distance function takes two string (x,y,z) positions
                 f[neighbor.description]  = g[neighbor.description] ?? 0.0 + distance(first: neighbor.description,second: destination.description) // Distance function called again
             }
