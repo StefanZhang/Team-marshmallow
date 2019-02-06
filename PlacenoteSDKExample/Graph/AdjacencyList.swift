@@ -91,7 +91,7 @@ extension AdjacencyList: Graphable {
         var neighbors = Array<Vertex<Element>>()
         let edge_list = edges(from: node)
         for edge in edge_list! {
-            dump(edge.destination.description)
+            //dump(edge.destination.description)
             neighbors.append(edge.destination)
         }
         return neighbors
@@ -113,53 +113,152 @@ extension AdjacencyList: Graphable {
         return sqrt(x*x + y*y + z*z)
     }
     
+    public func reconstructPath(cameFrom: Dictionary<String,Vertex<Element>>, currentVertex:Vertex<Element>) -> Array<Vertex<Element>> {
+        var current = currentVertex
+        var total_path = [current]
+        while (cameFrom[current.description] != nil) {
+            current = cameFrom[current.description]!
+            total_path.append(current)
+        }
+        return total_path
+    }
     public func aStar(start: Vertex<Element>, destination: Vertex<Element>) -> Array<Vertex<Element>>{
+        
+        // Dictonary in graph
+        let graphDict = adjacencyDict
+        
+        // arrays of coordinate strings
+        var keyStrs = [String]()
+        for vertex in graphDict.keys {
+            keyStrs.append(vertex.description)
+        }
+        
+        // The set of nodes already evaluated
+        // closedSet := {}
         var out = Array<Vertex<Element>>()
+        
+        // The set of currently discovered nodes that are not evaluated yet.
+        // Initially, only the start node is known.
+        //openSet := {start}
         var frontier: Array<Vertex<Element>> = [start]
-        var expanded = Array<Vertex<Element>>()
+        
+        // hmm?
+        //var expanded = Array<Vertex<Element>>()
+        
+        // For each node, which node it can most efficiently be reached from.
+        // If a node can be reached from many nodes, cameFrom will eventually contain the
+        // most efficient previous step.
         var cameFrom = Dictionary<String,Vertex<Element>> ()
+        
+        // For each node, the cost of getting from the start node to that node.
+        // gScore := map with default value of Infinity
+        //
         var g = Dictionary<String,Double> ()
+        for str in keyStrs {
+            g[str] = Double.infinity
+        }
+        // The cost of going from start to start is zero.
         g[start.description] = 0.0
         
-        print("This should be the string")
-        print(start.description)
+//        print("This is dictionary g")
+//        print(g)
         
+//        print("This should be the string")
+//        print(start.description)
+        
+        // For each node, the total cost of getting from the start node to the goal
+        // by passing by that node. That value is partly known, partly heuristic.
+        // fScore := map with default value of Infinity
         var f = Dictionary<String,Double> ()
-
+        for str in keyStrs {
+            f[str] = Double.infinity
+        }
+        
+        // For the first node, that value is completely heuristic.
+        // fScore[start] := heuristic_cost_estimate(start, goal)
+        // hmm?
+        f[start.description] = 1000
+        
+        
         while frontier.count > 0 {
-            var frontierMin = frontier[0]
             
+            // current := the node in openSet having the lowest fScore[] value
+            // current is vertex type
+            var frontierMin = frontier[0]
             for fr in frontier{
                 if (f[fr.description] ?? 0 < f[frontierMin.description] ?? 0){
                     frontierMin = fr
                 }
             }
-            
             let current = frontierMin
             
+            
+            //if current = goal
             if current == destination {
-                
-                //For testing
-                var endCurrent = current
-                while cameFrom.keys.contains(endCurrent.description) {
-                    endCurrent = cameFrom[endCurrent.description]!
-                    out.append(endCurrent)
-                }
-                //
-                
-                return out
+                //return reconstruct_path(cameFrom, current)
+                print("Final G score dictionary")
+                print(g)
+                return reconstructPath(cameFrom: cameFrom, currentVertex: current)
+//                //For testing
+//                var endCurrent = current
+//                while cameFrom.keys.contains(endCurrent.description) {
+//                    endCurrent = cameFrom[endCurrent.description]!
+//                    out.append(endCurrent)
+//                }
+//                //
+//
+//                return out
             }
-            // Remove current node from frontier
-            if let index = frontier.index(of: current) {
-                frontier.remove(at: index)
-            }
-            // Add to expanded nodes
-            expanded.append(current)
+            
+            //openSet.Remove(current)
+            let currentIndex = frontier.firstIndex(of: current)
+            frontier.remove(at: currentIndex!)
+            //closedSet.Add(current)
+            out.append(current)
+            
+//            // Remove current node from frontier
+//            if let index = frontier.index(of: current) {
+//                frontier.remove(at: index)
+//            }
+//            // Add to expanded nodes
+//            expanded.append(current)
+            
+//            print("These are the neighbors of current")
+//            dump(findNeighbors(node: current))
             
             for neighbor in findNeighbors(node: current) {
-                if expanded.index(of: neighbor) != NSNotFound{
+//                print("This is the first neighbor of current")
+//                dump(neighbor)
+                
+                //if neighbor in closedSet(Out)
+                //continue
+                // Ignore the neighbor which is already evaluated.
+                if out.contains(neighbor){
                     continue
                 }
+                
+                // The distance from start to a neighbor
+                // tentative_gScore := gScore[current] + dist_between(current, neighbor)
+                let tentative_gScore = g[current.description]! + distance(first: current.description, second: neighbor.description)
+                
+                print("This is tentative distance from start to a neighbor")
+                print(tentative_gScore)
+                
+                //if neighbor not in openSet    // Discover a new node
+                //openSet.Add(neighbor)
+                
+                if !frontier.contains(neighbor) {
+                    frontier.append(neighbor)
+                }
+                else if (tentative_gScore >= g[neighbor.description]!) {
+                    continue
+                }
+                
+                cameFrom[neighbor.description] = current
+                g[neighbor.description] = tentative_gScore
+                f[neighbor.description] = g[neighbor.description]! + distance(first: neighbor.description,second: destination.description)
+                
+                /*
                 if frontier.index(of: neighbor) == NSNotFound{
                     frontier.append(neighbor)
                 }
@@ -176,13 +275,13 @@ extension AdjacencyList: Graphable {
                 cameFrom[neighbor.description] = current
                 g[neighbor.description] = g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description) // Distance function takes two string (x,y,z) positions
                 f[neighbor.description]  = g[neighbor.description] ?? 0.0 + distance(first: neighbor.description,second: destination.description) // Distance function called again
+                */
             }
         }
         print("Failure")
         return Array<Vertex<Element>>()
         
     }
-    
 
 }
 
