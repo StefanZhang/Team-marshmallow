@@ -770,28 +770,33 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
       // Testing
       let dest = graph.adjacencyDict.keys.randomElement()
-      if dest != graph.adjacencyDict.keys.first {
+      //if dest != graph.adjacencyDict.keys.first {
+      if true {
         print("Graph TEEEEEESTING--------------")
         var toygraph  = AdjacencyList<String>()
         let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 0, y: 0, z: 0))
         let n2 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
-        let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 1, z: 1))
+        let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 1, z: 0))
+        let n4 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 2, y: 2, z: 0))
         
         let v1 = toygraph.createVertex(data: n1.toString())
         let v2 = toygraph.createVertex(data: n2.toString())
         let v3 = toygraph.createVertex(data: n3.toString())
+        let v4 = toygraph.createVertex(data: n4.toString())
         
         let c1 = SCNVector3(x: 0, y: 0, z: 0)
-        let c2 = SCNVector3(x: 0, y: 0, z: 0)
-        let c3 = SCNVector3(x: 0, y: 0, z: 0)
+        let c2 = SCNVector3(x: 1, y: 0, z: 0)
+        let c3 = SCNVector3(x: 1, y: 1, z: 0)
+        let c4 = SCNVector3(x: 2, y: 2, z: 0)
         
         toygraph.add(.undirected, from: v1, to: v2, weight: Double(nodeDistance(first: c1, second: c2)))
         toygraph.add(.undirected, from: v2, to: v3, weight: Double(nodeDistance(first: c2, second: c3)))
         toygraph.add(.undirected, from: v1, to: v3, weight: Double(nodeDistance(first: c1, second: c3)))
+        toygraph.add(.undirected, from: v3, to: v4, weight: Double(nodeDistance(first: c3, second: c4)))
 
-        let out = toygraph.aStar(start: v1, destination: v3)
+        let out = toygraph.aStar(start: v1, destination: v4)
         //let out = self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
-        print("This is the output of aStar. should be v1 to v3")
+        print("This is the output of aStar. should be v1 v3 v4")
         dump(out)
         var outArray = ""
         
