@@ -65,25 +65,30 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hmCircleLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
-                                <rect key="frame" x="116" y="52" width="174" height="174"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hmCircleLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
+                                <rect key="frame" x="120" y="52" width="174" height="174"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="bDL-XK-jBy" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" constant="8" id="9VI-Hj-vLW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bDL-XK-jBy" secondAttribute="trailing" constant="100" id="BMK-Ca-2ev"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ah2-Y0-3Ng" secondAttribute="trailing" constant="106" id="CH6-X4-9EI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="30Y-d7-QGn" secondAttribute="trailing" constant="10" id="D1E-JQ-dkT"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="top" secondItem="ah2-Y0-3Ng" secondAttribute="bottom" constant="21" id="FDp-uj-Ave"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RNd-19-nnl" secondAttribute="trailing" constant="44" id="GbY-Kr-mg9"/>
+                            <constraint firstItem="bDL-XK-jBy" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="100" id="Jpl-l8-EVq"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="43" id="M4A-V4-yPM"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="top" secondItem="RNd-19-nnl" secondAttribute="bottom" constant="3" id="VfQ-4W-ddp"/>
                             <constraint firstItem="ah2-Y0-3Ng" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="105" id="XQ3-92-MdY"/>
+                            <constraint firstItem="bDL-XK-jBy" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" constant="8" id="Xdw-bx-hBP"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="105" id="Z7b-oU-Fuj"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="10" id="cP2-ha-GfN"/>
+                            <constraint firstItem="bDL-XK-jBy" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" constant="8" id="e4a-Cr-d3Y"/>
                             <constraint firstItem="tI3-Zj-1dO" firstAttribute="top" secondItem="dxk-LY-KR4" secondAttribute="bottom" constant="96" id="hGb-E2-brb"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" constant="206" id="ibg-3b-HB6"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="10" id="jYf-63-14r"/>
+                            <constraint firstItem="RNd-19-nnl" firstAttribute="top" secondItem="bDL-XK-jBy" secondAttribute="bottom" constant="24" id="mUZ-qm-gee"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dxk-LY-KR4" secondAttribute="trailing" constant="106" id="xId-d4-YH4"/>
                         </constraints>
                     </view>
