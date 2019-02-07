@@ -64,6 +64,9 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hmCircleLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
                                 <rect key="frame" x="120" y="52" width="174" height="174"/>
@@ -107,12 +110,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-694.20289855072474" y="36.160714285714285"/>
+            <point key="canvasLocation" x="-1281" y="-363"/>
         </scene>
-        <!--View Controller-->
+        <!--Admin-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Admin" id="BV1-FR-VrT" customClass="ViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j89-Gv-ip5"/>
                         <viewControllerLayoutGuide type="bottom" id="Oxp-Pf-bN1"/>
@@ -315,6 +318,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="23.188405797101453" y="36.684782608695656"/>
+        </scene>
+        <!--Where_You_Are-->
+        <scene sceneID="Yfy-B0-yDk">
+            <objects>
+                <viewController title="Where_You_Are" id="fY2-BX-kzM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QFV-nC-0MO"/>
+                        <viewControllerLayoutGuide type="bottom" id="IaP-Q7-Hzb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="txh-JT-fcM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Do you know " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0JD-rA-XxT">
+                                <rect key="frame" x="15" y="216" width="360" height="144"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Where You Are?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usk-6D-ZQl">
+                                <rect key="frame" x="12" y="368" width="390" height="147"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bBW-b6-iAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="21.739130434782609" y="-731.25"/>
         </scene>
     </scenes>
     <resources>
