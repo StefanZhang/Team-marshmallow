@@ -55,7 +55,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hmFullLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hmCircleLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
                                 <rect key="frame" x="116" y="52" width="174" height="174"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -303,6 +303,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="hmFullLogo.png" width="2272" height="1704"/>
+        <image name="hmCircleLogo.png" width="1888" height="1888"/>
     </resources>
 </document>
