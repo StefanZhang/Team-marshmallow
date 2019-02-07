@@ -139,8 +139,6 @@ class ShapeManager {
     print("Here are all the children: ")
     //
     for child in scnScene.rootNode.childNodes{
-        print("child")
-        print(child.position)
         child.removeFromParentNode()
     }
     

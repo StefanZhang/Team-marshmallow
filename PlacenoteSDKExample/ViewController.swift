@@ -770,11 +770,30 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
       // Testing
       let dest = graph.adjacencyDict.keys.randomElement()
-      //if dest != graph.adjacencyDict.keys.first {
-      if true {
+      if dest != graph.adjacencyDict.keys.first {
+        let out = graph.aStar(start: graph.adjacencyDict.keys.first!, destination: dest!)
+        dump(out)
+        var outArray = ""
+        
+        for vertex in out{
+          outArray = outArray+":"+vertex.description
+          print(outArray)
+        }
+        outArray.append("Start" + (graph.adjacencyDict.keys.first?.description)!)
+        outArray.append("End" + ((dest?.description)!))
+
+        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+          NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+        //
+      }
+      
+      if 1<2 {
         print("Graph TEEEEEESTING--------------")
         var toygraph  = AdjacencyList<String>()
-        let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 0, y: 0, z: 0))
+        let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
         let n2 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
         let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 1, z: 0))
         let n4 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 2, y: 2, z: 0))
@@ -784,13 +803,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let v3 = toygraph.createVertex(data: n3.toString())
         let v4 = toygraph.createVertex(data: n4.toString())
         
-        let c1 = SCNVector3(x: 0, y: 0, z: 0)
+        let c1 = SCNVector3(x: 1, y: 0, z: 0)
         let c2 = SCNVector3(x: 1, y: 0, z: 0)
         let c3 = SCNVector3(x: 1, y: 1, z: 0)
         let c4 = SCNVector3(x: 2, y: 2, z: 0)
         
         toygraph.add(.undirected, from: v1, to: v2, weight: Double(nodeDistance(first: c1, second: c2)))
-        toygraph.add(.undirected, from: v2, to: v3, weight: Double(nodeDistance(first: c2, second: c3)))
+        toygraph.add(.undirected, from: v2, to: v3, weight: Double(nodeDistance(first: c2, second: c4)))
         toygraph.add(.undirected, from: v1, to: v3, weight: Double(nodeDistance(first: c1, second: c3)))
         toygraph.add(.undirected, from: v3, to: v4, weight: Double(nodeDistance(first: c3, second: c4)))
 
