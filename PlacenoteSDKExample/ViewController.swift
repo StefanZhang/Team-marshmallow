@@ -222,7 +222,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
     
     statusLabel.text = "Map List"
-    self.mapTable.reloadData() //reads from maps array (see: tableView functions)
+    self.mapTable.reloadData() //reads from maps array (see: tableView functions)              //Need to look through all the maps for the destination
     self.mapTable.isHidden = false
     self.toggleSliderUI(false, reset: false)
     self.tapRecognizer?.isEnabled = false
@@ -467,11 +467,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
   //Map selected
+  
+  //Must find out what new graph needs to be selected
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print(String(format: "Retrieving row: %d", indexPath.row))
     print("Retrieving mapId: " + maps[indexPath.row].0)
     statusLabel.text = "Retrieving mapId: " + maps[indexPath.row].0
-    
+    let alert = UIAlertController(title: "Alert", message: "Finding all needed maps", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+      switch action.style{
+      case .default:
+        print("default")
+        
+      case .cancel:
+        print("cancel")
+        
+      case .destructive:
+        print("destructive")
+        
+        
+      }}))
+    self.present(alert, animated: true, completion: nil)
     LibPlacenote.instance.loadMap(mapId: maps[indexPath.row].0,
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
