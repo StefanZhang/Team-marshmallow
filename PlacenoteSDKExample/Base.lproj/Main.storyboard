@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mqg-rI-qeK">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,11 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="tI3-Zj-1dO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="miY-RM-DVz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxk-LY-KR4">
-                                <rect key="frame" x="144" y="604" width="119" height="36"/>
+                                <rect key="frame" x="144" y="730" width="119" height="36"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Admin Mode">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -32,13 +32,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where To?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNd-19-nnl">
-                                <rect key="frame" x="63" y="226" width="287" height="69"/>
+                                <rect key="frame" x="63" y="250" width="287" height="69"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="57"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah2-Y0-3Ng">
-                                <rect key="frame" x="180" y="518" width="54" height="36"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="30Y-d7-QGn">
+                                <rect key="frame" x="30" y="322" width="354" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Mqg-rI-qeK" id="wTP-8g-FgW"/>
+                                </connections>
+                            </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah2-Y0-3Ng">
+                                <rect key="frame" x="180" y="673" width="54" height="36"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Begin">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,18 +54,34 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="30Y-d7-QGn" secondAttribute="trailing" constant="10" id="D1E-JQ-dkT"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="124" id="DXr-q7-tcC"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="43" id="M4A-V4-yPM"/>
+                            <constraint firstItem="30Y-d7-QGn" firstAttribute="top" secondItem="RNd-19-nnl" secondAttribute="bottom" constant="3" id="VfQ-4W-ddp"/>
+                            <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="10" id="cP2-ha-GfN"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" constant="206" id="ibg-3b-HB6"/>
+                            <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="10" id="jYf-63-14r"/>
                             <constraint firstItem="tI3-Zj-1dO" firstAttribute="top" secondItem="dxk-LY-KR4" secondAttribute="bottom" constant="96" id="jpV-2i-pyo"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="top" secondItem="ah2-Y0-3Ng" secondAttribute="bottom" constant="50" id="kzN-7R-Dwy"/>
                             <constraint firstItem="ah2-Y0-3Ng" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="160" id="yfP-DR-3db"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="44L-61-Y1w" id="IA1-Qb-wj8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7D7-ed-Sr5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="44L-61-Y1w">
+                    <connections>
+                        <outlet property="delegate" destination="Mqg-rI-qeK" id="ybE-6h-iCm"/>
+                        <outlet property="searchBar" destination="30Y-d7-QGn" id="8Oo-Jt-HfI"/>
+                        <outlet property="searchContentsController" destination="Mqg-rI-qeK" id="zqA-Ne-IDB"/>
+                        <outlet property="searchResultsDataSource" destination="Mqg-rI-qeK" id="1X7-Hy-rsT"/>
+                        <outlet property="searchResultsDelegate" destination="Mqg-rI-qeK" id="WII-BP-0qX"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-694.20289855072474" y="36.684782608695656"/>
+            <point key="canvasLocation" x="-694.20289855072474" y="36.160714285714285"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -69,7 +92,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Oxp-Pf-bN1"/>
                     </layoutGuides>
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS" userLabel="scnView" customClass="ARSCNView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwi-h6-3TD" userLabel="PickMap">
@@ -89,7 +112,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Placenote Shape Dropper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-vt-npx" userLabel="Label">
-                                <rect key="frame" x="0.0" y="35" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="59" width="414" height="64"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="crg-vt-ghT"/>
@@ -168,7 +191,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8xO-b1-Xq5" userLabel="Checkpoint">
-                                <rect key="frame" x="20" y="122" width="79" height="30"/>
+                                <rect key="frame" x="20" y="146" width="79" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Checkpoint">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -179,7 +202,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfV-zP-Xga" userLabel="Destination">
-                                <rect key="frame" x="20" y="160" width="78" height="30"/>
+                                <rect key="frame" x="20" y="184" width="78" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Destination">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>

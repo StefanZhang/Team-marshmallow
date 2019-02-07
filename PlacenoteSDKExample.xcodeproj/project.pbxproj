@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		25F72E51220CA12100355F77 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F72E50220CA12100355F77 /* Destination.swift */; };
+		25F72E57220CD93800355F77 /* Pic in Resources */ = {isa = PBXBuildFile; fileRef = 25F72E56220CD93800355F77 /* Pic */; };
 		7FBF965C5C3B1E5C0F8DE1AB /* Pods_PlacenoteSDKExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC572E55F179D977C01BA451 /* Pods_PlacenoteSDKExample.framework */; };
 		841987002202696000404F88 /* NavigationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841986FF2202696000404F88 /* NavigationNode.swift */; };
 		A28C7963202A46F40052F3FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28C7962202A46F40052F3FB /* AppDelegate.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		25F72E50220CA12100355F77 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
+		25F72E56220CD93800355F77 /* Pic */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pic; sourceTree = "<group>"; };
 		2904538A54D1EA278D335F50 /* Pods-PlacenoteSDKExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.release.xcconfig"; sourceTree = "<group>"; };
 		841986FF2202696000404F88 /* NavigationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationNode.swift; sourceTree = "<group>"; };
 		8D2EF9CBDC0F285A1BE9E787 /* Pods-PlacenoteSDKExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -58,13 +60,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		25594DE2220B929B0024A573 /* Pic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Pic;
-			sourceTree = "<group>";
-		};
 		4C6986BF447C6000E81885EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,7 +98,7 @@
 		A28C7961202A46F40052F3FB /* PlacenoteSDKExample */ = {
 			isa = PBXGroup;
 			children = (
-				25594DE2220B929B0024A573 /* Pic */,
+				25F72E56220CD93800355F77 /* Pic */,
 				A9BA5F0A22010D6700998DFB /* Graph */,
 				A28C7962202A46F40052F3FB /* AppDelegate.swift */,
 				A28C7964202A46F40052F3FB /* ViewController.swift */,
@@ -195,6 +190,7 @@
 				A28C796D202A46F40052F3FB /* LaunchScreen.storyboard in Resources */,
 				A28C796A202A46F40052F3FB /* Assets.xcassets in Resources */,
 				A28C7968202A46F40052F3FB /* Main.storyboard in Resources */,
+				25F72E57220CD93800355F77 /* Pic in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
