@@ -891,7 +891,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
     @IBAction func showPath(_ sender: Any) {
-      
+      print("This is the graph when showPath get called")
+      dump(graph)
     }
     
     
