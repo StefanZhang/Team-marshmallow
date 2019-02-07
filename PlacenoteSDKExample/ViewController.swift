@@ -180,7 +180,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print ("Just localized, drawing view")
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       if mappingStarted {
-        statusLabel.text = "Tap anywhere to add Shapes, Move Slowly"
+        statusLabel.text = "Move Slowly"
       }
       else if localizationStarted {
         statusLabel.text = "Map Found!"
@@ -478,7 +478,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       self.mappingStarted = true //extending the map
                                       self.localizationStarted = true
                                       self.mapTable.isHidden = true
-                                      self.pickMapButton.setTitle("Stop/Clear", for: .normal)
+                                      self.pickMapButton.setTitle("Stop", for: .normal)
                                       self.newMapButton.isEnabled = true
                                       self.newMapButton.setTitle("Save Map", for: .normal)
                                       
