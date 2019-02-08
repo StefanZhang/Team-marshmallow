@@ -61,8 +61,6 @@ class NavigationNode {
         return geometryNode
     }
     
-    // add function here to delete node from shapeNodes currently has a bug where the shapes don't get deleted
-    
     func toString() -> String{
         let x = NSString(format: "%.8f", self.position.x)
         let y = NSString(format: "%.8f", self.position.y)
