@@ -68,7 +68,7 @@
                                     <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hmCircleLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hmCircleLogo_white" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
                                 <rect key="frame" x="120" y="52" width="174" height="174"/>
                             </imageView>
                         </subviews>
@@ -355,6 +355,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="hmCircleLogo.png" width="1888" height="1888"/>
+        <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
 </document>
