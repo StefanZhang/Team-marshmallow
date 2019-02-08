@@ -33,7 +33,8 @@ public enum ShapeType:Int {
     
     switch s_type {
     case ShapeType.Sphere: //
-      geometry = SCNSphere(radius: 0.5)
+    // changed size
+      geometry = SCNSphere(radius: 0.1)
         geometry.materials.first?.diffuse.contents = UIColor.red
     case ShapeType.Capsule:
       geometry = SCNCapsule(capRadius:0.5, height:1.0)

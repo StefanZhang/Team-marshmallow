@@ -270,13 +270,23 @@ class ShapeManager {
     return geometryNode
   }
   
-    func checkAdjacent(selfPos: SCNVector3) -> Bool {
+//    func checkAdjacent(selfPos: SCNVector3) -> Bool {
+//        for node in shapePositions{
+//            if nodeDistance(first: selfPos, second: node) < 1.5 {
+//                return true
+//            }
+//        }
+//        return false
+//    }
+    
+    func checkAdjacent(selfPos: SCNVector3, distance: Float) -> [SCNVector3] {
+        var res = [SCNVector3]()
         for node in shapePositions{
-            if nodeDistance(first: selfPos, second: node) < 1.5 {
-                return true
+            if nodeDistance(first: selfPos, second: node) < distance {
+                res.append(node)
             }
         }
-        return false
+        return res
     }
     
     func nodeDistance (first: SCNVector3, second: SCNVector3) -> Float {

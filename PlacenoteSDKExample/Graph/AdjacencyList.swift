@@ -283,5 +283,15 @@ extension AdjacencyList: Graphable {
         
     }
 
+    // check if vertex in graph dictionary
+    public func checkVertex(loc: String) -> [Vertex<Element>] {
+        var res = [Vertex<Element>]()
+        for key in adjacencyDict.keys {
+            if loc == key.description {
+                res.append(key)
+            }
+        }
+        return res
+    }
 }
 

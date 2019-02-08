@@ -13,6 +13,9 @@ import Foundation
 
 public struct Vertex<T: Hashable> {
     var data: T
+    init(loc: T) {
+        data = loc
+    }
 }
 
 extension Vertex: Hashable {
@@ -30,4 +33,6 @@ extension Vertex: CustomStringConvertible {
         return "\(data)"
     }
 }
+
+
 

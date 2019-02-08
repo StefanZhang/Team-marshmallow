@@ -682,14 +682,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let pose: matrix_float4x4 = didUpdate.camera.transform
     
     //changed
-    let cam_loc = pose.columns.3
-    let loc01 = SCNVector3(cam_loc.x,cam_loc.y-0.8,cam_loc.z)
-    
-    if (nodeDistance(first: loc01, second: last_loc) > 1.5){
-      //dump(loc01) Matt commented this out
-      if(!self.shapeManager.checkAdjacent(selfPos: loc01)){
-        shapeManager.spawnNewBreadCrumb(position1: loc01)
-        last_loc = loc01
+    //let camPos = pose.columns.3
+    // Camera Location in Vector3
+    let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+    let distance = Float(0.3)
+    if (nodeDistance(first: camLoc, second: last_loc) > distance){
+      let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
+      if(adjLocs.isEmpty){
+        shapeManager.spawnNewBreadCrumb(position1: camLoc)
+        updateGraph()
+        last_loc = camLoc
       }
     }
     //shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
@@ -790,7 +792,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         //
       }
       
-      if 1<2 {
+      if 1>2 {
         print("Graph TEEEEEESTING--------------")
         var toygraph  = AdjacencyList<String>()
         let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
@@ -864,21 +866,60 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     // load the position from breadcrums
     let shapePositions = shapeManager.getShapePositions()
     let shapeNodes = shapeManager.getShapeNodes()
-
-    var ctr = 0
-    while ctr < shapePositions.count - 1{
-      let vec1s = SCNV3toString(vec: shapePositions[ctr])
-      let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
-      let d1 = graph.createVertex(data: vec1s)
-      let d2 = graph.createVertex(data: vec2s)
+//
+//    var ctr = 0
+//    while ctr < shapePositions.count - 1{
+//      let vec1s = SCNV3toString(vec: shapePositions[ctr])
+//      let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
+//      let d1 = graph.createVertex(data: vec1s)
+//      let d2 = graph.createVertex(data: vec2s)
+//
+//      //insert the hash string as key and node as value
+//      Hash_Node_Dict[vec1s] = shapeNodes[ctr]
+//      Hash_Node_Dict[vec2s] = shapeNodes[ctr+1]
+//
+//      // insert the nodes to undirected graph
+//      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
+//      ctr+=1
+//    }
+    let distance = Float(0.5)
+    let length = shapePositions.count
+    if (length > 0){
       
-      //insert the hash string as key and node as value
-      Hash_Node_Dict[vec1s] = shapeNodes[ctr]
-      Hash_Node_Dict[vec2s] = shapeNodes[ctr+1]
-      
-      // insert the nodes to undirected graph
-      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
-      ctr+=1
+      for i in 1...length { // pos is Vector3
+        for j in i+1...length{
+          if (nodeDistance(first: shapePositions[i-1], second: shapePositions[j-1]) < distance && nodeDistance(first: shapePositions[i-1], second: shapePositions[j-1]) > 0.0001) {
+            
+            let str1 = SCNV3toString(vec: shapePositions[i-1])
+            let str2 = SCNV3toString(vec: shapePositions[j-1])
+            let vertex1Array = graph.checkVertex(loc: str1)
+            let vertex2Array = graph.checkVertex(loc: str2)
+            
+            var v1 = Vertex(loc: "0")
+            var v2 = Vertex(loc: "0")
+            
+            // Checking if graph already have these vertex
+            if (!vertex1Array.isEmpty) {
+              v1 = vertex1Array[0]
+            }
+            else{
+              v1 = graph.createVertex(data: str1)
+              Hash_Node_Dict[str1] = shapeNodes[i-1]
+            }
+            
+            if (!vertex2Array.isEmpty) {
+              v2 = vertex2Array[0]
+            }
+            else{
+              v2 = graph.createVertex(data: str2)
+              Hash_Node_Dict[str2] = shapeNodes[j-1]
+            }
+            // make vertices connected
+            graph.add(.undirected, from: v1, to: v2, weight: 0.3)
+          }
+        }
+        
+      }
     }
     
 //    FOR DEBUG ONLY
@@ -891,11 +932,76 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
     @IBAction func showPath(_ sender: Any) {
+      //shapeManager.clearShapes()
+      updateGraph()
       print("This is the graph when showPath get called")
       dump(graph)
+      
+      let dict = graph.adjacencyDict
+      let vertices = dict.keys
+      
+    
+      let shapePositions = shapeManager.getShapePositions()
+      print("This is shapePosition")
+      print(shapePositions)
+      if (!shapePositions.isEmpty){
+        print("This is the first in shapePosition list")
+        dump(shapePositions[0])
+        
+        let start = shapePositions[0] // type V3
+        let startStr = SCNV3toString(vec: start)
+        
+        let des = shapePositions[shapePositions.count-1] // type V3
+        let desStr = SCNV3toString(vec: des)
+        
+        var startVer = vertices.first
+        var desVer = vertices.first
+        
+        for vertex in vertices{
+          if startStr == vertex.description {
+            startVer = vertex
+          }
+          if desStr == vertex.description {
+            desVer = vertex
+          }
+        }
+        dump(startVer)
+        dump(desVer)
+        
+        //var destination =
+        let OutVer = graph.aStar(start: startVer!, destination: desVer!)
+        var selectedPos = [SCNVector3]()
+        for ver in OutVer {
+          for str in shapePositions {
+            if ver.description == SCNV3toString(vec: str) {
+              selectedPos.append(str)
+            }
+          }
+        }
+        
+        
+        var shapeArray: [[String: [String: String]]] = []
+        if (selectedPos.count > 0) {
+          for i in 0...(selectedPos.count-1) {
+            shapeArray.append(["shape": ["style": "\(1)", "x": "\(selectedPos[i].x)",  "y": "\(selectedPos[i].y)",  "z": "\(selectedPos[i].z)" ]])
+          }
+        }
+        
+        var res = self.shapeManager.loadShapeArray(shapeArray: shapeArray)
+      }
+      
     }
-    
-    
+  
+//  func getShapeArray() -> [[String: [String: String]]] {
+//    var shapeArray: [[String: [String: String]]] = []
+//    if (shapePositions.count > 0) {
+//      for i in 0...(shapePositions.count-1) {
+//        shapeArray.append(["shape": ["style": "\(shapeTypes[i].rawValue)", "x": "\(shapePositions[i].x)",  "y": "\(shapePositions[i].y)",  "z": "\(shapePositions[i].z)" ]])
+//      }
+//    }
+//    return shapeArray
+//  }
+  
 }
 
 
