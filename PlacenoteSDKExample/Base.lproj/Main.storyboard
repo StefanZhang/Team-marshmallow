@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mqg-rI-qeK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UtA-jc-sC8">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -45,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="30Y-d7-QGn">
-                                <rect key="frame" x="30" y="313" width="354" height="56"/>
+                                <rect key="frame" x="30" y="357" width="354" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Mqg-rI-qeK" id="wTP-8g-FgW"/>
@@ -69,7 +69,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hmCircleLogo_white" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
-                                <rect key="frame" x="120" y="52" width="174" height="174"/>
+                                <rect key="frame" x="120" y="96" width="174" height="174"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -95,6 +95,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="dxk-LY-KR4" secondAttribute="trailing" constant="106" id="xId-d4-YH4"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="YEg-Du-yQD"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="44L-61-Y1w" id="IA1-Qb-wj8"/>
                     </connections>
@@ -110,12 +111,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-1281" y="-363"/>
+            <point key="canvasLocation" x="-371.01449275362324" y="-363.61607142857139"/>
         </scene>
-        <!--Admin-->
+        <!--Admin Mode-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController title="Admin" id="BV1-FR-VrT" customClass="ViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Admin Mode" id="BV1-FR-VrT" customClass="ViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j89-Gv-ip5"/>
                         <viewControllerLayoutGuide type="bottom" id="Oxp-Pf-bN1"/>
@@ -141,7 +142,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Placenote Shape Dropper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-vt-npx" userLabel="Label">
-                                <rect key="frame" x="0.0" y="59" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="64"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="crg-vt-ghT"/>
@@ -220,7 +221,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8xO-b1-Xq5" userLabel="Checkpoint">
-                                <rect key="frame" x="20" y="146" width="79" height="30"/>
+                                <rect key="frame" x="20" y="190" width="79" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Checkpoint">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -231,7 +232,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfV-zP-Xga" userLabel="Destination">
-                                <rect key="frame" x="20" y="184" width="78" height="30"/>
+                                <rect key="frame" x="20" y="228" width="78" height="30"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Destination">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -317,12 +318,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="23.188405797101453" y="36.684782608695656"/>
+            <point key="canvasLocation" x="933.33333333333337" y="36.160714285714285"/>
         </scene>
-        <!--Where_You_Are-->
+        <!--Where are you?-->
         <scene sceneID="Yfy-B0-yDk">
             <objects>
-                <viewController title="Where_You_Are" id="fY2-BX-kzM" sceneMemberID="viewController">
+                <viewController title="Where are you?" id="fY2-BX-kzM" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QFV-nC-0MO"/>
                         <viewControllerLayoutGuide type="bottom" id="IaP-Q7-Hzb"/>
@@ -351,7 +352,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bBW-b6-iAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="21.739130434782609" y="-731.25"/>
+            <point key="canvasLocation" x="931.88405797101461" y="-731.25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jIy-XH-2dj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UtA-jc-sC8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UqN-8R-30C">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Mqg-rI-qeK" kind="relationship" relationship="rootViewController" id="qUc-55-s5G"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Qg-be-Ml2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1281.1594202898552" y="-363.61607142857139"/>
         </scene>
     </scenes>
     <resources>
