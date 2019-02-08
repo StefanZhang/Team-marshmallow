@@ -501,9 +501,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       
                                       //Use metadata acquired from fetchMapList
                                       let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
+                                      // This is placenote originally
+//                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+//                                        self.statusLabel.text = "Map Loaded. Look Around"
+//                                      }
                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                         self.statusLabel.text = "Map Loaded. Look Around"
-                                      } else {
+                                      }
+                                      else {
                                         self.statusLabel.text = "Map Loaded. Shape file not found"
                                       }
                                       LibPlacenote.instance.startSession(extend: true)
@@ -685,7 +690,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     //let camPos = pose.columns.3
     // Camera Location in Vector3
     let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
-    let distance = Float(0.3)
+    let distance = Float(1.5)
     if (nodeDistance(first: camLoc, second: last_loc) > distance){
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
@@ -882,16 +887,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
 //      ctr+=1
 //    }
-    let distance = Float(0.5)
+    let distance = Float(2)
     let length = shapePositions.count
-    if (length > 0){
+    if (length > 1){
       
-      for i in 1...length { // pos is Vector3
-        for j in i+1...length{
-          if (nodeDistance(first: shapePositions[i-1], second: shapePositions[j-1]) < distance && nodeDistance(first: shapePositions[i-1], second: shapePositions[j-1]) > 0.0001) {
+      for i in 0..<length { // pos is Vector3
+        for j in i+1..<length{
+          if (nodeDistance(first: shapePositions[i], second: shapePositions[j]) < distance && nodeDistance(first: shapePositions[i], second: shapePositions[j]) > 0.0001) {
             
-            let str1 = SCNV3toString(vec: shapePositions[i-1])
-            let str2 = SCNV3toString(vec: shapePositions[j-1])
+            let str1 = SCNV3toString(vec: shapePositions[i])
+            let str2 = SCNV3toString(vec: shapePositions[j])
             let vertex1Array = graph.checkVertex(loc: str1)
             let vertex2Array = graph.checkVertex(loc: str2)
             
@@ -904,7 +909,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             else{
               v1 = graph.createVertex(data: str1)
-              Hash_Node_Dict[str1] = shapeNodes[i-1]
+              Hash_Node_Dict[str1] = shapeNodes[i]
             }
             
             if (!vertex2Array.isEmpty) {
@@ -912,10 +917,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             else{
               v2 = graph.createVertex(data: str2)
-              Hash_Node_Dict[str2] = shapeNodes[j-1]
+              Hash_Node_Dict[str2] = shapeNodes[j]
             }
             // make vertices connected
-            graph.add(.undirected, from: v1, to: v2, weight: 0.3)
+            graph.add(.undirected, from: v1, to: v2, weight: 1.5)
           }
         }
         
@@ -923,12 +928,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
     
 //    FOR DEBUG ONLY
-    for (key, value) in Hash_Node_Dict {
-      print("Key:\(key) -  Value:\(value)")
-    }
+//    for (key, value) in Hash_Node_Dict {
+//      print("Key:\(key) -  Value:\(value)")
+//    }
     
 //    FOR Debug ONLY
-    print(graph.description)
+//    print(graph.description)
   }
   
     @IBAction func showPath(_ sender: Any) {
@@ -948,6 +953,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         print("This is the first in shapePosition list")
         dump(shapePositions[0])
         
+        // Set the first sphere as the start and last sphere as the destination
         let start = shapePositions[0] // type V3
         let startStr = SCNV3toString(vec: start)
         
@@ -968,7 +974,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         dump(startVer)
         dump(desVer)
         
-        //var destination =
+        
         let OutVer = graph.aStar(start: startVer!, destination: desVer!)
         var selectedPos = [SCNVector3]()
         for ver in OutVer {
@@ -979,29 +985,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           }
         }
         
-        
-        var shapeArray: [[String: [String: String]]] = []
-        if (selectedPos.count > 0) {
-          for i in 0...(selectedPos.count-1) {
-            shapeArray.append(["shape": ["style": "\(1)", "x": "\(selectedPos[i].x)",  "y": "\(selectedPos[i].y)",  "z": "\(selectedPos[i].z)" ]])
-          }
+        print("Selected Postions:")
+        print(selectedPos)
+        for pos in selectedPos {
+          shapeManager.spawnNewBreadCrumb(position1: pos)
         }
         
-        var res = self.shapeManager.loadShapeArray(shapeArray: shapeArray)
       }
       
     }
-  
-//  func getShapeArray() -> [[String: [String: String]]] {
-//    var shapeArray: [[String: [String: String]]] = []
-//    if (shapePositions.count > 0) {
-//      for i in 0...(shapePositions.count-1) {
-//        shapeArray.append(["shape": ["style": "\(shapeTypes[i].rawValue)", "x": "\(shapePositions[i].x)",  "y": "\(shapePositions[i].y)",  "z": "\(shapePositions[i].z)" ]])
-//      }
-//    }
-//    return shapeArray
-//  }
-  
 }
 
 

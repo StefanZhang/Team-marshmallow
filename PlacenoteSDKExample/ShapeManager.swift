@@ -92,6 +92,7 @@ class ShapeManager {
         return false
     }
 
+     //This is placenote originially
     for item in shapeArray! { //left off here because I'm trying to keep the same color
       let x_string: String = item["shape"]!["x"]!
       let y_string: String = item["shape"]!["y"]!
@@ -101,10 +102,11 @@ class ShapeManager {
       shapePositions.append(position)
       shapeTypes.append(type)
       shapeNodes.append(createShape(position: position, type: type))
-
+      //shapeNodes.append(create)
       print ("Shape Manager: Retrieved " + String(describing: type) + " type at position" + String (describing: position))
     }
 
+    
     print ("Shape Manager: retrieved " + String(shapePositions.count) + " shapes")
     return true
   }

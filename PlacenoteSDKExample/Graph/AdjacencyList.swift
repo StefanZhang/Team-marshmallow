@@ -33,7 +33,7 @@ extension AdjacencyList: Graphable {
     public typealias Element = T
     
     public func createVertex(data: Element) -> Vertex<Element> {
-        let vertex = Vertex(data: data)
+        let vertex = Vertex(loc: data)
         
         if adjacencyDict[vertex] == nil {
             adjacencyDict[vertex] = []
@@ -160,12 +160,6 @@ extension AdjacencyList: Graphable {
         // The cost of going from start to start is zero.
         g[start.description] = 0.0
         
-//        print("This is dictionary g")
-//        print(g)
-        
-//        print("This should be the string")
-//        print(start.description)
-        
         // For each node, the total cost of getting from the start node to the goal
         // by passing by that node. That value is partly known, partly heuristic.
         // fScore := map with default value of Infinity
@@ -196,8 +190,8 @@ extension AdjacencyList: Graphable {
             //if current = goal
             if current == destination {
                 //return reconstruct_path(cameFrom, current)
-                print("Final G score dictionary")
-                print(g)
+//                print("Final G score dictionary")
+//                print(g)
                 return reconstructPath(cameFrom: cameFrom, currentVertex: current)
 //                //For testing
 //                var endCurrent = current
@@ -216,16 +210,6 @@ extension AdjacencyList: Graphable {
             //closedSet.Add(current)
             out.append(current)
             
-//            // Remove current node from frontier
-//            if let index = frontier.index(of: current) {
-//                frontier.remove(at: index)
-//            }
-//            // Add to expanded nodes
-//            expanded.append(current)
-            
-//            print("These are the neighbors of current")
-//            dump(findNeighbors(node: current))
-            
             for neighbor in findNeighbors(node: current) {
 //                print("This is the first neighbor of current")
 //                dump(neighbor)
@@ -241,9 +225,6 @@ extension AdjacencyList: Graphable {
                 // tentative_gScore := gScore[current] + dist_between(current, neighbor)
                 let tentative_gScore = g[current.description]! + distance(first: current.description, second: neighbor.description)
                 
-                print("This is tentative distance from start to a neighbor")
-                print(tentative_gScore)
-                
                 //if neighbor not in openSet    // Discover a new node
                 //openSet.Add(neighbor)
                 
@@ -257,25 +238,6 @@ extension AdjacencyList: Graphable {
                 cameFrom[neighbor.description] = current
                 g[neighbor.description] = tentative_gScore
                 f[neighbor.description] = g[neighbor.description]! + distance(first: neighbor.description,second: destination.description)
-                
-                /*
-                if frontier.index(of: neighbor) == NSNotFound{
-                    frontier.append(neighbor)
-                }
-                if (g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description)) >= (g[neighbor.description] ?? Double(1000000) ){
-                    continue
-                }
-                // Testing
-                print("DISTANCE")
-                print(distance(first: current.description,second: neighbor.description))
-                print(distance(first: current.description,second: destination.description))
-                
-                //
-                
-                cameFrom[neighbor.description] = current
-                g[neighbor.description] = g[current.description] ?? 0.0 + distance(first: current.description,second: neighbor.description) // Distance function takes two string (x,y,z) positions
-                f[neighbor.description]  = g[neighbor.description] ?? 0.0 + distance(first: neighbor.description,second: destination.description) // Distance function called again
-                */
             }
         }
         print("Failure")
