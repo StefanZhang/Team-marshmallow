@@ -548,6 +548,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                     }
     }
     )
+    print("This is the map name:")
+    print(maps[indexPath.row].0) // Need to call above function with next map at checkpoint
   }
   
   //Make rows editable for deletion
@@ -708,8 +710,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         last_loc = camLoc
       }
     }
+    // part one recognize that you are at a checkpoint
     //updateGraph()
     //getClosetNode(camera_pos: camLoc, map: graph)
+    
+    //part two delete everything from map and load next one
+    // shapeManager.clearShapes()
+    
+    
     
     // This is the camera position
     
