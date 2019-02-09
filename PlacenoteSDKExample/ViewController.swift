@@ -43,6 +43,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   @IBOutlet var planeDetSelection: UISwitch!
   @IBOutlet var fileTransferLabel: UILabel!
   
+  let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+
+  
   
   //AR Scene
   private var scnScene: SCNScene!
@@ -78,7 +81,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var locationManager: CLLocationManager!
   private var lastLocation: CLLocation? = nil
   // Testing graph
-
+  
   //Setup view once loaded
   override func viewDidLoad() {
 
@@ -111,6 +114,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     locationManager = CLLocationManager()
     locationManager.requestWhenInUseAuthorization()
     
+
     if CLLocationManager.locationServicesEnabled() {
       locationManager.delegate = self;
       locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
@@ -122,6 +126,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     configureSession();
+    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -176,6 +181,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   
   //Receive a status update when the status changes
   func onStatusChange(_ prevStatus: LibPlacenote.MappingStatus, _ currStatus: LibPlacenote.MappingStatus) {
+
     if prevStatus != LibPlacenote.MappingStatus.running && currStatus == LibPlacenote.MappingStatus.running { //just localized draw shapes you've retrieved
       print ("Just localized, drawing view")
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
@@ -473,21 +479,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     print(String(format: "Retrieving row: %d", indexPath.row))
     print("Retrieving mapId: " + maps[indexPath.row].0)
     statusLabel.text = "Retrieving mapId: " + maps[indexPath.row].0
-    let alert = UIAlertController(title: "Alert", message: "Finding all needed maps", preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-      switch action.style{
-      case .default:
-        print("default")
-        
-      case .cancel:
-        print("cancel")
-        
-      case .destructive:
-        print("destructive")
-        
-        
-      }}))
-    self.present(alert, animated: true, completion: nil)
+
+
     LibPlacenote.instance.loadMap(mapId: maps[indexPath.row].0,
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
@@ -715,7 +708,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         last_loc = camLoc
       }
     }
-    //shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+    //updateGraph()
+    //getClosetNode(camera_pos: camLoc, map: graph)
+    
+    // This is the camera position
+    
+    label.center = CGPoint(x: 160, y: 285)
+    label.textAlignment = .center
+//    let frame = scnView.session.currentFrame
+//    let camera = frame?.camera
+//    let loc = camera?.transform
+//    let loc01 = loc?.columns.3
+//
+//    let x1 = loc01?.x ?? 0.000
+//    let y1 = loc01?.y ?? 0.000
+//    let z1 = loc01?.z ?? 0.000
+//
+//    let formattedx = String(format: "%.3f", x1)
+//    let formattedy = String(format: "%.3f", y1)
+//    let formattedz = String(format: "%.3f", z1)
+    
+//    label.text = //formattedx + "|" + formattedy + "|" + formattedz   //x + y + z
+//    self.view.addSubview(label)    //shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
 
     //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
     
@@ -738,6 +752,49 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let y = first.y - second.y
     let z = first.z - second.z
     return sqrt(x*x + y*y + z*z)
+  }
+  
+  
+  func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>){
+    if shapeManager.getShapePositions().count > 0 {
+    for position in shapeManager.getShapePositions()
+    {
+      let pos = SCNV3toString(vec: position)
+
+      let node = Hash_Node_Dict[pos]
+      let tre = node?.geometry?.description
+      if(tre != nil){
+        let T = Array(tre!)[4]
+        
+        if( T == "B")
+        {
+          
+          if (nodeDistance(first: camera_pos, second: node?.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.0)
+          {
+            let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+              switch action.style{
+              case .default:
+                print("default")
+                
+              case .cancel:
+                print("cancel")
+                
+              case .destructive:
+                print("destructive")
+                
+                
+              }}))
+            self.present(alert, animated: true, completion: nil)
+            dump("HEEEEEEREEEEE")
+          }
+        }
+      }
+
+      
+      
+    }
+    }
   }
   
   //Informs the delegate of changes to the quality of ARKit's device position tracking.
@@ -764,6 +821,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       status = "Ready"
     }
     statusLabel.text = status
+    
   }
   
   func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
