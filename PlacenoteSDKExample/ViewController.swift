@@ -21,7 +21,7 @@ var last_loc = SCNVector3(0,0,0)
 //Dictionary for hash and node pairs
 var Hash_Node_Dict = [String:SCNNode]()
 
-class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
   
   
   //UI Elements
@@ -290,7 +290,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             
             self.present(MapName_alert, animated: true, completion: nil)
             
-            metadata.name = MapName_alert.textFields
+            metadata.name = RandomName.Get()
               
             self.statusLabel.text = "Saved Map: " + metadata.name! //update UI
             
@@ -1086,6 +1086,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       }
       
     }
+  @IBOutlet weak var tableView2: UITableView!
+  @IBOutlet weak var searchBar: UISearchBar!
+  
 }
 
 
