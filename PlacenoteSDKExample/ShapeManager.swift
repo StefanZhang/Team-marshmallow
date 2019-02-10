@@ -262,12 +262,13 @@ class ShapeManager {
   func createShape (position: SCNVector3, type: ShapeType) -> SCNNode {
     
     let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: type) //might need to do this in the generate bread crumb function to retain the type
-    let color = UIColor.red
+    let color = UIColor.blue
     geometry.materials.first?.diffuse.contents = color
     
     let geometryNode = SCNNode(geometry: geometry)
     geometryNode.position = position
-    geometryNode.scale = SCNVector3(x:0.1, y:0.1, z:0.1)
+    // Maybe this makes the loaded spheres smaller
+    //geometryNode.scale = SCNVector3(x:0.1, y:0.1, z:0.1)
     
     return geometryNode
   }
