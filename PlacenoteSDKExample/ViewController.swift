@@ -290,7 +290,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             
             self.present(MapName_alert, animated: true, completion: nil)
             
-            metadata.name = MapName_alert.textFields
+            metadata.name = RandomName.Get()
               
             self.statusLabel.text = "Saved Map: " + metadata.name! //update UI
             
