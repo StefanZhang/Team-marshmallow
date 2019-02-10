@@ -270,13 +270,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       toggleMappingUI(false)
       shapeManager.clearShapes() //creating new map, remove old shapes.
       
-      let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
-      MapName_alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-      MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
-        textField.placeholder = "Enter text:"
-      })
-      self.present(MapName_alert, animated: true, completion: nil)
-      
     }
     else if (mappingStarted) { //mapping been running, save map
       print("Saving Map")
@@ -289,8 +282,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             LibPlacenote.instance.stopSession()
             let metadata = LibPlacenote.MapMetadataSettable()
             
-            metadata.name = MapName_alert //RandomName.Get()
+            let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
+            MapName_alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
+              textField.placeholder = "Enter text:"
+            })
             
+            self.present(MapName_alert, animated: true, completion: nil)
+            
+            metadata.name = MapName_alert.textFields
+              
             self.statusLabel.text = "Saved Map: " + metadata.name! //update UI
             
             if (self.lastLocation != nil) {
