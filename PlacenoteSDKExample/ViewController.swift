@@ -278,20 +278,22 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       LibPlacenote.instance.saveMap(
         savedCb: {(mapId: String?) -> Void in
           if (mapId != nil) {
-            self.statusLabel.text = "Saved Id: " + mapId! //update UI
-            LibPlacenote.instance.stopSession()
-            let metadata = LibPlacenote.MapMetadataSettable()
             
+            //Pop up the save map window
             let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
             MapName_alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
-              textField.placeholder = "Enter text:"
+              textField.placeholder = "Enter Map name:"
             })
             
+            self.statusLabel.text = "Saved Id: " + mapId! //update UI
+            LibPlacenote.instance.stopSession()
+            let metadata = LibPlacenote.MapMetadataSettable()
             self.present(MapName_alert, animated: true, completion: nil)
             
-            metadata.name = RandomName.Get()
-              
+            let textField = MapName_alert.textFields![0] as UITextField
+            metadata.name = textField.text  //RandomName.Get()
+            
             self.statusLabel.text = "Saved Map: " + metadata.name! //update UI
             
             if (self.lastLocation != nil) {
@@ -300,6 +302,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
               metadata.location!.longitude = self.lastLocation!.coordinate.longitude
               metadata.location!.altitude = self.lastLocation!.altitude
             }
+            
             var userdata: [String:Any] = [:]
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
             metadata.userdata = userdata
