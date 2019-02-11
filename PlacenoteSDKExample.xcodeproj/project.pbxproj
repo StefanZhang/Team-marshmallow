@@ -19,7 +19,6 @@
 		A28C796D202A46F40052F3FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28C796B202A46F40052F3FB /* LaunchScreen.storyboard */; };
 		A28C7992202A48190052F3FB /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28C7990202A48190052F3FB /* ShapeType.swift */; };
 		A28C7993202A48190052F3FB /* ShapeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28C7991202A48190052F3FB /* ShapeManager.swift */; };
-		A2EC47FA20AF28D200C29CB5 /* RandomName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EC47F920AF28D200C29CB5 /* RandomName.swift */; };
 		A9BA5F032201067A00998DFB /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA5F022201067A00998DFB /* Vertex.swift */; };
 		A9BA5F052201075200998DFB /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA5F042201075200998DFB /* Edge.swift */; };
 		A9BA5F07220107EA00998DFB /* Graphable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA5F06220107EA00998DFB /* Graphable.swift */; };
@@ -42,7 +41,6 @@
 		A28C796E202A46F40052F3FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A28C7990202A48190052F3FB /* ShapeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
 		A28C7991202A48190052F3FB /* ShapeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeManager.swift; sourceTree = "<group>"; };
-		A2EC47F920AF28D200C29CB5 /* RandomName.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RandomName.swift; sourceTree = "<group>"; tabWidth = 2; };
 		A9BA5F022201067A00998DFB /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		A9BA5F042201075200998DFB /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		A9BA5F06220107EA00998DFB /* Graphable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphable.swift; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 				A28C7969202A46F40052F3FB /* Assets.xcassets */,
 				A28C796B202A46F40052F3FB /* LaunchScreen.storyboard */,
 				A28C796E202A46F40052F3FB /* Info.plist */,
-				A2EC47F920AF28D200C29CB5 /* RandomName.swift */,
 				841986FF2202696000404F88 /* NavigationNode.swift */,
 				25F72E50220CA12100355F77 /* Destination.swift */,
 				25F72E58220CF5B900355F77 /* Initial.swift */,
@@ -252,7 +249,6 @@
 				A28C7993202A48190052F3FB /* ShapeManager.swift in Sources */,
 				A9BA5F092201085C00998DFB /* AdjacencyList.swift in Sources */,
 				A9BA5F052201075200998DFB /* Edge.swift in Sources */,
-				A2EC47FA20AF28D200C29CB5 /* RandomName.swift in Sources */,
 				A28C7992202A48190052F3FB /* ShapeType.swift in Sources */,
 				A28C7963202A46F40052F3FB /* AppDelegate.swift in Sources */,
 				A9BA5F032201067A00998DFB /* Vertex.swift in Sources */,

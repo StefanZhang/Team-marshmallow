@@ -275,8 +275,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       //Pop up the save map window
       let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
       
-      MapName_alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-      
       MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
         textField.placeholder = "Enter Map name:"
       })
@@ -289,8 +287,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         }
       }))
       self.present(MapName_alert, animated: true, completion: nil)
-      
-     
       
     }
     else if (mappingStarted) { //mapping been running, save map
