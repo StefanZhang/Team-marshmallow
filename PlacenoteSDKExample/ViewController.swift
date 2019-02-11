@@ -21,6 +21,8 @@ var last_loc = SCNVector3(0,0,0)
 //Dictionary for hash and node pairs
 var Hash_Node_Dict = [String:SCNNode]()
 
+var mapname = ""
+
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
   
@@ -270,6 +272,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       toggleMappingUI(false)
       shapeManager.clearShapes() //creating new map, remove old shapes.
       
+      //Pop up the save map window
+      let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
+      
+      MapName_alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+      
+      MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
+        textField.placeholder = "Enter Map name:"
+      })
+      
+      MapName_alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+        
+        if let name = MapName_alert.textFields?.first?.text {
+          // Set the text field to var mapname
+          mapname = name
+        }
+      }))
+      self.present(MapName_alert, animated: true, completion: nil)
+      
+     
+      
     }
     else if (mappingStarted) { //mapping been running, save map
       print("Saving Map")
@@ -279,20 +301,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         savedCb: {(mapId: String?) -> Void in
           if (mapId != nil) {
             
-            //Pop up the save map window
-            let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
-            MapName_alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
-              textField.placeholder = "Enter Map name:"
-            })
-            
             self.statusLabel.text = "Saved Id: " + mapId! //update UI
             LibPlacenote.instance.stopSession()
             let metadata = LibPlacenote.MapMetadataSettable()
-            self.present(MapName_alert, animated: true, completion: nil)
             
-            let textField = MapName_alert.textFields![0] as UITextField
-            metadata.name = textField.text  //RandomName.Get()
+            // assign the map name to metadata
+            metadata.name = mapname
             
             self.statusLabel.text = "Saved Map: " + metadata.name! //update UI
             
