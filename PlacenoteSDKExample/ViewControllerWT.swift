@@ -8,6 +8,8 @@
 
 import UIKit
 
+var Destination_array = [String]() // Store Destination Name
+
 class ViewControllerWT: UIViewController {
 
     override func viewDidLoad() {
