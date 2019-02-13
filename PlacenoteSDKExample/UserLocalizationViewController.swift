@@ -1,5 +1,5 @@
 //
-//  ViewControllerWT.swift
+//  UserLocalizationViewController.swift
 //  PlacenoteSDKExample
 //
 //  Created by Team Herman Miller on 2/12/19.
@@ -8,9 +8,7 @@
 
 import UIKit
 
-var Destination_array = [String]() // Store Destination Name
-
-class ViewControllerWT: UIViewController {
+class UserLocalizationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

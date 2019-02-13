@@ -14,7 +14,6 @@ import ARKit
 import PlacenoteSDK
 
 
-
 //changed
 var last_loc = SCNVector3(0,0,0)
 
@@ -1068,8 +1067,22 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewDestination(position_1: loc02)
 
+      //Pop up the drop destination window
+      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination", message: "Name it with a specific name, like 'Room 3320'", preferredStyle: UIAlertControllerStyle.alert)
+
+      DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
+        textField.placeholder = "Enter Destination name:"
+      })
+      DestinationName_alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+        
+        if let destination_name = DestinationName_alert.textFields?.first?.text {
+          Destination_array.append(destination_name) // Append to the destination array
+          
+        }
+      }))
+      self.present(DestinationName_alert, animated: true, completion: nil)
       
-        //dump(graph.description)
+      
       
     }
   
