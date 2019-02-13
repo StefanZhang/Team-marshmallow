@@ -12,7 +12,7 @@ var Destination_array = [String]() // Store Destination Name
 
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-    var tempArray = ["Aaron", "John", "Matthew", "Stefan", "Zhenru"]
+    var tempArray = ["Stumpf", "Weber", "Behar", "Chadwick", "Eames", "Bennett", "Brisel", "Blueprint (ELT)", "Rudder", "Kelley (ELT)", "Action Office (ELT)", "Setu", "Studio 7.5"]
     var search = [String]()
     var searching = false
     
@@ -21,6 +21,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
@@ -49,8 +50,14 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
-        search = tempArray.filter({$0.prefix(searchText.count) == searchText})
+        search = tempArray.filter({$0.lowercased().prefix(searchText.count) == searchText.lowercased()})
         searching = true
+        self.tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
         self.tableView.reloadData()
     }
 
