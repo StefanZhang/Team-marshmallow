@@ -744,8 +744,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       }
     }
     // part one recognize that you are at a checkpoint
-    //updateGraph()
-    //getClosetNode(camera_pos: camLoc, map: graph)
+    updateGraph()
+    getClosetNode(camera_pos: camLoc, map: graph)
     
     //part two delete everything from map and load next one
     // shapeManager.clearShapes()
@@ -795,6 +795,112 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     return sqrt(x*x + y*y + z*z)
   }
   
+  func mapLoading(map: (String, LibPlacenote.MapMetadata)) -> Void
+  {
+    LibPlacenote.instance.loadMap(mapId: map.0,
+                                  downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+                                    if (completed) {
+                                      self.mappingStarted = true //extending the map
+                                      self.localizationStarted = true
+                                      self.mapTable.isHidden = true
+                                      self.pickMapButton.setTitle("Stop", for: .normal)
+                                      self.newMapButton.isEnabled = true
+                                      self.newMapButton.setTitle("Save Map", for: .normal)
+                                      
+                                      self.toggleMappingUI(false) //show mapping options UI
+                                      self.toggleSliderUI(true, reset: true) //hide + reset UI for later
+                                      
+                                      //Using this method you can individual retrieve the metadata for a single map,
+                                      //However, as we called a blanket fetchMapList before, it already acquired all the metadata for all maps
+                                      //We'll just use that meta data for now.
+                                      
+                                      /*LibPlacenote.instance.getMapMetadata(mapId: self.maps[indexPath.row].0, getMetadataCb: {(success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
+                                       let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
+                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                       self.statusLabel.text = "Map Loaded. Look Around"
+                                       } else {
+                                       self.statusLabel.text = "Map Loaded. Shape file not found"
+                                       }
+                                       LibPlacenote.instance.startSession(extend: true)
+                                       })*/
+                                      
+                                      //Use metadata acquired from fetchMapList
+                                      let userdata = map.1.userdata as? [String:Any]
+                                      // This is placenote originally
+                                      //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                      //                                        self.statusLabel.text = "Map Loaded. Look Around"
+                                      //                                      }
+                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                        self.statusLabel.text = "Map Loaded. Look Around"
+                                      }
+                                      else {
+                                        self.statusLabel.text = "Map Loaded. Shape file not found"
+                                      }
+                                      LibPlacenote.instance.startSession(extend: true)
+                                      
+                                      
+                                      if (self.reportDebug) {
+                                        LibPlacenote.instance.startReportRecord (uploadProgressCb: ({(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+                                          if (completed) {
+                                            self.statusLabel.text = "Dataset Upload Complete"
+                                            self.fileTransferLabel.text = ""
+                                          } else if (faulted) {
+                                            self.statusLabel.text = "Dataset Upload Faulted"
+                                            self.fileTransferLabel.text = ""
+                                          } else {
+                                            self.fileTransferLabel.text = "Dataset Upload: " + String(format: "%.3f", percentage) + "/1.0"
+                                          }
+                                        })
+                                        )
+                                        print ("Started Debug Report")
+                                      }
+                                      
+                                      self.tapRecognizer?.isEnabled = true
+                                    } else if (faulted) {
+                                      print ("Couldnt load map: " + map.0)
+                                      self.statusLabel.text = "Load error Map Id: " +  map.0
+                                    } else {
+                                      print ("Progress: " + percentage.description)
+                                    }
+    }
+    )
+    
+  }
+  
+  func findMap() -> (String, LibPlacenote.MapMetadata)
+  {
+    let locManager = CLLocationManager()
+    locManager.requestWhenInUseAuthorization()
+    var currentLocation: CLLocation!
+    
+    if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+      CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+      
+      currentLocation = locManager.location
+      
+    }
+    var distance = 100.00
+    let x1 = currentLocation.coordinate.longitude
+    let y1 = currentLocation.coordinate.latitude
+    var nextMap = maps[0]
+    for map in maps
+    {
+      let x2 = map.1.location?.longitude
+      let y2 = map.1.location?.longitude
+      if x2 != nil
+      {
+        let xDistance = x2! - x1
+        let yDistance = y2! - y1
+        
+        if sqrt(xDistance * xDistance + yDistance * yDistance) < distance
+        {
+          distance = sqrt(xDistance * xDistance + yDistance * yDistance)
+          nextMap = map
+        }
+      }
+    }
+    return nextMap
+  }
   
   func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>){
     if shapeManager.getShapePositions().count > 0 {
@@ -828,6 +934,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
               }}))
             self.present(alert, animated: true, completion: nil)
             dump("HEEEEEEREEEEE")
+            print("Closest map:")
+            let bestMap = findMap()
+            print(bestMap)
+            mapLoading(map: bestMap)
           }
         }
       }
@@ -890,27 +1000,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewCheckpoint(position_01: loc02)
       updateGraph()
       
-      // Testing
-      let dest = graph.adjacencyDict.keys.randomElement()
-      if dest != graph.adjacencyDict.keys.first {
-        let out = graph.aStar(start: graph.adjacencyDict.keys.first!, destination: dest!)
-        dump(out)
-        var outArray = ""
-        
-        for vertex in out{
-          outArray = outArray+":"+vertex.description
-          print(outArray)
-        }
-        outArray.append("Start" + (graph.adjacencyDict.keys.first?.description)!)
-        outArray.append("End" + ((dest?.description)!))
-
-        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-          NSLog("The \"OK\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
+//      // Testing
+//      let dest = graph.adjacencyDict.keys.randomElement()
+//      if dest != graph.adjacencyDict.keys.first {
+//        let out = graph.aStar(start: graph.adjacencyDict.keys.first!, destination: dest!)
+//        dump(out)
+//        var outArray = ""
+//
+//        for vertex in out{
+//          outArray = outArray+":"+vertex.description
+//          print(outArray)
+//        }
+//        outArray.append("Start" + (graph.adjacencyDict.keys.first?.description)!)
+//        outArray.append("End" + ((dest?.description)!))
+//
+//        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+//          NSLog("The \"OK\" alert occured.")
+//        }))
+//        self.present(alert, animated: true, completion: nil)
         //
-      }
+//      }
       
       if 1>2 {
         print("Graph TEEEEEESTING--------------")
@@ -946,12 +1056,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           print(outArray)
         }
         
-        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-          NSLog("The \"OK\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
-        //
+//        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+//          NSLog("The \"OK\" alert occured.")
+//        }))
+//        self.present(alert, animated: true, completion: nil)
+//        //
       }
       
     }
