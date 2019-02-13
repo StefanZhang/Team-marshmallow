@@ -20,7 +20,16 @@ var last_loc = SCNVector3(0,0,0)
 //Dictionary for hash and node pairs
 var Hash_Node_Dict = [String:SCNNode]()
 
+//Input map name from User
 var mapname = ""
+
+//Input destination name from user
+var destination_name_meta = ""
+
+var destination_pos = ""
+
+//Dictionary that contains the destination as the key and position as the val
+var Dest_Pos_Dict = [String:String]()
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
@@ -314,6 +323,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             
             var userdata: [String:Any] = [:]
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
+            Dest_Pos_Dict[destination_name_meta] = destination_pos
+            userdata["destinationDict"] = Dest_Pos_Dict
             metadata.userdata = userdata
             
             
@@ -968,12 +979,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         if let destination_name = DestinationName_alert.textFields?.first?.text {
           Destination_array.append(destination_name) // Append to the destination array
           
+          destination_name_meta = destination_name
+          destination_pos = self.SCNV3toString(vec: loc02)
         }
       }))
       self.present(DestinationName_alert, animated: true, completion: nil)
-      
-      
-      
+
     }
   
   func SCNV3toString(vec: SCNVector3) -> String{
