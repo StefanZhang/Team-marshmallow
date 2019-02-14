@@ -72,6 +72,9 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             selectedPlace = self.search[indexPath.row]
             print(selectedPlace)
             self.searchBarCancelButtonClicked(searchBar)
+            // to highlight the selected row after selecting it from a search
+            let indexPath2 = IndexPath(row: tempArray.firstIndex(of: selectedPlace)!, section: 0)
+            self.tableView.selectRow(at: indexPath2, animated: true, scrollPosition: UITableViewScrollPosition.middle)
             // still a shadow after the row is selected
             // only after using search to find place
         }
