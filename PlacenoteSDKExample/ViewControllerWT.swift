@@ -15,6 +15,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     var tempArray = ["Stumpf", "Weber", "Behar", "Chadwick", "Eames", "Bennett", "Brisel", "Blueprint (ELT)", "Rudder", "Kelley (ELT)", "Action Office (ELT)", "Setu", "Studio 7.5"]
     var search = [String]()
     var searching = false
+    var selectedPlace = ""
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -25,6 +26,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
+        navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
     }
     
@@ -60,5 +62,23 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         searchBar.text = ""
         self.tableView.reloadData()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searching == false{
+            selectedPlace = self.tempArray[indexPath.row]
+            print(selectedPlace)
+        }
+        else{
+            selectedPlace = self.search[indexPath.row]
+            print(selectedPlace)
+            self.searchBarCancelButtonClicked(searchBar)
+            // to highlight the selected row after selecting it from a search
+            let indexPath2 = IndexPath(row: tempArray.firstIndex(of: selectedPlace)!, section: 0)
+            self.tableView.selectRow(at: indexPath2, animated: true, scrollPosition: UITableViewScrollPosition.middle)
+            // still a shadow after the row is selected
+            // only after using search to find place
+        }
+    }
+    
 
 }
