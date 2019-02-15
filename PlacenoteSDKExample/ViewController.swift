@@ -322,6 +322,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             var userdata: [String:Any] = [:]
+//            dump(self.shapeManager.getShapeArray())
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
             Dest_Pos_Dict[destination_name_meta] = destination_pos
             userdata["destinationDict"] = Dest_Pos_Dict
@@ -584,7 +585,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     print("This is the map name:")
     print(maps[indexPath.row].0) // Need to call above function with next map at checkpoint
     print("Second thing in maps:")
-    print(maps[1].0)
+    //print(maps[1].0)
   }
   
   //Make rows editable for deletion
@@ -1231,9 +1232,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //        let camloc = loc?.columns.3
 //        let camlocV3 = SCNVector3(camloc!.x ,camloc!.y,camloc!.z)
 //        //let camlocStr = SCNV3toString(vec: camlocV3)
-//        let desStr = getClosestBC(camlocVec: camlocV3)
+//        var desStr = getClosestBC(camlocVec: camlocV3)
 //        dump(desStr)
-        
+//        if desStr == "" {
+//          desStr = SCNV3toString(vec: des)
+//        }
+//
         var startVer = vertices.first
         var desVer = vertices.first
         
