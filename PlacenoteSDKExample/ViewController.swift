@@ -1190,6 +1190,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //    print(graph.description)
   }
   
+  func getClosestBC (camlocVec: SCNVector3) -> String {
+    let shapePositions = shapeManager.getShapePositions()
+    
+    for vector3 in shapePositions {
+      if ( nodeDistance(first: vector3, second: camlocVec) < 1.0 ){
+        return SCNV3toString(vec:vector3)
+      }
+    }
+    return ""
+  }
+  
     @IBAction func showPath(_ sender: Any) {
       //shapeManager.clearShapes()
       updateGraph()
@@ -1213,6 +1224,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         
         let des = shapePositions[shapePositions.count-1] // type V3
         let desStr = SCNV3toString(vec: des)
+        
+//        let frame = scnView.session.currentFrame
+//        let camera = frame?.camera
+//        let loc = camera?.transform
+//        let camloc = loc?.columns.3
+//        let camlocV3 = SCNVector3(camloc!.x ,camloc!.y,camloc!.z)
+//        //let camlocStr = SCNV3toString(vec: camlocV3)
+//        let desStr = getClosestBC(camlocVec: camlocV3)
+//        dump(desStr)
         
         var startVer = vertices.first
         var desVer = vertices.first
