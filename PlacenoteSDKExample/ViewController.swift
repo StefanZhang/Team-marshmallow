@@ -583,6 +583,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     )
     print("This is the map name:")
     print(maps[indexPath.row].0) // Need to call above function with next map at checkpoint
+    print("Second thing in maps:")
+    print(maps[1].0)
   }
   
   //Make rows editable for deletion
@@ -745,7 +747,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
     // part one recognize that you are at a checkpoint
     updateGraph()
-    getClosetNode(camera_pos: camLoc, map: graph)
+    if (getClosetNode(camera_pos: camLoc, map: graph))
+    {
+      print("Closest map:")
+      let bestMap = findMap()
+      print(bestMap)
+      mapLoading(map: bestMap.0, index: bestMap.1)
+
+      //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+    }
     
     //part two delete everything from map and load next one
     // shapeManager.clearShapes()
@@ -795,9 +805,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     return sqrt(x*x + y*y + z*z)
   }
   
-  func mapLoading(map: (String, LibPlacenote.MapMetadata)) -> Void
+  func mapLoading(map: (String, LibPlacenote.MapMetadata), index: Int) -> Void
   {
-    LibPlacenote.instance.loadMap(mapId: map.0,
+    let x = maps[index].0
+    LibPlacenote.instance.loadMap(mapId: maps[index].0,
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
                                       self.mappingStarted = true //extending the map
@@ -825,7 +836,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                        })*/
                                       
                                       //Use metadata acquired from fetchMapList
-                                      let userdata = map.1.userdata as? [String:Any]
+                                      let userdata = self.maps[index].1.userdata as? [String:Any]
                                       // This is placenote originally
                                       //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                       //                                        self.statusLabel.text = "Map Loaded. Look Around"
@@ -857,8 +868,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       
                                       self.tapRecognizer?.isEnabled = true
                                     } else if (faulted) {
-                                      print ("Couldnt load map: " + map.0)
-                                      self.statusLabel.text = "Load error Map Id: " +  map.0
+                                      print ("Couldnt load map: " + self.maps[index].0)
+                                      self.statusLabel.text = "Load error Map Id: " +  self.maps[index].0
                                     } else {
                                       print ("Progress: " + percentage.description)
                                     }
@@ -867,7 +878,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
   }
   
-  func findMap() -> (String, LibPlacenote.MapMetadata)
+  func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
   {
     let locManager = CLLocationManager()
     locManager.requestWhenInUseAuthorization()
@@ -883,10 +894,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let x1 = currentLocation.coordinate.longitude
     let y1 = currentLocation.coordinate.latitude
     var nextMap = maps[0]
+    var counter = 0
+    var index = 0
     for map in maps
     {
+      
       let x2 = map.1.location?.longitude
-      let y2 = map.1.location?.longitude
+      let y2 = map.1.location?.latitude
       if x2 != nil
       {
         let xDistance = x2! - x1
@@ -896,13 +910,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         {
           distance = sqrt(xDistance * xDistance + yDistance * yDistance)
           nextMap = map
+          index = counter
         }
       }
+      counter = counter + 1
     }
-    return nextMap
+    return (nextMap, index)
   }
   
-  func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>){
+  func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
     if shapeManager.getShapePositions().count > 0 {
     for position in shapeManager.getShapePositions()
     {
@@ -910,7 +926,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 
       let node = Hash_Node_Dict[pos]
       let tre = node?.geometry?.description
-      if(tre != nil){
+      if(tre != nil)
+      {
         let T = Array(tre!)[4]
         
         if( T == "B")
@@ -934,10 +951,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
               }}))
             self.present(alert, animated: true, completion: nil)
             dump("HEEEEEEREEEEE")
-            print("Closest map:")
-            let bestMap = findMap()
-            print(bestMap)
-            mapLoading(map: bestMap)
+            return true
           }
         }
       }
@@ -946,6 +960,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
     }
     }
+    return false
   }
   
   //Informs the delegate of changes to the quality of ARKit's device position tracking.
