@@ -1272,9 +1272,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       }
       
     }
-  @IBOutlet weak var tableView2: UITableView!
-  @IBOutlet weak var searchBar: UISearchBar!
-  
+
 }
 
 
