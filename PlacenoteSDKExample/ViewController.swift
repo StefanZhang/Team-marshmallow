@@ -28,6 +28,9 @@ var destination_name_meta = ""
 
 var destination_pos = ""
 
+// default not to drop breadcrumbs
+var canDropBC = false
+
 //Dictionary that contains the destination as the key and position as the val
 var Dest_Pos_Dict = [String:String]()
 
@@ -250,7 +253,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     if (trackingStarted && !mappingStarted) { //ARKit is enabled, start mapping
       mappingStarted = true
-      
+      // enable BC dropping
+      canDropBC = true
       LibPlacenote.instance.stopSession()
       
       LibPlacenote.instance.startSession()
@@ -738,7 +742,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     // Camera Location in Vector3
     let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
     let distance = Float(1.5)
-    if (nodeDistance(first: camLoc, second: last_loc) > distance){
+    if (nodeDistance(first: camLoc, second: last_loc) > distance && canDropBC == true){
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
         shapeManager.spawnNewBreadCrumb(position1: camLoc)
@@ -1203,6 +1207,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
     @IBAction func showPath(_ sender: Any) {
+      // enable BC dropping
+      canDropBC = false
+      
       //shapeManager.clearShapes()
       updateGraph()
       print("This is the graph when showPath get called")
