@@ -72,7 +72,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var reportDebug: Bool = false
   private var maxRadiusSearch: Float = 500.0 //m
   private var currRadiusSearch: Float = 0.0 //m
-  
+  private var newMapfound = false
   
   
   //Application related variables
@@ -760,14 +760,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
     // part one recognize that you are at a checkpoint
     //updateGraph()
-    if (getClosetNode(camera_pos: camLoc, map: graph))
+    if (newMapfound == false)
     {
-      print("Closest map:")
-      let bestMap = findMap()
-      print(bestMap)
-      mapLoading(map: bestMap.0, index: bestMap.1)
-
-      //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+      
+    
+      if (getClosetNode(camera_pos: camLoc, map: graph))
+      {
+        print("Closest map:")
+        let bestMap = findMap()
+        print(bestMap)
+        mapLoading(map: bestMap.0, index: bestMap.1)
+        //newMapfound == true
+        //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+      }
     }
     
     //part two delete everything from map and load next one
