@@ -102,7 +102,6 @@ class ShapeManager {
       shapePositions.append(position)
       shapeTypes.append(type)
       shapeNodes.append(createShape(position: position, type: type))
-      //shapeNodes.append(create)
       print ("Shape Manager: Retrieved " + String(describing: type) + " type at position" + String (describing: position))
     }
 
