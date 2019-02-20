@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Getter for Destination Names
-    func getDestinationName() -> [Array<Any>] {
+    func getDestinationName() -> [String] {
         return DestinationName_array
     }
     
