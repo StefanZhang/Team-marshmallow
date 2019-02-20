@@ -13,6 +13,8 @@ import SceneKit
 import ARKit
 import PlacenoteSDK
 
+// Array of V3 of nearest breadcrumbs
+var nearestShapes = [SCNVector3]()
 
 //changed
 var last_loc = SCNVector3(0,0,0)
@@ -70,7 +72,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var reportDebug: Bool = false
   private var maxRadiusSearch: Float = 500.0 //m
   private var currRadiusSearch: Float = 0.0 //m
-  
+  private var newMapfound = false
   
   
   //Application related variables
@@ -367,7 +369,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
   @IBAction func pickMap(_ sender: Any) {
-    
+    canDropBC = false
     if (localizationStarted) { // currently a map is loaded. StopSession and clearView
 
       shapeManager.clearShapes()
@@ -746,20 +748,31 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
         shapeManager.spawnNewBreadCrumb(position1: camLoc)
-        updateGraph()
+        //updateGraph()
         last_loc = camLoc
       }
     }
+    
+    nearestShapes = shapeManager.checkAdjacent(selfPos: camLoc, distance: 0.3)
+    if (!nearestShapes.isEmpty) {
+      print("This is the closest BC")
+      dump(nearestShapes)
+    }
     // part one recognize that you are at a checkpoint
-    updateGraph()
-    if (getClosetNode(camera_pos: camLoc, map: graph))
+    //updateGraph()
+    if (newMapfound == false)
     {
-      print("Closest map:")
-      let bestMap = findMap()
-      print(bestMap)
-      mapLoading(map: bestMap.0, index: bestMap.1)
-
-      //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+      
+    
+      if (getClosetNode(camera_pos: camLoc, map: graph))
+      {
+        print("Closest map:")
+        let bestMap = findMap()
+        print(bestMap)
+        mapLoading(map: bestMap.0, index: bestMap.1)
+        //newMapfound == true
+        //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+      }
     }
     
     //part two delete everything from map and load next one
@@ -1207,14 +1220,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     return ""
   }
   
+
     @IBAction func showPath(_ sender: Any) {
       // enable BC dropping
       canDropBC = false
       
-      //shapeManager.clearShapes()
+      shapeManager.clearView()
+      
       updateGraph()
-      print("This is the graph when showPath get called")
-      dump(graph)
+//      print("This is the graph when showPath get called")
+//      dump(graph)
       
       let dict = graph.adjacencyDict
       let vertices = dict.keys
@@ -1227,8 +1242,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         print("This is the first in shapePosition list")
         dump(shapePositions[0])
         
+        print("This is the nearest node now")
+        dump(nearestShapes)
+        
         // Set the first sphere as the start and last sphere as the destination
         let start = shapePositions[0] // type V3
+        //let start = nearestShapes[0] // type V3
         let startStr = SCNV3toString(vec: start)
         
         let des = shapePositions[shapePositions.count-1] // type V3

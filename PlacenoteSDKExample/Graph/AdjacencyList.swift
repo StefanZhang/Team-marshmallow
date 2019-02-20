@@ -142,8 +142,6 @@ extension AdjacencyList: Graphable {
         //openSet := {start}
         var frontier: Array<Vertex<Element>> = [start]
         
-        // hmm?
-        //var expanded = Array<Vertex<Element>>()
         
         // For each node, which node it can most efficiently be reached from.
         // If a node can be reached from many nodes, cameFrom will eventually contain the
@@ -193,15 +191,7 @@ extension AdjacencyList: Graphable {
 //                print("Final G score dictionary")
 //                print(g)
                 return reconstructPath(cameFrom: cameFrom, currentVertex: current)
-//                //For testing
-//                var endCurrent = current
-//                while cameFrom.keys.contains(endCurrent.description) {
-//                    endCurrent = cameFrom[endCurrent.description]!
-//                    out.append(endCurrent)
-//                }
-//                //
-//
-//                return out
+
             }
             
             //openSet.Remove(current)
