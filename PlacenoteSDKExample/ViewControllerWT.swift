@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PlacenoteSDK
 
 var Destination_array = [String]() // Store Destination Name
 
@@ -16,12 +17,14 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     var search = [String]()
     var searching = false
     var selectedPlace = ""
+    private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LibPlacenote.instance.fetchMapList(listCb: onMapList)
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
@@ -40,7 +43,21 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-
+    //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
+    func onMapList(success: Bool, mapList: [String: LibPlacenote.MapMetadata]) -> Void {
+        maps.removeAll()
+        if (!success) {
+            print ("failed to fetch map list")
+            return
+        }
+        print("here")
+        //Cycle through the maplist and create a database of all the maps (place.key) and its metadata (place.value)
+        for place in mapList {
+            maps.append((place.key, place.value))
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching{
             return search.count
