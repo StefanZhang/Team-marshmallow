@@ -110,7 +110,7 @@ class ShapeManager {
     print ("Shape Manager: retrieved " + String(shapePositions.count) + " shapes")
     return true
   }
-
+    
   func clearView() { //clear shapes from view
     for shape in shapeNodes {
       shape.removeFromParentNode()

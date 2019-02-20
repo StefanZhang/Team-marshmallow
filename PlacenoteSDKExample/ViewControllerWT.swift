@@ -13,18 +13,17 @@ var Destination_array = [String]() // Store Destination Name
 
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    var appdelegate:AppDelegate!
     var tempArray = ["Stumpf", "Weber", "Behar", "Chadwick", "Eames", "Bennett", "Brisel", "Blueprint (ELT)", "Rudder", "Kelley (ELT)", "Action Office (ELT)", "Setu", "Studio 7.5"]
     var search = [String]()
     var searching = false
     var selectedPlace = ""
-    private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        LibPlacenote.instance.fetchMapList(listCb: onMapList)
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
@@ -41,20 +40,6 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
-    //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
-    func onMapList(success: Bool, mapList: [String: LibPlacenote.MapMetadata]) -> Void {
-        maps.removeAll()
-        if (!success) {
-            print ("failed to fetch map list")
-            return
-        }
-        print("here")
-        //Cycle through the maplist and create a database of all the maps (place.key) and its metadata (place.value)
-        for place in mapList {
-            maps.append((place.key, place.value))
-        }
     }
     
     

@@ -846,6 +846,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                       //                                        self.statusLabel.text = "Map Loaded. Look Around"
                                       //                                      }
+                                      
                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                         self.statusLabel.text = "Map Loaded. Look Around"
                                       }
