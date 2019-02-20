@@ -13,13 +13,14 @@ import PlacenoteSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
           if (initialized!) {
             print ("SDK Initialized")
+            LibPlacenote.instance.fetchMapList(listCb: self.onMapList)
           }
           else {
             print ("SDK Could not be initialized")
@@ -27,6 +28,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return true
     }
+    
+    
+    //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
+    func onMapList(success: Bool, mapList: [String: LibPlacenote.MapMetadata]) -> Void {
+        maps.removeAll()
+        if (!success) {
+            print ("failed to fetch map list")
+            return
+        }
+        //Cycle through the maplist and create a database of all the maps (place.key) and its metadata (place.value)
+        for place in mapList {
+            maps.append((place.key, place.value))
+        }
+        print("Map info: ")
+        print(maps)
+    }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
