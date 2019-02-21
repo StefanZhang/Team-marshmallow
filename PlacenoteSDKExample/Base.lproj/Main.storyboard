@@ -377,7 +377,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="NO"/>
                                 <connections>
-                                    <segue destination="jqJ-h0-OFX" kind="show" id="8ZI-Sm-5pe"/>
+                                    <segue destination="RZp-YH-C88" kind="showDetail" id="het-dD-Qn7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8g-OQ-BkH">
@@ -400,23 +400,26 @@
             </objects>
             <point key="canvasLocation" x="931.88405797101461" y="-731.25"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="F7I-Dq-7rf">
+        <!--User Localization View Controller-->
+        <scene sceneID="fUb-xn-NFD">
             <objects>
-                <viewController id="jqJ-h0-OFX" sceneMemberID="viewController">
+                <viewController id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="PLC-x6-Ikz"/>
-                        <viewControllerLayoutGuide type="bottom" id="VYU-j4-7qg"/>
+                        <viewControllerLayoutGuide type="top" id="jXh-5F-UIh"/>
+                        <viewControllerLayoutGuide type="bottom" id="HvZ-Ma-sfD"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="olh-Wa-lZ8">
+                    <view key="view" contentMode="scaleToFill" id="jMz-Ut-B5F" userLabel="localizeView" customClass="ARSCNView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="navView" destination="jMz-Ut-B5F" id="Cdr-hV-Ykv"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="g9f-Xv-9G4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1bd-m8-vPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2153.6231884057975" y="-738.61607142857144"/>
+            <point key="canvasLocation" x="1992.753623188406" y="-734.59821428571422"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jIy-XH-2dj">

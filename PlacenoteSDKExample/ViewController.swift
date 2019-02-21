@@ -59,8 +59,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   @IBOutlet var fileTransferLabel: UILabel!
   
   let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-
-  
+ 
   
   //AR Scene
   private var scnScene: SCNScene!
@@ -157,7 +156,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     scnView.showsStatistics = true
     scnView.autoenablesDefaultLighting = true
     scnView.delegate = self
-    scnView.session.delegate = self
+    scnView.session.delegate =  self
     scnView.isPlaying = true
     scnView.debugOptions = []
     mapTable.isHidden = true //hide the map list until 'Load Map' is clicked
