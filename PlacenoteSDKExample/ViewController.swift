@@ -200,7 +200,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print ("Just localized, drawing view")
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       if mappingStarted {
-        statusLabel.text = "Move Slowly"
+        statusLabel.text = "Move Slowly And Stay Within 3 Feet Of Good Features"
       }
       else if localizationStarted {
         statusLabel.text = "Map Found!"
@@ -747,7 +747,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
         shapeManager.spawnNewBreadCrumb(position1: camLoc)
-        //updateGraph()
         last_loc = camLoc
       }
     }
@@ -758,7 +757,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       dump(nearestShapes)
     }
     // part one recognize that you are at a checkpoint
-    //updateGraph()
     if (newMapfound == false)
     {
       
@@ -1031,7 +1029,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let z = loc01?.z
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewCheckpoint(position_01: loc02)
-      updateGraph()
+      //updateGraph()
       
 //      // Testing
 //      let dest = graph.adjacencyDict.keys.randomElement()
@@ -1143,22 +1141,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     // load the position from breadcrums
     let shapePositions = shapeManager.getShapePositions()
     let shapeNodes = shapeManager.getShapeNodes()
-//
-//    var ctr = 0
-//    while ctr < shapePositions.count - 1{
-//      let vec1s = SCNV3toString(vec: shapePositions[ctr])
-//      let vec2s = SCNV3toString(vec: shapePositions[ctr+1])
-//      let d1 = graph.createVertex(data: vec1s)
-//      let d2 = graph.createVertex(data: vec2s)
-//
-//      //insert the hash string as key and node as value
-//      Hash_Node_Dict[vec1s] = shapeNodes[ctr]
-//      Hash_Node_Dict[vec2s] = shapeNodes[ctr+1]
-//
-//      // insert the nodes to undirected graph
-//      graph.add(.undirected, from: d1, to: d2, weight: 1.5)
-//      ctr+=1
-//    }
+    
     let distance = Float(2)
     let length = shapePositions.count
     if (length > 1){
@@ -1198,14 +1181,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         
       }
     }
-    
-//    FOR DEBUG ONLY
-//    for (key, value) in Hash_Node_Dict {
-//      print("Key:\(key) -  Value:\(value)")
-//    }
-    
-//    FOR Debug ONLY
-//    print(graph.description)
   }
   
   func getClosestBC (camlocVec: SCNVector3) -> String {

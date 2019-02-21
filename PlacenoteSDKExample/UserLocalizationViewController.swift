@@ -13,6 +13,8 @@ import PlacenoteSDK
 
 class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate{
 
+    private var graph  = AdjacencyList<String>()
+    
     @IBOutlet var navView: ARSCNView!
     
     //AR Scene
