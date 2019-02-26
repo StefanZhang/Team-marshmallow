@@ -7,7 +7,8 @@ target 'PlacenoteSDKExample' do
 
   # Pods for PlacenoteTest
   pod 'PlacenoteSDK'
-
+  pod 'AWSCognito'
+  pod 'AWSCore'
 end
 
 post_install do |installer|

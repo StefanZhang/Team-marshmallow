@@ -8,6 +8,8 @@
 
 import UIKit
 import PlacenoteSDK
+import AWSCore
+import AWSCognito
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // AWS initialization
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
+                                                                identityPoolId:"us-east-2:f1c35eed-faab-4fc0-8e34-d205684e0916")
+        
+        let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
+        
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+
         
         LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
             if (initialized!) {

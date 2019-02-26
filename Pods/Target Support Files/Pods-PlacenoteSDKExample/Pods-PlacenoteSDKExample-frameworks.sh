@@ -143,10 +143,14 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
   install_framework "${PODS_ROOT}/PlacenoteSDK/Placenote.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PlacenoteSDK/PlacenoteSDK.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
   install_framework "${PODS_ROOT}/PlacenoteSDK/Placenote.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PlacenoteSDK/PlacenoteSDK.framework"
 fi
