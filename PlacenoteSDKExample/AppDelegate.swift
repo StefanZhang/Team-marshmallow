@@ -30,6 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AWSServiceManager.default().defaultServiceConfiguration = configuration
 
+        // Syncs a made dataset to AWS identity pool
+//        let syncClient = AWSCognito.default()
+//        let AWSdataset = syncClient.openOrCreateDataset("TestDataSet")
+//        AWSdataset.synchronize().continueWith {(task: AWSTask!) -> AnyObject! in
+//            return nil
+//
+//        }
         
         LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
             if (initialized!) {
