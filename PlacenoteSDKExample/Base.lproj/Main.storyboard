@@ -505,6 +505,15 @@
                                     <outlet property="delegate" destination="fY2-BX-kzM" id="QWc-Kl-Zo9"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-jm-FSg">
+                                <rect key="frame" x="20" y="52" width="34" height="30"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Mqg-rI-qeK" kind="show" id="TTY-d4-17w"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -521,9 +530,11 @@
                             <constraint firstItem="sws-5f-t4C" firstAttribute="trailing" secondItem="Rl4-8B-qlP" secondAttribute="trailing" id="X8d-G5-p9g"/>
                             <constraint firstItem="T3P-fz-O6m" firstAttribute="top" secondItem="o8g-OQ-BkH" secondAttribute="bottom" constant="19" id="YNL-By-9Gf"/>
                             <constraint firstItem="0JD-rA-XxT" firstAttribute="top" secondItem="YS9-ju-ewD" secondAttribute="bottom" constant="8" id="Zve-T3-Z5r"/>
+                            <constraint firstItem="gDL-jm-FSg" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leadingMargin" id="aDH-di-1p1"/>
                             <constraint firstItem="IaP-Q7-Hzb" firstAttribute="top" secondItem="T3P-fz-O6m" secondAttribute="bottom" constant="8" id="iVP-oe-axK"/>
                             <constraint firstItem="sws-5f-t4C" firstAttribute="top" secondItem="Rl4-8B-qlP" secondAttribute="bottom" id="iiO-mW-7fa"/>
                             <constraint firstItem="0JD-rA-XxT" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leading" id="jTu-nA-8MJ"/>
+                            <constraint firstItem="gDL-jm-FSg" firstAttribute="top" secondItem="QFV-nC-0MO" secondAttribute="bottom" constant="8" id="khD-Ye-Pgh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="T3P-fz-O6m" secondAttribute="trailing" constant="112" id="lJ9-Xa-P60"/>
                             <constraint firstItem="YS9-ju-ewD" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leadingMargin" constant="112" id="peJ-T4-aJW"/>
                         </constraints>
@@ -581,4 +592,7 @@
     <resources>
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="TTY-d4-17w"/>
+    </inferredMetricsTieBreakers>
 </document>
