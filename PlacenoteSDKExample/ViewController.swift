@@ -330,8 +330,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             var userdata: [String:Any] = [:]
 //            dump(self.shapeManager.getShapeArray())
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
-            Dest_Pos_Dict[destination_name_meta] = destination_pos
-            userdata["destinationDict"] = Dest_Pos_Dict
+            
+            if (Dest_Pos_Dict.isEmpty){
+              print("Not Destination Droped for this map")
+            }
+            else{
+              Dest_Pos_Dict[destination_name_meta] = destination_pos
+              userdata["destinationDict"] = Dest_Pos_Dict
+            }
+            
             metadata.userdata = userdata
             
             
