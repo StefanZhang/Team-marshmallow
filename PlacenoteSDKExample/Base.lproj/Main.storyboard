@@ -101,14 +101,6 @@
                                     <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEy-sc-reL">
-                                <rect key="frame" x="364" y="44" width="30" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="?"/>
-                                <connections>
-                                    <segue destination="Tvl-F3-anO" kind="show" id="pvf-52-KDV"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -128,9 +120,7 @@
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="10" id="j7i-Wf-zRV"/>
                             <constraint firstItem="bDL-XK-jBy" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="110" id="jZi-Lu-JAx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="30Y-d7-QGn" secondAttribute="trailing" constant="10" id="lLz-OU-LCJ"/>
-                            <constraint firstItem="yEy-sc-reL" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" id="nig-dg-qsK"/>
                             <constraint firstItem="tI3-Zj-1dO" firstAttribute="top" secondItem="dxk-LY-KR4" secondAttribute="bottom" constant="36" id="pne-tF-0Wh"/>
-                            <constraint firstItem="yEy-sc-reL" firstAttribute="trailing" secondItem="miY-RM-DVz" secondAttribute="trailingMargin" id="rTt-kO-wII"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="101" id="ugb-Hi-NQf"/>
                         </constraints>
                     </view>
@@ -295,6 +285,14 @@
                                     <action selector="showPath:" destination="BV1-FR-VrT" eventType="touchUpInside" id="RR2-up-Pie"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEy-sc-reL">
+                                <rect key="frame" x="364" y="61" width="30" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="?"/>
+                                <connections>
+                                    <segue destination="Tvl-F3-anO" kind="show" id="pvf-52-KDV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="7Ae-0m-BXK" firstAttribute="width" secondItem="0ka-cC-Twy" secondAttribute="width" id="0YU-td-UjS"/>
@@ -335,10 +333,12 @@
                             <constraint firstItem="8xO-b1-Xq5" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" id="lrb-Ii-9Qy"/>
                             <constraint firstItem="5Mu-1V-Uq4" firstAttribute="height" secondItem="BrB-h1-WRS" secondAttribute="height" multiplier="0.08" id="mW2-jV-Icu"/>
                             <constraint firstItem="hwi-h6-3TD" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" constant="20" id="naG-ic-JRa"/>
+                            <constraint firstItem="yEy-sc-reL" firstAttribute="trailing" secondItem="BrB-h1-WRS" secondAttribute="trailingMargin" id="ot7-LN-OlJ"/>
                             <constraint firstItem="BJ5-11-JDS" firstAttribute="width" secondItem="hwi-h6-3TD" secondAttribute="width" id="s3L-NU-ikT"/>
                             <constraint firstItem="Cc9-rN-p2h" firstAttribute="leading" secondItem="snL-gx-sgu" secondAttribute="trailing" constant="20" id="spT-u0-zdN"/>
                             <constraint firstItem="8xO-b1-Xq5" firstAttribute="top" secondItem="3Xz-vt-npx" secondAttribute="bottom" constant="23" id="stb-zU-P6Z"/>
                             <constraint firstItem="iX6-0Y-XCU" firstAttribute="top" secondItem="XLP-t5-UNJ" secondAttribute="bottom" id="uUw-eT-Yct"/>
+                            <constraint firstItem="yEy-sc-reL" firstAttribute="top" secondItem="j89-Gv-ip5" secondAttribute="bottom" constant="17" id="uqK-9w-BrP"/>
                             <constraint firstItem="PfV-zP-Xga" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" id="wXb-qo-ilC"/>
                             <constraint firstItem="iX6-0Y-XCU" firstAttribute="width" secondItem="7Ae-0m-BXK" secondAttribute="width" id="xq6-vK-EN3"/>
                         </constraints>
@@ -560,7 +560,22 @@
                     <view key="view" contentMode="scaleToFill" id="jMz-Ut-B5F" userLabel="localizeView" customClass="ARSCNView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vci-EV-nBG">
+                                <rect key="frame" x="20" y="52" width="34" height="30"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="fY2-BX-kzM" kind="show" id="NzB-eX-ef0"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vci-EV-nBG" firstAttribute="top" secondItem="jXh-5F-UIh" secondAttribute="bottom" constant="8" id="nAY-mX-PdB"/>
+                            <constraint firstItem="vci-EV-nBG" firstAttribute="leading" secondItem="jMz-Ut-B5F" secondAttribute="leadingMargin" id="sKQ-fk-1nS"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="navView" destination="jMz-Ut-B5F" id="Cdr-hV-Ykv"/>
@@ -593,6 +608,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="AsE-Zy-RWk"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
