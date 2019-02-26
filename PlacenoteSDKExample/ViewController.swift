@@ -200,6 +200,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print ("Just localized, drawing view")
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       if mappingStarted {
+        self.newMapfound = false
         statusLabel.text = "Move Slowly And Stay Within 3 Feet Of Good Features"
       }
       else if localizationStarted {
@@ -757,17 +758,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       dump(nearestShapes)
     }
     // part one recognize that you are at a checkpoint
-    if (newMapfound == false)
+    if (self.newMapfound == false)
     {
       
-    
+      updateGraph()
       if (getClosetNode(camera_pos: camLoc, map: graph))
       {
         print("Closest map:")
         let bestMap = findMap()
         print(bestMap)
         mapLoading(map: bestMap.0, index: bestMap.1)
-        //newMapfound == true
+        self.newMapfound == true
         //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       }
     }
@@ -945,11 +946,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       if(tre != nil)
       {
         let T = Array(tre!)[4]
-        
         if( T == "B")
         {
           
-          if (nodeDistance(first: camera_pos, second: node?.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.0)
+          if (nodeDistance(first: camera_pos, second: node?.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.5)
           {
             let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
