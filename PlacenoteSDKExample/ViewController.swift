@@ -96,6 +96,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var lastLocation: CLLocation? = nil
   // Testing graph
   
+  override func viewDidAppear(_ animated: Bool) {
+    self.performSegue(withIdentifier: "loginView", sender: self)
+  }
+  
   //Setup view once loaded
   override func viewDidLoad() {
 
@@ -201,7 +205,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       if mappingStarted {
         self.newMapfound = false
-        statusLabel.text = "Move Slowly And Stay Within 3 Feet Of Good Features"
+        statusLabel.text = "Move Slowly And Stay Within 3 Feet Of Features"
       }
       else if localizationStarted {
         statusLabel.text = "Map Found!"

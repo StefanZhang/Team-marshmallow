@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         var Name_DestinationDict = [String:String]()
+        dump(maps)
         
         for item in maps{
             MapName_array.append(item.1.name ?? "")
