@@ -10,6 +10,7 @@ import UIKit
 import PlacenoteSDK
 import AWSCore
 import AWSCognito
+import AWSMobileClient
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -64,12 +65,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         var Name_DestinationDict = [String:String]()
-        dump(maps)
         
         for item in maps{
             MapName_array.append(item.1.name ?? "")
             let userdata = item.1.userdata as? [String:Any]
-            Name_DestinationDict = userdata!["destinationDict"] as! Dictionary
+            
+            // This was crashing the app!! Dictionary was nil
+            //Name_DestinationDict = userdata!["destinationDict"] as! Dictionary
+            
+            // Replaced with this in order to build without crashing
+            Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["Default" : "Dictionary"]
             
             for (key, value) in Name_DestinationDict {
                 DestinationName_array.append(key)

@@ -7,6 +7,7 @@ target 'PlacenoteSDKExample' do
 
   # Pods for PlacenoteTest
   pod 'PlacenoteSDK'
+  pod 'AWSMobileClient'
   pod 'AWSCognito'
   pod 'AWSCore'
 end
