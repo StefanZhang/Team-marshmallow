@@ -97,7 +97,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   // Testing graph
   
   override func viewDidAppear(_ animated: Bool) {
-    self.performSegue(withIdentifier: "loginView", sender: self)
+    //self.performSegue(withIdentifier: "loginView", sender: self)
   }
   
   //Setup view once loaded

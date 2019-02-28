@@ -357,7 +357,6 @@
                         <outlet property="showPNLabel" destination="Cc9-rN-p2h" id="ToW-PY-abX"/>
                         <outlet property="showPNSelection" destination="snL-gx-sgu" id="bJI-IB-7Mu"/>
                         <outlet property="statusLabel" destination="3Xz-vt-npx" id="wui-wQ-DQj"/>
-                        <segue destination="4HW-9K-1nR" kind="presentation" identifier="loginView" id="zJn-Nx-ScI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -367,6 +366,7 @@
         <!--View Controller-->
         <scene sceneID="i1T-e3-Yn3">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HQA-7p-g0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="4HW-9K-1nR" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CN8-Y2-8kF"/>
@@ -402,7 +402,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HQA-7p-g0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1691" y="13"/>
         </scene>
@@ -651,7 +650,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AsE-Zy-RWk"/>
+        <segue reference="NzB-eX-ef0"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
