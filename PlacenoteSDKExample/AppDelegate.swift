@@ -11,33 +11,72 @@ import PlacenoteSDK
 import AWSCore
 import AWSCognito
 import AWSMobileClient
+import AWSCognitoIdentityProvider
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+
+
     private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
     var MapName_array = [String]()
     var DestinationName_array = [String]()
+    
+    //AWS
+    var storyboard: UIStoryboard?
+    var navigationController: UINavigationController?
+    var adminLoginViewController: AdminLoginViewController?
+    
+    let CognitoIdentityUserPoolRegion: AWSRegionType = .USEast2
+    let CognitoIdentityUserPoolId = "us-east-2_eSmLbpR34"
+    let CognitoIdentityUserPoolAppClientId = "2ohb870m9b8ecat963666vpj6e"
+    let CognitoIdentityUserPoolAppClientSecret = "1a94e9itcfc25f4q33dj5oiv14sb850cb9jmuhfacohcej6avjk8"
+    
+    let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // AWS initialization
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
-                                                                identityPoolId:"us-east-2:f1c35eed-faab-4fc0-8e34-d205684e0916")
         
-        let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
+        // Warn user if configuration not updated
+        if (CognitoIdentityUserPoolId == "us-east-2_eSmLbpR34") {
+            let alertController = UIAlertController(title: "Invalid Configuration",
+                                                    message: "Please configure user pool constants in Constants.swift file.",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            
+            self.window?.rootViewController!.present(alertController, animated: true, completion:  nil)
+        }
         
-        AWSServiceManager.default().defaultServiceConfiguration = configuration
-
-        // Syncs a made dataset to AWS identity pool
-//        let syncClient = AWSCognito.default()
-//        let AWSdataset = syncClient.openOrCreateDataset("TestDataSet")
-//        AWSdataset.synchronize().continueWith {(task: AWSTask!) -> AnyObject! in
-//            return nil
+        // setup logging
+        AWSDDLog.sharedInstance.logLevel = .verbose
+        
+        // setup service configuration
+        let serviceConfiguration = AWSServiceConfiguration(region: CognitoIdentityUserPoolRegion, credentialsProvider: nil)
+        
+        // create pool configuration
+        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoIdentityUserPoolAppClientId,
+                                                                        clientSecret: CognitoIdentityUserPoolAppClientSecret,
+                                                                        poolId: CognitoIdentityUserPoolId)
+        
+        // initialize user pool client
+        AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: poolConfiguration, forKey: AWSCognitoUserPoolsSignInProviderKey)
+        
+        // fetch the user pool client we initialized in above step
+        let pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
+        self.storyboard = UIStoryboard(name: "Main", bundle: nil)
+        pool.delegate = self
+        
+//        // Old AWS work
+//        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
+//                                                                identityPoolId:"us-east-2:f1c35eed-faab-4fc0-8e34-d205684e0916")
 //
-//        }
+//        let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
+//
+//        AWSServiceManager.default().defaultServiceConfiguration = configuration
         
         LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
             if (initialized!) {
@@ -50,6 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return true
     }
+    
+    
+
     
     
     //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
@@ -116,3 +158,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+// AWS
+extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
+    
+    func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
+        if (self.navigationController == nil) {
+            self.navigationController = self.storyboard?.instantiateViewController(withIdentifier: "adminLoginViewController") as? UINavigationController
+        }
+        
+        if (self.adminLoginViewController == nil) {
+            self.adminLoginViewController = self.navigationController?.viewControllers[0] as? AdminLoginViewController
+        }
+        
+        DispatchQueue.main.async {
+            self.navigationController!.popToRootViewController(animated: true)
+            if (!self.navigationController!.isViewLoaded
+                || self.navigationController!.view.window == nil) {
+                self.window?.rootViewController?.present(self.navigationController!,
+                                                         animated: true,
+                                                         completion: nil)
+            }
+            
+        }
+        return self.adminLoginViewController as! AWSCognitoIdentityPasswordAuthentication
+    }
+    
+    
+    func startRememberDevice() -> AWSCognitoIdentityRememberDevice {
+        return self as! AWSCognitoIdentityRememberDevice
+    }
+}
