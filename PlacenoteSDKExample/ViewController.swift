@@ -28,6 +28,8 @@ var mapname = ""
 //Input destination name from user
 var destination_name_meta = ""
 
+var category_name_meta = ""
+
 var destination_pos = ""
 
 // default not to drop breadcrumbs
@@ -35,6 +37,8 @@ var canDropBC = false
 
 //Dictionary that contains the destination as the key and position as the val
 var Dest_Pos_Dict = [String:String]()
+//Dictionary that contains the destination as the key and category as the val
+var Dest_Cat_Dict = [String:String]()
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
@@ -336,11 +340,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
             
             if (Dest_Pos_Dict.isEmpty){
-              print("Not Destination Droped for this map")
+              print("No Destination Droped for this map")
             }
             else{
-              Dest_Pos_Dict[destination_name_meta] = destination_pos
               userdata["destinationDict"] = Dest_Pos_Dict
+            }
+            
+            if (Dest_Cat_Dict.isEmpty){
+              print("No Category Droped for this Destination")
+            }
+            else{
+              userdata["CategoryDict"] = Dest_Cat_Dict
             }
             
             metadata.userdata = userdata
@@ -684,8 +694,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
 
-  
-  
   // MARK: - ARSCNViewDelegate
   
   // Override to create and configure nodes for anchors added to the view's session.
@@ -1121,19 +1129,30 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewDestination(position_1: loc02)
 
       //Pop up the drop destination window
-      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination", message: "Name it with a specific name, like 'Room 3320'", preferredStyle: UIAlertControllerStyle.alert)
+      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination and Category", message: "Name it with a specific name, like 'Room 3320' and 'Study Room'", preferredStyle: UIAlertControllerStyle.alert)
 
       DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
         textField.placeholder = "Enter Destination name:"
       })
+      
+      DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
+        textField.placeholder = "Enter Category:"
+      })
+      
       DestinationName_alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
         
-        if let destination_name = DestinationName_alert.textFields?.first?.text {
+        if let destination_name = DestinationName_alert.textFields?[0].text {
           Destination_array.append(destination_name) // Append to the destination array
-          
           destination_name_meta = destination_name
           destination_pos = self.SCNV3toString(vec: loc02)
+          Dest_Pos_Dict[destination_name_meta] = destination_pos
         }
+        
+        if let category_name = DestinationName_alert.textFields?[1].text {
+          category_name_meta = category_name
+          Dest_Cat_Dict[destination_name_meta] = category_name_meta
+        }
+        
       }))
       self.present(DestinationName_alert, animated: true, completion: nil)
 
