@@ -359,12 +359,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             // store checkpoint and their corresponding CoreLocation
-            if (Checkpoint_CL_Dict.isEmpty){
-              print("No Checkpoint Dropped for this map")
-            }
-            else{
-              userdata["CheckpointDict"] = Checkpoint_CL_Dict
-            }
+            
+//            if (Checkpoint_CL_Dict.isEmpty){
+//              print("No Checkpoint Dropped for this map")
+//            }
+//            else{
+//              userdata["CheckpointDict"] = Checkpoint_CL_Dict
+//            }
             
             metadata.userdata = userdata
             
@@ -892,6 +893,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       
                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                         self.statusLabel.text = "Map Loaded. Look Around"
+                                        //dump(userdata?["CheckpointDict"] as? [String:String])
+                                        
                                       }
                                       else {
                                         self.statusLabel.text = "Map Loaded. Shape file not found"
@@ -1063,14 +1066,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewCheckpoint(position_01: loc02)
       //updateGraph()
       
-      let locManager = CLLocationManager()
-      locManager.requestWhenInUseAuthorization()
+      locationManager.requestWhenInUseAuthorization()
       var currentLocation: CLLocation!
       
       if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
         CLLocationManager.authorizationStatus() ==  .authorizedAlways){
         
-        currentLocation = locManager.location
+        currentLocation = locationManager.location
         let currentLat = currentLocation.coordinate.latitude
         let currentLong = currentLocation.coordinate.longitude
         
