@@ -40,6 +40,9 @@ var Dest_Pos_Dict = [String:String]()
 //Dictionary that contains the destination as the key and category as the val
 var Dest_Cat_Dict = [String:String]()
 
+//Dictionary that contains the checkpoint's vector3 as the key and their core location as the value
+var Checkpoint_CL_Dict = [String:String]()
+
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
   
@@ -98,7 +101,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   
   private var locationManager: CLLocationManager!
   private var lastLocation: CLLocation? = nil
-  // Testing graph
+  
+  //changed
+
   
   override func viewDidAppear(_ animated: Bool) {
     //self.performSegue(withIdentifier: "loginView", sender: self)
@@ -352,6 +357,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             else{
               userdata["CategoryDict"] = Dest_Cat_Dict
             }
+            
+            // store checkpoint and their corresponding CoreLocation
             
             metadata.userdata = userdata
             
@@ -1049,6 +1056,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewCheckpoint(position_01: loc02)
       //updateGraph()
+      
+      let locManager = CLLocationManager()
+      locManager.requestWhenInUseAuthorization()
+      var currentLocation: CLLocation!
+      
+      if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+        CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+        
+        currentLocation = locManager.location
+        //currentLatitude = currentLocation.
+      }
+      let cp_str = SCNV3toString(vec: loc02)
+      //Checkpoint_CL_Dict[cp_str] = currentLocation
       
 //      // Testing
 //      let dest = graph.adjacencyDict.keys.randomElement()
