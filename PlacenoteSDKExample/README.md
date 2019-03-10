@@ -10,8 +10,8 @@ User
 2.
 You have arrived pop up
 
-3.
 Navigation
+3.
 	- Make the dictionary for checkpoint location
 	- Make Queue/Stack for highest priority map
 	- Store maps as vertecies for A* algorithm
