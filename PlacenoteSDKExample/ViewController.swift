@@ -345,20 +345,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             userdata["shapeArray"] = self.shapeManager.getShapeArray()
             
             if (Dest_Pos_Dict.isEmpty){
-              print("No Destination Droped for this map")
+              print("No Destination Dropped for this map")
             }
             else{
               userdata["destinationDict"] = Dest_Pos_Dict
             }
             
             if (Dest_Cat_Dict.isEmpty){
-              print("No Category Droped for this Destination")
+              print("No Category Dropped for this Destination")
             }
             else{
               userdata["CategoryDict"] = Dest_Cat_Dict
             }
             
             // store checkpoint and their corresponding CoreLocation
+            if (Checkpoint_CL_Dict.isEmpty){
+              print("No Checkpoint Dropped for this map")
+            }
+            else{
+              userdata["CheckpointDict"] = Checkpoint_CL_Dict
+            }
             
             metadata.userdata = userdata
             
@@ -1065,10 +1071,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         CLLocationManager.authorizationStatus() ==  .authorizedAlways){
         
         currentLocation = locManager.location
-        //currentLatitude = currentLocation.
+        let currentLat = currentLocation.coordinate.latitude
+        let currentLong = currentLocation.coordinate.longitude
+        
+        let x = NSString(format: "%.8f", currentLat)
+        let y = NSString(format: "%.8f", currentLong)
+        let s3 = NSString(format:"%@,%@",x,y)
+        let currentCLStr = s3 as String
+        let cp_str = SCNV3toString(vec: loc02)
+        Checkpoint_CL_Dict[cp_str] = currentCLStr
       }
-      let cp_str = SCNV3toString(vec: loc02)
-      //Checkpoint_CL_Dict[cp_str] = currentLocation
+      
       
 //      // Testing
 //      let dest = graph.adjacencyDict.keys.randomElement()
@@ -1092,47 +1105,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         //
 //      }
       
-      if 1>2 {
-        print("Graph TEEEEEESTING--------------")
-        var toygraph  = AdjacencyList<String>()
-        let n1 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
-        let n2 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 0, z: 0))
-        let n3 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 1, y: 1, z: 0))
-        let n4 = NavigationNode(number: 1.0, Stype: ShapeType.Sphere, position: SCNVector3(x: 2, y: 2, z: 0))
-        
-        let v1 = toygraph.createVertex(data: n1.toString())
-        let v2 = toygraph.createVertex(data: n2.toString())
-        let v3 = toygraph.createVertex(data: n3.toString())
-        let v4 = toygraph.createVertex(data: n4.toString())
-        
-        let c1 = SCNVector3(x: 1, y: 0, z: 0)
-        let c2 = SCNVector3(x: 1, y: 0, z: 0)
-        let c3 = SCNVector3(x: 1, y: 1, z: 0)
-        let c4 = SCNVector3(x: 2, y: 2, z: 0)
-        
-        toygraph.add(.undirected, from: v1, to: v2, weight: Double(nodeDistance(first: c1, second: c2)))
-        toygraph.add(.undirected, from: v2, to: v3, weight: Double(nodeDistance(first: c2, second: c4)))
-        toygraph.add(.undirected, from: v1, to: v3, weight: Double(nodeDistance(first: c1, second: c3)))
-        toygraph.add(.undirected, from: v3, to: v4, weight: Double(nodeDistance(first: c3, second: c4)))
-
-        let out = toygraph.aStar(start: v1, destination: v4)
-        //let out = self.graph.aStar(start: graph.adjacencyDict.keys.first ?? Vertex<String>(data:"0"), destination: graph.adjacencyDict.keys.randomElement() ?? Vertex<String>(data:"0"))
-        print("This is the output of aStar. should be v1 v3 v4")
-        dump(out)
-        var outArray = ""
-        
-        for vertex in out{
-          outArray = outArray+":"+vertex.description
-          print(outArray)
-        }
-        
-//        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-//          NSLog("The \"OK\" alert occured.")
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-//        //
-      }
       
     }
     
