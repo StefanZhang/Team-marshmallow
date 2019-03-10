@@ -12,10 +12,10 @@ You have arrived pop up
 
 Navigation
 3.
-	- Make the dictionary for checkpoint location
-	- Make Queue/Stack for highest priority map
-	- Store maps as vertecies for A* algorithm
-
+Make the dictionary for checkpoint location
+Make Queue/Stack for highest priority map
+Store maps as vertecies for A* algorithm
+Make the findNextCheckpoint button
 	
 General process:
 
