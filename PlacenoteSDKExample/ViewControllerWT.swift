@@ -12,8 +12,14 @@ import PlacenoteSDK
 var Destination_array = [String]() // Store Destination Name
 
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    @IBAction func btnUpdate(_ sender: Any) {
+        tempArray = appDelegate.getDestinationName()
+        tempArray.sort()
+        self.tableView.reloadData()
+    }
     
-    var appdelegate:AppDelegate!
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Stumpf", "Weber", "Behar", "Chadwick", "Eames", "Bennett", "Brisel", "Blueprint (ELT)", "Rudder", "Kelley (ELT)", "Action Office (ELT)", "Setu", "Studio 7.5"]
     var search = [String]()
     var searching = false
@@ -89,8 +95,11 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.tableView.selectRow(at: indexPath2, animated: true, scrollPosition: UITableViewScrollPosition.middle)
             // still a shadow after the row is selected
             // only after using search to find place
+            
         }
     }
-    
+    func getSelectedPlace() -> String{
+        return self.selectedPlace
+    }
 
 }
