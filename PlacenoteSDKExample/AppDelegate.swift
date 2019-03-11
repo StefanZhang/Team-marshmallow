@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
     var MapName_array = [String]()
     var DestinationName_array = [String]()
+    var CategoryDict = [String:[String]]()
     
     //AWS
     var storyboard: UIStoryboard?
@@ -107,6 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         var Name_DestinationDict = [String:String]()
+        var Destination_CatDict = [String:String]()
         
         for item in maps{
             MapName_array.append(item.1.name ?? "")
@@ -116,14 +118,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //Name_DestinationDict = userdata!["destinationDict"] as! Dictionary
             
             // Replaced with this in order to build without crashing
-            Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["Default" : "Dictionary"]
+            Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["DefaultDest" : "N/A"]
             
             for (key, value) in Name_DestinationDict {
                 DestinationName_array.append(key)
             }
-        
+            
+            Destination_CatDict = userdata!["CategoryDict"] as? Dictionary<String, String> ?? ["DefualtDest" : "DefaultCat"]
+            
+            for (Dest,Cat) in Destination_CatDict {
+                print(Cat,Dest)
+                if (CategoryDict[Cat] != nil){
+                    print("Cat exsists, append the name to the back of the val list")
+                    CategoryDict[Cat]!.append(Dest)
+                }
+                else{
+                    print("Cat does not exsists, create one, and add the name to the val list")
+                    CategoryDict[Cat] = [Dest]
+                }
+            }
         }
+        print(CategoryDict)
         
+        print("Destination Name array: ")
         print(DestinationName_array)
     }
     
