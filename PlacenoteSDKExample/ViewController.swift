@@ -392,6 +392,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           }
       }
       )
+      
+      shapeManager.clearShapes()
       newMapButton.setTitle("New Map", for: .normal)
       pickMapButton.setTitle("Load Map", for: .normal)
       tapRecognizer?.isEnabled = false
@@ -1139,10 +1141,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           Destination_array.append(destination_name) // Append to the destination array
           destination_name_meta = destination_name
           destination_pos = self.SCNV3toString(vec: loc02)
+          Dest_Cat_Dict.removeAll()
           Dest_Pos_Dict[destination_name_meta] = destination_pos
         }
         
         if let category_name = DestinationName_alert.textFields?[1].text {
+          Dest_Cat_Dict.removeAll()
           category_name_meta = category_name
           Dest_Cat_Dict[destination_name_meta] = category_name_meta
         }

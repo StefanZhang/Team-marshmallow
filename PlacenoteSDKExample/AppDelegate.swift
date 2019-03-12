@@ -110,9 +110,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var Name_DestinationDict = [String:String]()
         var Destination_CatDict = [String:String]()
         
-        for item in maps{
-            MapName_array.append(item.1.name ?? "")
-            let userdata = item.1.userdata as? [String:Any]
+        for map in maps{
+            MapName_array.append(map.1.name ?? "")
+            let userdata = map.1.userdata as? [String:Any]
             
             // This was crashing the app!! Dictionary was nil
             //Name_DestinationDict = userdata!["destinationDict"] as! Dictionary
@@ -138,10 +138,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        print(CategoryDict)
         
+        print(CategoryDict)
         print("Destination Name array: ")
         print(DestinationName_array)
+        
+        //Clear the previous user info to avoid duplicates
+        
+        
+        
     }
     
     // Getter for Destination Names
