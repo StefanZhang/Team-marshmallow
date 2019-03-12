@@ -101,13 +101,6 @@
                                     <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUi-op-gFd">
-                                <rect key="frame" x="335" y="52" width="51" height="30"/>
-                                <state key="normal" title="Update"/>
-                                <connections>
-                                    <action selector="btnUpdate:" destination="Mqg-rI-qeK" eventType="touchUpInside" id="whF-s2-CuD"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -124,12 +117,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="bDL-XK-jBy" secondAttribute="trailing" constant="110" id="QfT-b1-3lA"/>
                             <constraint firstItem="VY8-7J-p9H" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="Wsh-NX-x9v"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="top" secondItem="bDL-XK-jBy" secondAttribute="bottom" constant="6" id="ZoM-vC-mEi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="uUi-op-gFd" secondAttribute="trailing" constant="8" id="am8-Tr-R9d"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="10" id="j7i-Wf-zRV"/>
                             <constraint firstItem="bDL-XK-jBy" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="110" id="jZi-Lu-JAx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="30Y-d7-QGn" secondAttribute="trailing" constant="10" id="lLz-OU-LCJ"/>
                             <constraint firstItem="tI3-Zj-1dO" firstAttribute="top" secondItem="dxk-LY-KR4" secondAttribute="bottom" constant="36" id="pne-tF-0Wh"/>
-                            <constraint firstItem="uUi-op-gFd" firstAttribute="top" secondItem="K62-qo-lwt" secondAttribute="bottom" constant="8" id="u5H-gT-8a7"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="101" id="ugb-Hi-NQf"/>
                         </constraints>
                     </view>

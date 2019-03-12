@@ -12,15 +12,9 @@ import PlacenoteSDK
 var Destination_array = [String]() // Store Destination Name
 
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    @IBAction func btnUpdate(_ sender: Any) {
-        tempArray = appDelegate.getDestinationName()
-        tempArray.sort()
-        self.tableView.reloadData()
-    }
-    
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var tempArray = ["Stumpf", "Weber", "Behar", "Chadwick", "Eames", "Bennett", "Brisel", "Blueprint (ELT)", "Rudder", "Kelley (ELT)", "Action Office (ELT)", "Setu", "Studio 7.5"]
+    var tempArray = ["Fetching Destinations..."]
     var search = [String]()
     var searching = false
     var selectedPlace = ""
@@ -98,8 +92,22 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             
         }
     }
+    
     func getSelectedPlace() -> String{
         return self.selectedPlace
+    }
+    
+    func setPlaceArray(){
+        tempArray = appDelegate.getDestinationName()
+        tempArray.sort()
+        self.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.setPlaceArray()
+        })
     }
 
 }
