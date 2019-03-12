@@ -1,0 +1,10 @@
+Aaron- Authentification, Splitting Views
+
+Stefan- Handing off destination and destination map
+
+Matthew&Zhenru- Ultimate navigation
+
+John- categorize table view
+
+
+Final Navigation 
