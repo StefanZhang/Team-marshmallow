@@ -41,7 +41,7 @@ var Dest_Pos_Dict = [String:String]()
 var Dest_Cat_Dict = [String:String]()
 
 //Dictionary that contains the checkpoint's vector3 as the key and their core location as the value
-var Checkpoint_CL_Dict = [String:String]()
+var Checkpoint_Array = [String]()
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
@@ -359,13 +359,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             // store checkpoint and their corresponding CoreLocation
-            
-//            if (Checkpoint_CL_Dict.isEmpty){
-//              print("No Checkpoint Dropped for this map")
-//            }
-//            else{
-//              userdata["CheckpointDict"] = Checkpoint_CL_Dict
-//            }
+            if (Checkpoint_Array.isEmpty){
+              print("No Checkpoint Dropped for this map")
+            }
+            else{
+              userdata["CheckpointArray"] = Checkpoint_Array
+            }
             
             metadata.userdata = userdata
             
@@ -793,7 +792,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       dump(nearestShapes)
     }
     // part one recognize that you are at a checkpoint
-    if (self.newMapfound == false)
+    if (self.newMapfound == false && canDropBC == false)
     {
       
       updateGraph()
@@ -1083,7 +1082,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let s3 = NSString(format:"%@,%@",x,y)
         let currentCLStr = s3 as String
         let cp_str = SCNV3toString(vec: loc02)
-        Checkpoint_CL_Dict[cp_str] = currentCLStr
+        let pair = cp_str + "," + currentCLStr
+        Checkpoint_Array.append(pair)
       }
       
       
