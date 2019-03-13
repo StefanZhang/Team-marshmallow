@@ -20,9 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
-    var MapName_array = [String]()
-    var DestinationName_array = [String]()
-    var CategoryDict = [String:[String]]()
+    var MapName_array = [String]() //Array of Map Name
+    var DestinationName_array = [String]() //Array of Destination Name
+    var CategoryDict = [String:[String]]() //Dict with key of Category, and val of array of corresponding destination
+    var MapDestDict = [String:[String]]() //Dict with key of Map Name, and val of array of corresponding Destiantion name
+    var DestPosDict = [String:String]() // Dict with key of Destination Name, val of corresponding corrdinates
     
     //AWS
     var storyboard: UIStoryboard?
@@ -107,45 +109,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             maps.append((place.key, place.value))
         }
         
-        var Name_DestinationDict = [String:String]()
-        var Destination_CatDict = [String:String]()
+        var Name_DestinationDict = [String:String]() //temp container
+        var Destination_CatDict = [String:String]() // temp container
+        var Destination_PosDict = [String:String]() //temp container
+        
         
         for map in maps{
-            MapName_array.append(map.1.name ?? "")
+            let MapNametemp = map.1.name ?? ""
+            MapName_array.append(MapNametemp)
             let userdata = map.1.userdata as? [String:Any]
-            
-            // This was crashing the app!! Dictionary was nil
-            //Name_DestinationDict = userdata!["destinationDict"] as! Dictionary
-            
-            // Replaced with this in order to build without crashing
+
             Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["DefaultDest" : "N/A"]
             
             for (key, value) in Name_DestinationDict {
                 DestinationName_array.append(key)
+                
+                if (MapDestDict[MapNametemp] != nil){
+                    MapDestDict[MapNametemp]!.append(key)
+                }
+                else{
+                    MapDestDict[MapNametemp] = [key]
+                }
             }
             
             Destination_CatDict = userdata!["CategoryDict"] as? Dictionary<String, String> ?? ["DefualtDest" : "DefaultCat"]
             
             for (Dest,Cat) in Destination_CatDict {
-                print(Cat,Dest)
                 if (CategoryDict[Cat] != nil){
-                    print("Cat exsists, append the name to the back of the val list")
+                    // Cat exsists, append the name to the back of the val list
                     CategoryDict[Cat]!.append(Dest)
                 }
                 else{
-                    print("Cat does not exsists, create one, and add the name to the val list")
+                    // Cat does not exsists, create one, and add the name to the val list
                     CategoryDict[Cat] = [Dest]
                 }
             }
+            
+            Destination_PosDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["DefualtDest" : "DefaultPos"]
+            
+            for (Dest, Pos) in Destination_PosDict{
+                DestPosDict[Dest] = Pos
+            }
+            
         }
-        
+    
+        print("CategoryDict: Category(Key), with Destination(val)")
         print(CategoryDict)
-        print("Destination Name array: ")
-        print(DestinationName_array)
-        
-        //Clear the previous user info to avoid duplicates
-        
-        
+        print("MapDestDict: MapName(Key), with Destination(val)")
+        print(MapDestDict)
+        print("DestPosDict: DestinationName(Key), with Position(val)")
+        print(DestPosDict)
+        print("Map and Pos:")
+        print(WhichMapANDWhichPos(DestName: "room1"))
         
     }
     
@@ -175,6 +190,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         LibPlacenote.instance.shutdown()
+    }
+    
+    // Input Destination Name
+    // Return the result array with result[0] = MapName and result[1] = Position
+    
+    func WhichMapANDWhichPos(DestName:String) -> [String]{
+        var result = [String]()
+        
+        result.append(WhichMap(DestName: DestName))
+        result.append(DestPosDict[DestName]!)
+
+        return result
+    }
+    
+    func WhichMap(DestName:String) -> String {
+        var result = ""
+        
+        for (Map, Dest) in MapDestDict{
+            for i in Dest{
+                if i == DestName{
+                    result = Map
+                    break
+                }
+            }
+        }
+        return result
     }
     
     
