@@ -1,0 +1,11 @@
+Aaron- Authentification, Splitting Views
+
+Stefan- Handing off destination and destination map
+
+Matthew&Zhenru- Ultimate navigation
+
+John- categorize table view, 
+
+John&Stefan- WhereTo and Where are you?
+
+Everyone- Final Localization & Final UI desgin
