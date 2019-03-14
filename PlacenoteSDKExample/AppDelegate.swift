@@ -146,16 +146,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
-    
+
         print("CategoryDict: Category(Key), with Destination(val)")
         print(CategoryDict)
         print("MapDestDict: MapName(Key), with Destination(val)")
         print(MapDestDict)
         print("DestPosDict: DestinationName(Key), with Position(val)")
         print(DestPosDict)
-        print("Map and Pos:")
-        print(WhichMapANDWhichPos(DestName: "room1"))
-        
+
     }
     
     // Getter for Destination Names
