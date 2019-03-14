@@ -186,7 +186,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Input Destination Name
     // Return the result array with result[0] = MapName and result[1] = Position
-    
     func WhichMapANDWhichPos(DestName:String) -> [String]{
         var result = [String]()
         
