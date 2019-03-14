@@ -78,19 +78,18 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searching == false{
             selectedPlace = self.tempArray[indexPath.row]
-            print(selectedPlace)
         }
         else{
             selectedPlace = self.search[indexPath.row]
-            print(selectedPlace)
             self.searchBarCancelButtonClicked(searchBar)
             // to highlight the selected row after selecting it from a search
             let indexPath2 = IndexPath(row: tempArray.firstIndex(of: selectedPlace)!, section: 0)
             self.tableView.selectRow(at: indexPath2, animated: true, scrollPosition: UITableViewScrollPosition.middle)
             // still a shadow after the row is selected
             // only after using search to find place
-            
         }
+        print(selectedPlace)
+        print(appDelegate.WhichMapANDWhichPos(DestName: selectedPlace))
     }
     
     func getSelectedPlace() -> String{
@@ -99,13 +98,15 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func setPlaceArray(){
         tempArray = appDelegate.getDestinationName()
+        let farray = tempArray.filter {$0 != "DefaultDest"}
+        tempArray = farray
         tempArray.sort()
         self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             self.setPlaceArray()
         })
     }
