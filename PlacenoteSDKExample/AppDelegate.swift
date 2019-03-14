@@ -10,7 +10,6 @@ import UIKit
 import PlacenoteSDK
 import AWSCore
 import AWSCognito
-import AWSMobileClient
 import AWSCognitoIdentityProvider
 
 @UIApplicationMain
@@ -31,17 +30,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     var adminLoginViewController: AdminLoginViewController?
     
-    let CognitoIdentityUserPoolRegion: AWSRegionType = .USEast2
-    let CognitoIdentityUserPoolId = "us-east-2_eSmLbpR34"
-    let CognitoIdentityUserPoolAppClientId = "2ohb870m9b8ecat963666vpj6e"
-    let CognitoIdentityUserPoolAppClientSecret = "1a94e9itcfc25f4q33dj5oiv14sb850cb9jmuhfacohcej6avjk8"
+
     
     let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // AWS initialization
+        // setup logging
+        AWSDDLog.sharedInstance.logLevel = .verbose
+        
+        // AWS Cognito initialization
+        setCognitoUserPool()
+        
+        LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
+            if (initialized!) {
+                print ("SDK Initialized")
+                LibPlacenote.instance.fetchMapList(listCb: self.onMapList)
+            }
+            else {
+                print ("SDK Could not be initialized")
+            }
+        })
+        return true
+    }
+    
+    func setCognitoUserPool() {
+        let CognitoIdentityUserPoolRegion: AWSRegionType = .USEast2
+        let CognitoIdentityUserPoolId = "us-east-2_eSmLbpR34"
+        let CognitoIdentityUserPoolAppClientId = "2ohb870m9b8ecat963666vpj6e"
+        let CognitoIdentityUserPoolAppClientSecret = "1a94e9itcfc25f4q33dj5oiv14sb850cb9jmuhfacohcej6avjk8"
         
         // Warn user if configuration not updated
         if (CognitoIdentityUserPoolId == "us-east-2_eSmLbpR34") {
@@ -54,9 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController!.present(alertController, animated: true, completion:  nil)
         }
         
-        // setup logging
-        AWSDDLog.sharedInstance.logLevel = .verbose
-        
         // setup service configuration
         let serviceConfiguration = AWSServiceConfiguration(region: CognitoIdentityUserPoolRegion, credentialsProvider: nil)
         
@@ -64,33 +79,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoIdentityUserPoolAppClientId,
                                                                         clientSecret: CognitoIdentityUserPoolAppClientSecret,
                                                                         poolId: CognitoIdentityUserPoolId)
-        
         // initialize user pool client
         AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: poolConfiguration, forKey: AWSCognitoUserPoolsSignInProviderKey)
-        
         // fetch the user pool client we initialized in above step
         let pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
-        self.storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //self.storyboard = UIStoryboard(name: "Main", bundle: nil)
         pool.delegate = self
-        
-//        // Old AWS work
-//        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
-//                                                                identityPoolId:"us-east-2:f1c35eed-faab-4fc0-8e34-d205684e0916")
-//
-//        let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
-//
-//        AWSServiceManager.default().defaultServiceConfiguration = configuration
-        
-        LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
-            if (initialized!) {
-                print ("SDK Initialized")
-                LibPlacenote.instance.fetchMapList(listCb: self.onMapList)
-            }
-            else {
-                print ("SDK Could not be initialized")
-            }
-        })
-        return true
     }
     
     
@@ -243,7 +237,7 @@ extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
             }
             
         }
-        return self.adminLoginViewController as! AWSCognitoIdentityPasswordAuthentication
+        return self.adminLoginViewController!
     }
     
     

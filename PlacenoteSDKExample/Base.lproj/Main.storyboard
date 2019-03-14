@@ -363,10 +363,10 @@
             </objects>
             <point key="canvasLocation" x="1410" y="-8"/>
         </scene>
-        <!--View Controller-->
+        <!--Admin Login-->
         <scene sceneID="i1T-e3-Yn3">
             <objects>
-                <viewController id="4HW-9K-1nR" sceneMemberID="viewController">
+                <viewController title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CN8-Y2-8kF"/>
                         <viewControllerLayoutGuide type="bottom" id="19z-Ae-i1u"/>
@@ -375,43 +375,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jXt-gS-cau">
-                                <rect key="frame" x="96" y="213" width="222" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3It-rZ-3Yq">
-                                <rect key="frame" x="140" y="298" width="135" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3It-rZ-3Yq">
+                                <rect key="frame" x="139.5" y="421" width="135" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="rL5-qh-LQl"/>
+                                </constraints>
                                 <state key="normal" title="Admin Login">
                                     <color key="titleColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="1" alpha="0.60000002379999995" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="adminLogin:" destination="Pyc-ev-X2v" eventType="touchUpInside" id="9Lp-7j-Qch"/>
-                                    <segue destination="BV1-FR-VrT" kind="show" id="hTo-Kw-vdC"/>
+                                    <action selector="loginPressed:" destination="4HW-9K-1nR" eventType="touchUpInside" id="cLS-5M-sMa"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="bEi-16-cFT"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDJ-aO-evT">
-                                <rect key="frame" x="96" y="158" width="222" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDJ-aO-evT">
+                                <rect key="frame" x="68" y="175" width="283" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZX-PU-ATO">
+                                <rect key="frame" x="20" y="52" width="34" height="30"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="username:" destination="Pyc-ev-X2v" eventType="valueChanged" id="Wvp-Rq-f8V"/>
+                                    <segue destination="Mqg-rI-qeK" kind="show" id="zTz-yQ-YRA"/>
                                 </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jXt-gS-cau">
+                                <rect key="frame" x="68" y="235" width="283" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BZX-PU-ATO" firstAttribute="leading" secondItem="FqH-nq-jlP" secondAttribute="leadingMargin" id="9aY-6M-X9e"/>
+                            <constraint firstItem="3It-rZ-3Yq" firstAttribute="centerY" secondItem="FqH-nq-jlP" secondAttribute="centerY" id="HSC-nY-LWD"/>
+                            <constraint firstItem="zDJ-aO-evT" firstAttribute="leading" secondItem="FqH-nq-jlP" secondAttribute="leadingMargin" constant="48" id="X2I-KR-mhI"/>
+                            <constraint firstItem="3It-rZ-3Yq" firstAttribute="centerX" secondItem="FqH-nq-jlP" secondAttribute="centerX" id="YEU-jv-9ZV"/>
+                            <constraint firstItem="zDJ-aO-evT" firstAttribute="trailing" secondItem="jXt-gS-cau" secondAttribute="trailing" id="Yqu-Ye-df5"/>
+                            <constraint firstItem="zDJ-aO-evT" firstAttribute="top" secondItem="CN8-Y2-8kF" secondAttribute="bottom" constant="131" id="cpP-VS-KAD"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BZX-PU-ATO" secondAttribute="trailing" constant="20" symbolic="YES" id="d4Y-En-PKN"/>
+                            <constraint firstItem="BZX-PU-ATO" firstAttribute="top" secondItem="CN8-Y2-8kF" secondAttribute="bottom" constant="8" symbolic="YES" id="dDX-Pg-kMQ"/>
+                            <constraint firstItem="19z-Ae-i1u" firstAttribute="top" secondItem="3It-rZ-3Yq" secondAttribute="bottom" constant="387" id="pnE-rB-LLE"/>
+                            <constraint firstItem="jXt-gS-cau" firstAttribute="top" secondItem="zDJ-aO-evT" secondAttribute="bottom" constant="30" id="rXU-nj-eoh"/>
+                            <constraint firstItem="zDJ-aO-evT" firstAttribute="leading" secondItem="jXt-gS-cau" secondAttribute="leading" id="rY3-mV-F5Y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zDJ-aO-evT" secondAttribute="trailing" constant="43" id="xGF-Hz-hXb"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="password" destination="jXt-gS-cau" id="F4w-im-kRm"/>
+                        <outlet property="username" destination="zDJ-aO-evT" id="eSM-Gi-X4X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HQA-7p-g0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Pyc-ev-X2v" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="720" y="-8"/>
+            <point key="canvasLocation" x="718.84057971014499" y="-8.0357142857142847"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WIx-HE-bO0">
@@ -599,10 +622,10 @@
             </objects>
             <point key="canvasLocation" x="931.88405797101461" y="-731.25"/>
         </scene>
-        <!--User Localization View Controller-->
+        <!--User Localization-->
         <scene sceneID="fUb-xn-NFD">
             <objects>
-                <viewController id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="User Localization" id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jXh-5F-UIh"/>
                         <viewControllerLayoutGuide type="bottom" id="HvZ-Ma-sfD"/>
@@ -658,7 +681,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AsE-Zy-RWk"/>
-        <segue reference="TTY-d4-17w"/>
+        <segue reference="NzB-eX-ef0"/>
+        <segue reference="zTz-yQ-YRA"/>
     </inferredMetricsTieBreakers>
 </document>

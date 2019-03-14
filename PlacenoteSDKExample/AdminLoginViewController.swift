@@ -12,38 +12,21 @@ import AWSCognitoIdentityProvider
 
 class AdminLoginViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
-    var usernameText: String?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.password.text = nil
-        self.username.text = usernameText
+        self.loginButton?.isEnabled = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
 
- 
-    @IBAction func signInPressed(_ sender: AnyObject) {
+    @IBAction func loginPressed(_ sender: AnyObject) {
+        print(self.username.text!)
         if (self.username.text != nil && self.password.text != nil) {
             let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: self.username.text!, password: self.password.text! )
             self.passwordAuthenticationCompletion?.set(result: authDetails)
@@ -54,7 +37,9 @@ class AdminLoginViewController: UIViewController {
             let retryAction = UIAlertAction(title: "Retry", style: .default, handler: nil)
             alertController.addAction(retryAction)
         }
+        
     }
+    
 }
 
 extension AdminLoginViewController: AWSCognitoIdentityPasswordAuthentication {
@@ -62,8 +47,8 @@ extension AdminLoginViewController: AWSCognitoIdentityPasswordAuthentication {
     public func getDetails(_ authenticationInput: AWSCognitoIdentityPasswordAuthenticationInput, passwordAuthenticationCompletionSource: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>) {
         self.passwordAuthenticationCompletion = passwordAuthenticationCompletionSource
         DispatchQueue.main.async {
-            if (self.usernameText == nil) {
-                self.usernameText = authenticationInput.lastKnownUsername
+            if (self.username.text == nil) {
+                self.username.text = authenticationInput.lastKnownUsername
             }
         }
     }
