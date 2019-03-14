@@ -89,8 +89,9 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.tableView.selectRow(at: indexPath2, animated: true, scrollPosition: UITableViewScrollPosition.middle)
             // still a shadow after the row is selected
             // only after using search to find place
-            
         }
+        //print(selectedPlace)
+        //print(appDelegate.WhichMapANDWhichPos(DestName: selectedPlace))
     }
     
     func getSelectedPlace() -> String{
