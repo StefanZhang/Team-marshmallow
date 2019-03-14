@@ -65,7 +65,8 @@ extension AdminLoginViewController: AWSCognitoIdentityPasswordAuthentication {
                 self.present(alertController, animated: true, completion:  nil)
             } else {
                 self.username.text = nil
-                self.dismiss(animated: true, completion: nil)
+                //self.dismiss(animated: true, completion: nil)
+                self.performSegue(withIdentifier: "Admin Mode", sender: AnyObject.self)
             }
         }
     }
