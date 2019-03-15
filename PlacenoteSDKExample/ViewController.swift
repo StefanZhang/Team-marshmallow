@@ -32,6 +32,9 @@ var category_name_meta = ""
 
 var destination_pos = ""
 
+
+var FeatureCount = 0
+var maxcrumbCount = 15
 // default not to drop breadcrumbs
 var canDropBC = false
 
@@ -774,6 +777,51 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let image: CVPixelBuffer = didUpdate.capturedImage
     let pose: matrix_float4x4 = didUpdate.camera.transform
     
+    let currentFrame = scnView.session.currentFrame
+    let featurePoints = currentFrame?.rawFeaturePoints?.points
+
+    if self.shapeManager.getShapeNodes().count > maxcrumbCount // next do distance from origin
+    {
+      
+      let alert = UIAlertController(title: "Alert", message: "Look at the whole map", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+        switch action.style{
+        case .default:
+          print("default")
+          
+        case .cancel:
+          print("cancel")
+          
+        case .destructive:
+          print("destructive")
+          
+          
+        }}))
+      self.present(alert, animated: true, completion: nil)
+      maxcrumbCount += 10
+    }
+    if featurePoints?.count != nil
+    {
+      if featurePoints!.count > 800
+      {
+        let alert = UIAlertController(title: "Alert", message: "Max Map Size" + String(featurePoints!.count), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+          switch action.style{
+          case .default:
+            print("default")
+            
+          case .cancel:
+            print("cancel")
+            
+          case .destructive:
+            print("destructive")
+            
+            
+          }}))
+        self.present(alert, animated: true, completion: nil)
+        
+      }
+    }
     //changed
     //let camPos = pose.columns.3
     // Camera Location in Vector3
