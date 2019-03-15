@@ -8,7 +8,7 @@
 
 #import "AWSMTLModel.h"
 
-void awsmtl_loadMTLNSCoding(void);
+void awsmtl_loadMTLNSCoding();
 
 // Defines how a MTLModel property key should be encoded into an archive.
 //

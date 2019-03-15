@@ -35,7 +35,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="4HW-9K-1nR" kind="show" id="Q9B-cB-Q7R"/>
+                                    <segue destination="4HW-9K-1nR" kind="show" id="QdX-Gd-01e"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where To?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNd-19-nnl">
@@ -361,12 +361,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1410" y="-8"/>
+            <point key="canvasLocation" x="1409" y="-3"/>
         </scene>
         <!--Admin Login-->
         <scene sceneID="i1T-e3-Yn3">
             <objects>
-                <viewController title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="adminLoginViewController" title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lKH-oy-C4O"/>
                         <viewControllerLayoutGuide type="bottom" id="rZf-g0-bfU"/>
@@ -387,8 +387,7 @@
                                     <color key="titleColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginPressed:" destination="4HW-9K-1nR" eventType="touchUpInside" id="5Qn-au-Jba"/>
-                                    <segue destination="Mqg-rI-qeK" kind="show" id="zND-pZ-0qx"/>
+                                    <segue destination="Mqg-rI-qeK" kind="show" id="942-2o-vEu"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jXt-gS-cau">
@@ -408,7 +407,7 @@
                                     <color key="titleColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BV1-FR-VrT" kind="show" id="OWn-UT-774"/>
+                                    <action selector="loginPressed:" destination="4HW-9K-1nR" eventType="touchUpInside" id="x6Y-Mv-vaw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -429,11 +428,12 @@
                     <connections>
                         <outlet property="password" destination="jXt-gS-cau" id="F4w-im-kRm"/>
                         <outlet property="username" destination="zDJ-aO-evT" id="eSM-Gi-X4X"/>
+                        <segue destination="BV1-FR-VrT" kind="show" identifier="showAdmin" id="2Yr-H6-IM7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HQA-7p-g0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="718.84057971014499" y="-8.0357142857142847"/>
+            <point key="canvasLocation" x="480" y="413"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WIx-HE-bO0">
@@ -680,7 +680,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NzB-eX-ef0"/>
-        <segue reference="zND-pZ-0qx"/>
+        <segue reference="AsE-Zy-RWk"/>
+        <segue reference="942-2o-vEu"/>
     </inferredMetricsTieBreakers>
 </document>

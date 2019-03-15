@@ -103,11 +103,10 @@
         AWSJSONDictionary *outputRules = [[AWSJSONDictionary alloc] initWithDictionary:[anActionRules objectForKey:@"output"] JSONDefinitionRule:shapeRules];
         result = [AWSXMLResponseSerializer parseResponse:response rules:outputRules bodyDictionary:[result mutableCopy] error:error];
 
-        NSNumber *errorCode = [[AWSService errorCodeDictionary] objectForKey:[[[result objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]];
-        if (errorCode != nil) {
+        if ([[AWSService errorCodeDictionary] objectForKey:[[[result objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]]) {
             if (error) {
                 *error = [NSError errorWithDomain:AWSServiceErrorDomain
-                                             code:[errorCode integerValue]
+                                             code:[[[AWSService errorCodeDictionary] objectForKey:[[[result objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]] integerValue]
                                          userInfo:result];
             }
         }
@@ -195,7 +194,7 @@
         }
 
         //if the location may contain multiple headers if it is a map type
-        if ([memberRules isKindOfClass:[NSDictionary class]] && [memberRules[@"location"] isEqualToString:@"headers"] && [memberRules[@"type"] isEqualToString:@"map"]) {
+        if ([memberRules isKindOfClass:[NSDictionary class]] && [memberRules[@"location"] isEqualToString:@"headers"] && [memberRules[@"type"] isEqualToString:@"map"] ) {
             NSString *locationName = memberRules[@"locationName"]?memberRules[@"locationName"]:@""; //if no locationName specified, match all headers.
             if (locationName) {
                 NSPredicate *metaDatapredicate = [NSPredicate predicateWithFormat:@"SELF like[c] %@",[locationName stringByAppendingString:@"*"]]; //[c] means case insensitive

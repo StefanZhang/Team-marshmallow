@@ -619,7 +619,7 @@ unsigned long long const kAWSDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; //
     __block unsigned long long result;
 
     dispatch_block_t block = ^{
-        result = self->_maximumFileSize;
+        result = _maximumFileSize;
     };
 
     // The design of this method is taken from the AWSDDAbstractLogger implementation.
@@ -647,7 +647,7 @@ unsigned long long const kAWSDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; //
 - (void)setMaximumFileSize:(unsigned long long)newMaximumFileSize {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            self->_maximumFileSize = newMaximumFileSize;
+            _maximumFileSize = newMaximumFileSize;
             [self maybeRollLogFileDueToSize];
         }
     };
@@ -676,7 +676,7 @@ unsigned long long const kAWSDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; //
     __block NSTimeInterval result;
 
     dispatch_block_t block = ^{
-        result = self->_rollingFrequency;
+        result = _rollingFrequency;
     };
 
     // The design of this method is taken from the AWSDDAbstractLogger implementation.
@@ -704,7 +704,7 @@ unsigned long long const kAWSDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; //
 - (void)setRollingFrequency:(NSTimeInterval)newRollingFrequency {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            self->_rollingFrequency = newRollingFrequency;
+            _rollingFrequency = newRollingFrequency;
             [self maybeRollLogFileDueToAge];
         }
     };
@@ -779,7 +779,7 @@ unsigned long long const kAWSDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; //
     [self rollLogFileWithCompletionBlock:nil];
 }
 
-- (void)rollLogFileWithCompletionBlock:(void (^)(void))completionBlock {
+- (void)rollLogFileWithCompletionBlock:(void (^)())completionBlock {
     // This method is public.
     // We need to execute the rolling on our logging thread/queue.
 

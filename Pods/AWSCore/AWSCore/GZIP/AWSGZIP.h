@@ -33,7 +33,7 @@
 
 #import <Foundation/Foundation.h>
 
-void awsgzip_loadGZIP(void);
+void awsgzip_loadGZIP();
 
 @interface NSData (AWSGZIP)
 

@@ -150,7 +150,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     if (_willRemoveObjectBlock)
         _willRemoveObjectBlock(self, key, object);
 
-    if (cost != nil)
+    if (cost)
         _totalCost -= [cost unsignedIntegerValue];
 
     [_dictionary removeObjectForKey:key];
@@ -290,7 +290,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
         [strongSelf->_dates setObject:now forKey:key];
         [strongSelf->_costs setObject:@(cost) forKey:key];
 
-        self->_totalCost += cost;
+        _totalCost += cost;
 
         if (strongSelf->_didAddObjectBlock)
             strongSelf->_didAddObjectBlock(strongSelf, key, object);
@@ -652,7 +652,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheObjectBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_willRemoveObjectBlock;
+        block = _willRemoveObjectBlock;
     });
 
     return block;
@@ -676,7 +676,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_willRemoveAllObjectsBlock;
+        block = _willRemoveAllObjectsBlock;
     });
 
     return block;
@@ -700,7 +700,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheObjectBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_didAddObjectBlock;
+        block = _didAddObjectBlock;
     });
 
     return block;
@@ -724,7 +724,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheObjectBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_didRemoveObjectBlock;
+        block = _didRemoveObjectBlock;
     });
 
     return block;
@@ -748,7 +748,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_didRemoveAllObjectsBlock;
+        block = _didRemoveAllObjectsBlock;
     });
 
     return block;
@@ -772,7 +772,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_didReceiveMemoryWarningBlock;
+        block = _didReceiveMemoryWarningBlock;
     });
 
     return block;
@@ -796,7 +796,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block AWSTMMemoryCacheBlock block = nil;
 
     dispatch_sync(_queue, ^{
-        block = self->_didEnterBackgroundBlock;
+        block = _didEnterBackgroundBlock;
     });
 
     return block;
@@ -820,7 +820,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block NSTimeInterval ageLimit = 0.0;
     
     dispatch_sync(_queue, ^{
-        ageLimit = self->_ageLimit;
+        ageLimit = _ageLimit;
     });
     
     return ageLimit;
@@ -846,7 +846,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block NSUInteger costLimit = 0;
 
     dispatch_sync(_queue, ^{
-        costLimit = self->_costLimit;
+        costLimit = _costLimit;
     });
 
     return costLimit;
@@ -873,7 +873,7 @@ NSString * const AWSTMMemoryCachePrefix = @"com.tumblr.TMMemoryCache";
     __block NSUInteger cost = 0;
     
     dispatch_sync(_queue, ^{
-        cost = self->_totalCost;
+        cost = _totalCost;
     });
     
     return cost;

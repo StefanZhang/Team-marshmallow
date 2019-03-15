@@ -115,6 +115,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     
     super.viewDidLoad()
+
     setupView()
     setupScene()
     //App Related initializations

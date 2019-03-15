@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSData*) aws_dataWithSignedBigInteger:(AWSJKBigInteger *)bigInteger;
 + (NSData*) aws_dataFromHexString:(NSString*)hexString;
 - (AWSJKBigInteger *)aws_toBigInt;
-void awsbigint_loadBigInt(void);
+void awsbigint_loadBigInt();
 @end
 
 NS_ASSUME_NONNULL_END

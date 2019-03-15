@@ -7,9 +7,9 @@ target 'PlacenoteSDKExample' do
 
   # Pods for PlacenoteTest
   pod 'PlacenoteSDK'
-  pod 'AWSMobileClient'
-  pod 'AWSCognito'
-  pod 'AWSCore'
+  pod 'AWSCognitoIdentityProvider', '~> 2.5.5'
+  pod 'AWSCore', '~> 2.5.5'
+
 end
 
 post_install do |installer|

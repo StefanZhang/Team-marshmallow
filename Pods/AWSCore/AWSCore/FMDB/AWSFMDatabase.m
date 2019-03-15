@@ -47,12 +47,10 @@
     return self;
 }
 
-#if ! __has_feature(objc_arc)
 - (void)finalize {
     [self close];
     [super finalize];
 }
-#endif
 
 - (void)dealloc {
     [self close];
@@ -340,7 +338,7 @@ static int AWSFMDBDatabaseBusyHandler(void *f, int count) {
 }
 
 
-- (void)setCachedStatement:(AWSFMStatement*)statement forQuery:(nonnull NSString*)query {
+- (void)setCachedStatement:(AWSFMStatement*)statement forQuery:(NSString*)query {
     
     query = [query copy]; // in case we got handed in a mutable string...
     [statement setQuery:query];
@@ -921,10 +919,6 @@ static int AWSFMDBDatabaseBusyHandler(void *f, int count) {
 
 - (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args {
     
-    if (!sql) {
-        return YES;
-    }
-    
     if (![self databaseExists]) {
         return NO;
     }
@@ -1405,12 +1399,10 @@ void AWSFMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqli
 @synthesize useCount=_useCount;
 @synthesize inUse=_inUse;
 
-#if ! __has_feature(objc_arc)
 - (void)finalize {
     [self close];
     [super finalize];
 }
-#endif
 
 - (void)dealloc {
     [self close];

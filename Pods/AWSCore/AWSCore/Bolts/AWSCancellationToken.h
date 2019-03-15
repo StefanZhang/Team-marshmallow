@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  A block that will be called when a token is cancelled.
  */
-typedef void(^AWSCancellationBlock)(void);
+typedef void(^AWSCancellationBlock)();
 
 /*!
  The consumer view of a CancellationToken.

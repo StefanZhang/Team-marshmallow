@@ -9,11 +9,17 @@
 import UIKit
 import PlacenoteSDK
 import AWSCore
-import AWSCognito
 import AWSCognitoIdentityProvider
+
+let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
+let userPoolID = "UserPool"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    class func defaultUserPool() -> AWSCognitoIdentityUserPool {
+        return AWSCognitoIdentityUserPool(forKey: userPoolID)
+    }
     
     var window: UIWindow?
 
@@ -30,10 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
     var adminLoginViewController: AdminLoginViewController?
     
-
-    
-    let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -45,11 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         LibPlacenote.instance.initialize(apiKey: "0qmcrb5a2tw2b00xa70d1x81sae3k9dtvu4fq9mf9zlpoqcwzozmy8d1k8kpfag32abvfo3ql5tu059np1xt74zsfprhrurzui2k",  onInitialized: {(initialized: Bool?) -> Void in
             if (initialized!) {
-                print ("SDK Initialized")
+                print ("PlaceNote SDK Initialized")
                 LibPlacenote.instance.fetchMapList(listCb: self.onMapList)
             }
             else {
-                print ("SDK Could not be initialized")
+                print ("Placenote SDK Could not be initialized")
             }
         })
         return true
@@ -215,27 +217,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // AWS
 extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
     
-    func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
-        if (self.navigationController == nil) {
-            self.navigationController = self.storyboard?.instantiateViewController(withIdentifier: "adminLoginViewController") as? UINavigationController
-        }
-        
-        if (self.adminLoginViewController == nil) {
-            self.adminLoginViewController = self.navigationController?.viewControllers[0] as? AdminLoginViewController
-        }
-        
-        DispatchQueue.main.async {
-            self.navigationController!.popToRootViewController(animated: true)
-            if (!self.navigationController!.isViewLoaded
-                || self.navigationController!.view.window == nil) {
-                self.window?.rootViewController?.present(self.navigationController!,
-                                                         animated: true,
-                                                         completion: nil)
-            }
-            
-        }
-        return self.adminLoginViewController!
-    }
+//    func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
+//        if (self.navigationController == nil) {
+//            self.navigationController = self.window?.rootViewController as? UINavigationController
+//        }
+//        
+//        if (self.adminLoginViewController == nil) {
+//            self.adminLoginViewController = self.storyboard?.instantiateViewController(withIdentifier: "adminLoginViewController") as? AdminLoginViewController
+//        }
+//        
+//        DispatchQueue.main.async {
+//            //self.navigationController!.popToRootViewController(animated: true)
+//            if(self.adminLoginViewController!.isViewLoaded || self.adminLoginViewController!.view.window == nil) {
+//                self.navigationController?.present(self.adminLoginViewController!, animated: true, completion: nil)
+//            }
+//            
+//        }
+//        return self.adminLoginViewController!
+//    }
     
     
     func startRememberDevice() -> AWSCognitoIdentityRememberDevice {
