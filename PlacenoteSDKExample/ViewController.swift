@@ -32,8 +32,11 @@ var category_name_meta = ""
 
 var destination_pos = ""
 
-
+// This is the amount of feature points detected in a frame 
 var FeatureCount = 0
+
+// This is the limit for when the user is prompted about checking the map to see if 
+// the map is too large
 var maxcrumbCount = 15
 // default not to drop breadcrumbs
 var canDropBC = false
@@ -553,8 +556,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
   //Map selected
-  
-  //Must find out what new graph needs to be selected
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     print(String(format: "Retrieving row: %d", indexPath.row))
     print("Retrieving mapId: " + maps[indexPath.row].0)
@@ -628,10 +629,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                     }
     }
     )
-    print("This is the map name:")
-    print(maps[indexPath.row].0) // Need to call above function with next map at checkpoint
-    print("Second thing in maps:")
-    //print(maps[1].0)
+    
   }
   
   //Make rows editable for deletion
@@ -776,13 +774,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   func session(_ session: ARSession, didUpdate: ARFrame) {
     let image: CVPixelBuffer = didUpdate.capturedImage
     let pose: matrix_float4x4 = didUpdate.camera.transform
-    
+    // Gets the current amount of feature points in a frame
     let currentFrame = scnView.session.currentFrame
     let featurePoints = currentFrame?.rawFeaturePoints?.points
 
-    if self.shapeManager.getShapeNodes().count > maxcrumbCount // next do distance from origin
+    if self.shapeManager.getShapeNodes().count > maxcrumbCount // next do distance from origin, and time making map
     {
-      
+      // Makes the user turn around to get the feature points in the frame
       let alert = UIAlertController(title: "Alert", message: "Look at the whole map", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
         switch action.style{
@@ -903,7 +901,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let z = first.z - second.z
     return sqrt(x*x + y*y + z*z)
   }
-  
+  // Loads a map using the map name and the index in the list on maps
   func mapLoading(map: (String, LibPlacenote.MapMetadata), index: Int) -> Void
   {
     let x = maps[index].0
@@ -979,7 +977,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     )
     
   }
-  
+  // Looks at all the maps and finds the one that is most likely the one the user is trying to load
   func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
   {
     let locManager = CLLocationManager()
@@ -1019,7 +1017,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     }
     return (nextMap, index)
   }
-  
+  // Finds out if the user is at a checkpoint or not (must be at least 1 object placed in the map to work)
   func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
     if shapeManager.getShapePositions().count > 0 {
     for position in shapeManager.getShapePositions()
