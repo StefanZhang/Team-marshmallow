@@ -122,6 +122,8 @@ extension AdjacencyList: Graphable {
         }
         return total_path
     }
+    
+    // A* algorithm for breadcrumbs with V3 coordinate
     public func aStar(start: Vertex<Element>, destination: Vertex<Element>) -> Array<Vertex<Element>>{
         
         // Dictonary in graph

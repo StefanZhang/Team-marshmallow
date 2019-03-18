@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var MapDestDict = [String:[String]]() //Dict with key of Map Name, and val of array of corresponding Destiantion name
     var DestPosDict = [String:String]() // Dict with key of Destination Name, val of corresponding corrdinates
     
+    // Dictionary for map location. key is mapname. value is lat+lon+alt
+    var MapLocationDict = [String:String]()
+    
     //AWS
     var storyboard: UIStoryboard?
     var navigationController: UINavigationController?
@@ -89,9 +92,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pool.delegate = self
     }
     
-    
+    func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
+        let x = NSString(format: "%.16f", lat)
+        let y = NSString(format: "%.16f", lon)
+        let z = NSString(format: "%.16f", alt)
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        let resultString = s3 as String
+        return resultString
+    }
 
-    
+    // for ultimate navigation
+    func graphOfMaps() {
+        let ultimateGraph = AdjacencyList<String>()
+       
+        //let mapLocArray = Array(MapLocationDict.values)
+        var allVertices = [Vertex<String>]()
+        
+        for mapLoc in MapLocationDict.values {
+            allVertices.append(ultimateGraph.createVertex(data: mapLoc))
+        }
+        let length = allVertices.count
+        for i in 0..<length {
+            for j in i+1..<length {
+                ultimateGraph.add(.undirected, from:allVertices[i], to:allVertices[j], weight:1.5)
+            }
+        }
+    }
     
     //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
     func onMapList(success: Bool, mapList: [String: LibPlacenote.MapMetadata]) -> Void {
@@ -109,12 +135,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var Destination_CatDict = [String:String]() // temp container
         var Destination_PosDict = [String:String]() //temp container
         
-        
         for map in maps{
             let MapNametemp = map.1.name ?? ""
             MapName_array.append(MapNametemp)
             let userdata = map.1.userdata as? [String:Any]
 
+            //for ultimate navigation
+            let mapLat = map.1.location?.latitude
+            let mapLon = map.1.location?.longitude
+            let mapAlt = map.1.location?.altitude
+            let mapLocStr = mapLocToString(lat: mapLat!, lon: mapLon!, alt: mapAlt!)
+            MapLocationDict[MapNametemp] = mapLocStr
+            
             Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["DefaultDest" : "N/A"]
             
             for (key, value) in Name_DestinationDict {
@@ -148,14 +180,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+//        print("This is mapLocationDict")
+//        dump(MapLocationDict)
+        
+//        print("CategoryDict: Category(Key), with Destination(val)")
+//        print(CategoryDict)
+//        print("MapDestDict: MapName(Key), with Destination(val)")
+//        print(MapDestDict)
+//        print("DestPosDict: DestinationName(Key), with Position(val)")
+//        print(DestPosDict)
 
-        print("CategoryDict: Category(Key), with Destination(val)")
-        print(CategoryDict)
-        print("MapDestDict: MapName(Key), with Destination(val)")
-        print(MapDestDict)
-        print("DestPosDict: DestinationName(Key), with Position(val)")
-        print(DestPosDict)
-
+    }
+    
+    func getMapLocationDict() -> [String:String] {
+        return MapLocationDict
     }
     
     // Getter for Destination Names
