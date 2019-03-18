@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25F72E51220CA12100355F77 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F72E50220CA12100355F77 /* Destination.swift */; };
 		25F72E57220CD93800355F77 /* Pic in Resources */ = {isa = PBXBuildFile; fileRef = 25F72E56220CD93800355F77 /* Pic */; };
-		25F72E59220CF5B900355F77 /* Initial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F72E58220CF5B900355F77 /* Initial.swift */; };
 		7FBF965C5C3B1E5C0F8DE1AB /* Pods_PlacenoteSDKExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC572E55F179D977C01BA451 /* Pods_PlacenoteSDKExample.framework */; };
 		840963372224F8E900AE4C02 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840963362224F8E900AE4C02 /* AdminLoginViewController.swift */; };
 		841987002202696000404F88 /* NavigationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841986FF2202696000404F88 /* NavigationNode.swift */; };
@@ -31,9 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		25F72E50220CA12100355F77 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		25F72E56220CD93800355F77 /* Pic */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pic; sourceTree = "<group>"; };
-		25F72E58220CF5B900355F77 /* Initial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initial.swift; sourceTree = "<group>"; };
 		2904538A54D1EA278D335F50 /* Pods-PlacenoteSDKExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.release.xcconfig"; sourceTree = "<group>"; };
 		840963362224F8E900AE4C02 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		841986FF2202696000404F88 /* NavigationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationNode.swift; sourceTree = "<group>"; };
@@ -121,8 +117,6 @@
 				A28C796B202A46F40052F3FB /* LaunchScreen.storyboard */,
 				A28C796E202A46F40052F3FB /* Info.plist */,
 				841986FF2202696000404F88 /* NavigationNode.swift */,
-				25F72E50220CA12100355F77 /* Destination.swift */,
-				25F72E58220CF5B900355F77 /* Initial.swift */,
 				842D53B1221E62FE00A4DBF7 /* UserLocalizationViewController.swift */,
 				840963362224F8E900AE4C02 /* AdminLoginViewController.swift */,
 				8421BD11223C2C570006F617 /* MapSort.swift */,
@@ -264,7 +258,6 @@
 				A955DBA0221EE784005603EF /* ViewControllerWAY.swift in Sources */,
 				A9BA5F07220107EA00998DFB /* Graphable.swift in Sources */,
 				841987002202696000404F88 /* NavigationNode.swift in Sources */,
-				25F72E59220CF5B900355F77 /* Initial.swift in Sources */,
 				A28C7965202A46F40052F3FB /* ViewController.swift in Sources */,
 				A28C7993202A48190052F3FB /* ShapeManager.swift in Sources */,
 				A9BA5F092201085C00998DFB /* AdjacencyList.swift in Sources */,
@@ -274,7 +267,6 @@
 				A28C7963202A46F40052F3FB /* AppDelegate.swift in Sources */,
 				A9BA5F032201067A00998DFB /* Vertex.swift in Sources */,
 				840963372224F8E900AE4C02 /* AdminLoginViewController.swift in Sources */,
-				25F72E51220CA12100355F77 /* Destination.swift in Sources */,
 				8421BD12223C2C570006F617 /* MapSort.swift in Sources */,
 				843AA8F2221377070070EF03 /* ViewControllerWT.swift in Sources */,
 			);
