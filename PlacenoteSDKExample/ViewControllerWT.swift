@@ -24,12 +24,24 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SetUpNaviBar()
+        
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
+    }
+    
+    func SetUpNaviBar(){
+        
+        let MenuButton = UIButton(type: .system)
+        let buttonImage = UIImage(named: "menu_icon")
+        MenuButton.setImage(buttonImage, for: .normal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: MenuButton)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
