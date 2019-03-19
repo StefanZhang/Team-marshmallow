@@ -25,7 +25,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SetUpNaviBar()
+        SetUpLeftNaviBar()
         
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
@@ -35,13 +35,59 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         // Do any additional setup after loading the view.
     }
     
-    func SetUpNaviBar(){
+    
+    func SetUpLeftNaviBar(){
+        let MenuButton = UIBarButtonItem(image: UIImage(named: "menu_icon"), style: .plain, target: self, action: #selector(ShowMenu))
+    
+        navigationItem.leftBarButtonItem = MenuButton
         
-        let MenuButton = UIButton(type: .system)
-        let buttonImage = UIImage(named: "menu_icon")
-        MenuButton.setImage(buttonImage, for: .normal)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: MenuButton)
+    }
+    
+    
+    
+    // This function handles two things:
+    // 1. Black(gray) out the screen other then the menu with animation
+    // 2. Display the menu
+    let blackview = UIView()
+    
+    let collectionview: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let colview = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        colview.backgroundColor = UIColor.white
+        return colview
+    }()
+    
+    @objc func ShowMenu(){
         
+        if let window = UIApplication.shared.keyWindow{
+            
+            blackview.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            
+            blackview.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HandleDismiss)))
+            
+            window.addSubview(blackview)
+            window.addSubview(collectionview)
+            
+            collectionview.frame = CGRect(x: 0, y: 0, width: 200, height: window.frame.height)
+            
+            blackview.frame = window.frame
+            self.blackview.alpha = 0
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.blackview.alpha = 1
+                self.collectionview.frame = CGRect(x: 0, y: 0, width: self.collectionview.frame.width, height: self.collectionview.frame.height)
+            })
+        }
+    }
+    
+    @objc func HandleDismiss(){
+        UIView.animate(withDuration: 0.5, animations: {
+            self.blackview.alpha = 0
+            
+            if let window = UIApplication.shared.keyWindow{
+                self.collectionview.frame = CGRect(x: 0, y: self.collectionview.frame.height, width: self.collectionview.frame.width, height: self.collectionview.frame.height)
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
