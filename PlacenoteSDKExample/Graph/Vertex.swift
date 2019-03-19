@@ -13,6 +13,9 @@ import Foundation
 
 public struct Vertex<T: Hashable> {
     var data: T
+    var leftChild: T
+    var rightChild: T
+    var parent: T
     init(loc: T) {
         data = loc
     }
@@ -20,6 +23,7 @@ public struct Vertex<T: Hashable> {
 
 extension Vertex: Hashable {
     public var hashValue: Int { // 1
+        
         return "\(data)".hashValue
     }
     

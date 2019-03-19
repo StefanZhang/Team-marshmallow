@@ -38,6 +38,11 @@ var FeatureCount = 0
 // This is the limit for when the user is prompted about checking the map to see if 
 // the map is too large
 var maxcrumbCount = 15
+
+// Goes into the calculation for the max size
+let date = Date()
+let calendar = Calendar.current
+
 // default not to drop breadcrumbs
 var canDropBC = false
 
@@ -85,6 +90,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var maxRadiusSearch: Float = 500.0 //m
   private var currRadiusSearch: Float = 0.0 //m
   private var newMapfound = false
+  private var hour    = 0
+  private var minutes = 0
+  private var seconds = 0
   
   
   //Application related variables
@@ -220,6 +228,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print ("Just localized, drawing view")
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       if mappingStarted {
+        hour = calendar.component(.hour, from: date)
+        minutes = calendar.component(.minute, from: date)
+        seconds = calendar.component(.second, from: date)
         self.newMapfound = false
         statusLabel.text = "Move Slowly And Stay Within 3 Feet Of Features"
       }
@@ -777,8 +788,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     // Gets the current amount of feature points in a frame
     let currentFrame = scnView.session.currentFrame
     let featurePoints = currentFrame?.rawFeaturePoints?.points
-
-    if self.shapeManager.getShapeNodes().count > maxcrumbCount // next do distance from origin, and time making map
+    print(shapeManager.getShapeNodes())
+    if shapeManager.getShapeNodes().count > 0
+    {
+      var firstnode = shapeManager.getShapeNodes()[0]
+      print(firstnode.position)
+      
+    }
+    if self.shapeManager.getShapeNodes().count > maxcrumbCount //&& minutes && nodeDistance(first: camera_pos, second: firstnode?.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.5   // next do distance from origin, and time making map
     {
       // Makes the user turn around to get the feature points in the frame
       let alert = UIAlertController(title: "Alert", message: "Look at the whole map", preferredStyle: .alert)
@@ -838,6 +855,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print("This is the closest BC")
       dump(nearestShapes)
     }
+    print("hours = \(hour):\(minutes):\(seconds)")
     // part one recognize that you are at a checkpoint
     if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
     {
