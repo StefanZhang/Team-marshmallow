@@ -11,23 +11,24 @@ import PlacenoteSDK
 
 var Destination_array = [String]() // Store Destination Name
 
-class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    
+class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pickerView: UIPickerView!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var tempArray = ["Fetching Destinations..."]
+    var tempArray = ["Fetching Places..."]
     var search = [String]()
     var searching = false
     var selectedPlace = ""
+    var pickerData: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         SetUpNaviBar()
-        
+        pickerData = ["all places","bathroom","classroom"]
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
@@ -109,8 +110,8 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         return self.selectedPlace
     }
     
-    func setPlaceArray(){
-        tempArray = appDelegate.getDestinationName()
+    func setPlaceArray(_ array: [String]){
+        tempArray = array
         let farray = tempArray.filter {$0 != "DefaultDest"}
         tempArray = farray
         tempArray.sort()
@@ -119,9 +120,50 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            self.setPlaceArray()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.setPlaceArray(self.appDelegate.getDestinationName())
         })
     }
-
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // determines the number of rows in the picker view
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    
+    // Populates each row of the picker view
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return pickerData[row]
+    }
+    
+    // Sets up the font displayed in the filter picker view
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont(name: "Times New Roman", size: 16)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = pickerData[row]
+        pickerLabel?.textColor = UIColor.black
+        
+        return pickerLabel!
+    }
+    
+    // when picker view function is changed
+    // filters the main table view
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(pickerData[row])
+        var tempDict = appDelegate.getCategoryDict()
+        if (pickerData[row] == "all places"){
+            self.setPlaceArray(self.appDelegate.getDestinationName())
+        }
+        else{
+            self.setPlaceArray(tempDict[pickerData[row]]!)
+        }
+    }
+    
 }
