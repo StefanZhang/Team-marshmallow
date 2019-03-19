@@ -27,7 +27,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SetUpNaviBar()
+        SetUpLeftNaviBar()
         pickerData = ["all places","bathroom","classroom"]
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
