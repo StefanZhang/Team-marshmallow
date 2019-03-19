@@ -66,7 +66,7 @@ class PriorityQueue {
     @discardableResult
     public func remove() throws -> Vertex<String> {
         guard self.queue.count > 0 else {
-            var NodeError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Object does not exist"])
+            let NodeError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Object does not exist"])
             throw NodeError
         }
         return self.popAndHeapifyDown()
@@ -120,6 +120,15 @@ class PriorityQueue {
         return Int(parent)
     }
     
+    private func find_child(index: Int, side: String) -> Int
+    {
+        if side == "Right"
+        {
+            return (index * 2) + 2
+        }
+        return (index * 2) + 1
+    }
+    
     /**
      Restores the min heap order of the queue by moving an item towards the beginning of the queue.
      - parameter index: The index of the item to move.
@@ -127,12 +136,11 @@ class PriorityQueue {
     private func heapifyUp(from index: Int) {
         var child = index
         var parent = self.find_parent(index: child)
-        
-//        while parent >= 0 && self.queue[parent] > self.queue[child] {
-//            swap(parent, with: child)
-//            child = parent
-//            parent = child.parent
-//        }
+        let mid = index
+        while parent >= 0 && parent > child {
+            child = parent
+            parent = find_parent(index: mid)
+        }
     }
     
     /**
@@ -142,23 +150,22 @@ class PriorityQueue {
         var parent = 0
         
         while true {
-            let leftChild = (parent * 2) + 1
+            let leftChild = find_child(index: parent, side: "Left")
             if leftChild >= self.queue.count {
                 break
             }
             
-            let rightChild = (parent * 2) + 2
+            let rightChild = find_child(index: parent, side: "Right")
             var minChild = leftChild
-//            if rightChild < self.queue.count && self.queue[minChild] > self.queue[rightChild] {
-//                minChild = rightChild
-//            }
-//
-//            if self.queue[parent] > self.queue[minChild] {
-//                self.swap(parent, with: minChild)
-//                parent = minChild
-//            } else {
-//                break
-//            }
+            if rightChild < self.queue.count && minChild > rightChild {
+                minChild = rightChild
+            }
+
+            if parent > minChild {
+                parent = minChild
+            } else {
+                break
+            }
         }
 }
 }
