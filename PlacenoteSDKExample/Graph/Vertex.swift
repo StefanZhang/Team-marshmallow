@@ -13,6 +13,9 @@ import Foundation
 
 public struct Vertex<T: Hashable> {
     var data: T
+//    var leftChild: T
+//    var rightChild: T
+//    var parent: T
     init(loc: T) {
         data = loc
     }

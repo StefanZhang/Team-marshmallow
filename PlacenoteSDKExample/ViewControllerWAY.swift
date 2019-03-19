@@ -14,31 +14,42 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var btnHere: UIButton!
     
-    var appdelegate:AppDelegate!
-    var tempArray = ["Stumpf", "Weber", "Behar", "Chadwick", "Eames", "Bennett", "Brisel", "Blueprint (ELT)", "Rudder", "Kelley (ELT)", "Action Office (ELT)", "Setu", "Studio 7.5"]
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var tempArray = ["Fetching Destinations..."]
     var search = [String]()
     var searching = false
     var selectedPlace = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SetUpNaviBar()
+        
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
-        self.btnHere.isHidden = true
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
     }
     
+    func SetUpNaviBar(){
+        
+        let MenuButton = UIButton(type: .system)
+        let buttonImage = UIImage(named: "menu_icon")
+        MenuButton.setImage(buttonImage, for: .normal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: MenuButton)
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        //super.viewWillAppear(animated)
+        //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        //super.viewWillDisappear(animated)
+        //navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     
@@ -72,47 +83,42 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         searching = false
         searchBar.text = ""
         self.tableView.reloadData()
-        self.hideKeyboard()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searching == false{
             selectedPlace = self.tempArray[indexPath.row]
-            print(selectedPlace)
-            self.hideKeyboard()
         }
         else{
             selectedPlace = self.search[indexPath.row]
-            print(selectedPlace)
             self.searchBarCancelButtonClicked(searchBar)
             // to highlight the selected row after selecting it from a search
             let indexPath2 = IndexPath(row: tempArray.firstIndex(of: selectedPlace)!, section: 0)
             self.tableView.selectRow(at: indexPath2, animated: true, scrollPosition: UITableViewScrollPosition.middle)
             // still a shadow after the row is selected
             // only after using search to find place
-            self.hideKeyboard()
         }
-        self.btnHere.isHidden = false
+        print(selectedPlace)
+        print(appDelegate.WhichMapANDWhichPos(DestName: selectedPlace))
     }
     
-
-}
-
-extension UIViewController
-{
-    func hideKeyboard()
-    {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(UIViewController.dismissKeyboard))
-        
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+    func getSelectedPlace() -> String{
+        return self.selectedPlace
     }
     
-    @objc func dismissKeyboard()
-    {
-        view.endEditing(true)
+    func setPlaceArray(){
+        tempArray = appDelegate.getDestinationName()
+        let farray = tempArray.filter {$0 != "DefaultDest"}
+        tempArray = farray
+        tempArray.sort()
+        self.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+            self.setPlaceArray()
+        })
     }
 }
 
