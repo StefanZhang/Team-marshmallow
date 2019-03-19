@@ -13,14 +13,15 @@ var Destination_array = [String]() // Store Destination Name
 
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Destinations..."]
     var search = [String]()
     var searching = false
     var selectedPlace = ""
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
