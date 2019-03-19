@@ -66,7 +66,8 @@ class PriorityQueue {
     @discardableResult
     public func remove() throws -> Vertex<String> {
         guard self.queue.count > 0 else {
-            
+            var NodeError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Object does not exist"])
+            throw NodeError
         }
         return self.popAndHeapifyDown()
     }
@@ -127,11 +128,11 @@ class PriorityQueue {
         var child = index
         var parent = self.find_parent(index: child)
         
-        while parent >= 0 && self.queue[parent] > self.queue[child] {
-            swap(parent, with: child)
-            child = parent
-            parent = child.parent
-        }
+//        while parent >= 0 && self.queue[parent] > self.queue[child] {
+//            swap(parent, with: child)
+//            child = parent
+//            parent = child.parent
+//        }
     }
     
     /**
@@ -148,16 +149,16 @@ class PriorityQueue {
             
             let rightChild = (parent * 2) + 2
             var minChild = leftChild
-            if rightChild < self.queue.count && self.queue[minChild] > self.queue[rightChild] {
-                minChild = rightChild
-            }
-            
-            if self.queue[parent] > self.queue[minChild] {
-                self.swap(parent, with: minChild)
-                parent = minChild
-            } else {
-                break
-            }
+//            if rightChild < self.queue.count && self.queue[minChild] > self.queue[rightChild] {
+//                minChild = rightChild
+//            }
+//
+//            if self.queue[parent] > self.queue[minChild] {
+//                self.swap(parent, with: minChild)
+//                parent = minChild
+//            } else {
+//                break
+//            }
         }
 }
 }
