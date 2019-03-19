@@ -55,7 +55,7 @@ protocol Queue {
 }
 
 class PriorityQueue {
-    var queue = Array<Int>()
+    var queue = Array<Vertex<String>>()
     @discardableResult
     public func add(_ item: Vertex<String>) -> Bool {
         self.queue.append(item)
@@ -105,7 +105,7 @@ class PriorityQueue {
         return firstItem
     }
     
-    private func find_parent(index: Int){
+    private func find_parent(index: Int) -> Int {
         var parent = 0.0
         if index % 2 == 0
         {
@@ -125,7 +125,7 @@ class PriorityQueue {
      */
     private func heapifyUp(from index: Int) {
         var child = index
-        var parent = self.find_parent(child)
+        var parent = self.find_parent(index: child)
         
         while parent >= 0 && self.queue[parent] > self.queue[child] {
             swap(parent, with: child)
