@@ -338,6 +338,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return MapLocationDict
     }
     
+    func getCategoryDict() -> [String:[String]] {
+        return CategoryDict
+    }
+    
     // Getter for Destination Names
     func getDestinationName() -> [String] {
         return DestinationName_array
