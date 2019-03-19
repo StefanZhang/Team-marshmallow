@@ -4,18 +4,18 @@ Details of how the ultimate navigation works:
 
 Admin
 1.
-Make prompt for checkpoint dropping
+Make prompt for checkpoint dropping.  Done
 
 User
 2.
-You have arrived pop up
+You have arrived pop up Done
 
 Navigation
 3.
-Make the dictionary for checkpoint location
-Make Queue/Stack for highest priority map
-Store maps as vertecies for A* algorithm
-Make the findNextCheckpoint button
+Make the dictionary for checkpoint location. Done
+Make Queue/Stack for highest priority map. Done
+Store maps as vertecies for A* algorithm Done
+Make the findNextCheckpoint button Waiting on View Controller
 	
 General process:
 

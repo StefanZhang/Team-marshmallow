@@ -37,11 +37,11 @@ var FeatureCount = 0
 
 // This is the limit for when the user is prompted about checking the map to see if 
 // the map is too large
-var maxcrumbCount = 15
+var maxcrumbCount = 25
 
 // Goes into the calculation for the max size
-let date = Date()
-let calendar = Calendar.current
+var date = Date()
+var calendar = Calendar.current
 
 // default not to drop breadcrumbs
 var canDropBC = false
@@ -93,6 +93,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var hour    = 0
   private var minutes = 0
   private var seconds = 0
+  private var maxSizeReached = false
   
   
   //Application related variables
@@ -786,61 +787,61 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let image: CVPixelBuffer = didUpdate.capturedImage
     let pose: matrix_float4x4 = didUpdate.camera.transform
     // Gets the current amount of feature points in a frame
-    let currentFrame = scnView.session.currentFrame
-    let featurePoints = currentFrame?.rawFeaturePoints?.points
-    print(shapeManager.getShapeNodes())
+
+    let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+    
     if shapeManager.getShapeNodes().count > 0
     {
-      var firstnode = shapeManager.getShapeNodes()[0]
-      print(firstnode.position)
+      let firstnode = shapeManager.getShapeNodes()[0]
+      date = Date()
+      calendar = Calendar.current
+      var mappingTime = calendar.component(.minute, from: date)
+      var maxTime = false
       
-    }
-    if self.shapeManager.getShapeNodes().count > maxcrumbCount //&& minutes && nodeDistance(first: camera_pos, second: firstnode?.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.5   // next do distance from origin, and time making map
-    {
-      // Makes the user turn around to get the feature points in the frame
-      let alert = UIAlertController(title: "Alert", message: "Look at the whole map", preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-        switch action.style{
-        case .default:
-          print("default")
-          
-        case .cancel:
-          print("cancel")
-          
-        case .destructive:
-          print("destructive")
-          
-          
-        }}))
-      self.present(alert, animated: true, completion: nil)
-      maxcrumbCount += 10
-    }
-    if featurePoints?.count != nil
-    {
-      if featurePoints!.count > 800
+      if mappingTime < 0
       {
-        let alert = UIAlertController(title: "Alert", message: "Max Map Size" + String(featurePoints!.count), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-          switch action.style{
-          case .default:
-            print("default")
-            
-          case .cancel:
-            print("cancel")
-            
-          case .destructive:
-            print("destructive")
-            
-            
-          }}))
-        self.present(alert, animated: true, completion: nil)
+        mappingTime += 60
+      }
+      
+      // If it has been longer than 5 minutes set the maxTime to true
+      if String(mappingTime % 60) + ":" + String(calendar.component(.second, from: date)) == String(minutes + 5 % 60) + ":" + String(seconds)
+      {
+        maxTime = true
+      }
+      
+      // If the Admin has been walking for an excessive amount of time this will tell them to stop and make a new map
+      if self.shapeManager.getShapeNodes().count > maxcrumbCount || maxTime || nodeDistance(first: camLoc, second: firstnode.position) > 45
+      {
+        if maxSizeReached == false
+        {
+          // Makes the user turn around to get the feature points in the frame
+          let alert = UIAlertController(title: "Alert", message: "Maximum Map size reached, drop Chekpoint and Save Map", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+              print("default")
+              
+            case .cancel:
+              print("cancel")
+              
+            case .destructive:
+              print("destructive")
+              
+              
+            }}))
+          self.present(alert, animated: true, completion: nil)
+          maxSizeReached = true
+        }
+
         
       }
+      
     }
+    
     //changed
     //let camPos = pose.columns.3
     // Camera Location in Vector3
-    let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+    
     let distance = Float(1.5)
     if (nodeDistance(first: camLoc, second: last_loc) > distance && canDropBC == true){
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
@@ -855,7 +856,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print("This is the closest BC")
       dump(nearestShapes)
     }
-    print("hours = \(hour):\(minutes):\(seconds)")
+
     // part one recognize that you are at a checkpoint
     if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
     {
