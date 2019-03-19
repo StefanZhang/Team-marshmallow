@@ -839,7 +839,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       dump(nearestShapes)
     }
     // part one recognize that you are at a checkpoint
-    if (self.newMapfound == false && canDropBC == false)
+    if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
     {
       
       updateGraph()
@@ -1019,6 +1019,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   // Finds out if the user is at a checkpoint or not (must be at least 1 object placed in the map to work)
   func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
+      print(shapeManager.getShapePositions().count)
     if shapeManager.getShapePositions().count > 0 {
     for position in shapeManager.getShapePositions()
     {
@@ -1026,6 +1027,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 
       let node = Hash_Node_Dict[pos]
       let tre = node?.geometry?.description
+      print(tre)
       if(tre != nil)
       {
         let T = Array(tre!)[4]
@@ -1049,7 +1051,30 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                 
               }}))
             self.present(alert, animated: true, completion: nil)
-            dump("HEEEEEEREEEEE")
+
+            return true
+          }
+        }
+        else if(T == "P")
+        {
+          if (nodeDistance(first: camera_pos, second: node?.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.5)
+          {
+            let alert = UIAlertController(title: "Alert", message: "You have arrived", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+              switch action.style{
+              case .default:
+                print("default")
+                
+              case .cancel:
+                print("cancel")
+                
+              case .destructive:
+                print("destructive")
+                
+                
+              }}))
+            self.present(alert, animated: true, completion: nil)
+            
             return true
           }
         }
