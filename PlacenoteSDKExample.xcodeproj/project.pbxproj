@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2524EEE72242A2FD00C5DC81 /* MenuLauncherWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524EEE62242A2FD00C5DC81 /* MenuLauncherWT.swift */; };
+		2524EEE92242ACFC00C5DC81 /* MenuCellWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524EEE82242ACFC00C5DC81 /* MenuCellWT.swift */; };
+		2524EEEB2242AE4700C5DC81 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524EEEA2242AE4700C5DC81 /* BaseCell.swift */; };
+		2524EEED2242B1CB00C5DC81 /* UIViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524EEEC2242B1CB00C5DC81 /* UIViewHelper.swift */; };
 		7FBF965C5C3B1E5C0F8DE1AB /* Pods_PlacenoteSDKExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC572E55F179D977C01BA451 /* Pods_PlacenoteSDKExample.framework */; };
 		840963372224F8E900AE4C02 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840963362224F8E900AE4C02 /* AdminLoginViewController.swift */; };
 		841987002202696000404F88 /* NavigationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841986FF2202696000404F88 /* NavigationNode.swift */; };
@@ -30,6 +33,9 @@
 
 /* Begin PBXFileReference section */
 		2524EEE62242A2FD00C5DC81 /* MenuLauncherWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLauncherWT.swift; sourceTree = "<group>"; };
+		2524EEE82242ACFC00C5DC81 /* MenuCellWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellWT.swift; sourceTree = "<group>"; };
+		2524EEEA2242AE4700C5DC81 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		2524EEEC2242B1CB00C5DC81 /* UIViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewHelper.swift; sourceTree = "<group>"; };
 		2904538A54D1EA278D335F50 /* Pods-PlacenoteSDKExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.release.xcconfig"; sourceTree = "<group>"; };
 		840963362224F8E900AE4C02 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		841986FF2202696000404F88 /* NavigationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationNode.swift; sourceTree = "<group>"; };
@@ -120,6 +126,9 @@
 				840963362224F8E900AE4C02 /* AdminLoginViewController.swift */,
 				8421BD11223C2C570006F617 /* MapSort.swift */,
 				2524EEE62242A2FD00C5DC81 /* MenuLauncherWT.swift */,
+				2524EEE82242ACFC00C5DC81 /* MenuCellWT.swift */,
+				2524EEEA2242AE4700C5DC81 /* BaseCell.swift */,
+				2524EEEC2242B1CB00C5DC81 /* UIViewHelper.swift */,
 			);
 			path = PlacenoteSDKExample;
 			sourceTree = "<group>";
@@ -265,7 +274,10 @@
 				A28C7992202A48190052F3FB /* ShapeType.swift in Sources */,
 				A28C7963202A46F40052F3FB /* AppDelegate.swift in Sources */,
 				A9BA5F032201067A00998DFB /* Vertex.swift in Sources */,
+				2524EEEB2242AE4700C5DC81 /* BaseCell.swift in Sources */,
+				2524EEE92242ACFC00C5DC81 /* MenuCellWT.swift in Sources */,
 				840963372224F8E900AE4C02 /* AdminLoginViewController.swift in Sources */,
+				2524EEED2242B1CB00C5DC81 /* UIViewHelper.swift in Sources */,
 				8421BD12223C2C570006F617 /* MapSort.swift in Sources */,
 				2524EEE72242A2FD00C5DC81 /* MenuLauncherWT.swift in Sources */,
 				843AA8F2221377070070EF03 /* ViewControllerWT.swift in Sources */,

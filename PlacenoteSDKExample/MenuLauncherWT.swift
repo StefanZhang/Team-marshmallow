@@ -5,15 +5,27 @@
 //  Created by xiaofeng Zhang on 3/20/19.
 //  Copyright © 2019 Vertical. All rights reserved.
 //
+// Helper Launcher class for Menu in WTcontroller, to reduce the code in controller
+// 1. Black(gray) out the screen other then the menu with animation
+// 2. Display the menu
 
 import Foundation
 import UIKit
 
-class MenuLauncher: NSObject {
+// handle the info of each menu object, name being the bar name, and the imgName is icon name
+class MenuObject: NSObject {
+    let name: String
+    let imgName: String
     
-    // This function handles two things:
-    // 1. Black(gray) out the screen other then the menu with animation
-    // 2. Display the menu
+    init(name: String, imgName: String) {
+        self.name = name
+        self.imgName = imgName
+    }
+}
+
+class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    // Black out the sreen
     let blackview = UIView()
     
     let collectionview: UICollectionView = {
@@ -23,6 +35,14 @@ class MenuLauncher: NSObject {
         return colview
     }()
     
+    let cellID = "cellID"
+    
+    // Contains all the menu obejct
+    let MenuObjects: [MenuObject] = {
+        return [MenuObject(name: "Admin Login", imgName: "settings"), MenuObject(name: "User Instructions", imgName: "like"), MenuObject(name: "About HermanMiller", imgName: "home")]
+    }()
+    
+    // Display menu with specific coordinates and animation
     @objc func ShowMenu(){
         
         if let window = UIApplication.shared.keyWindow{
@@ -46,6 +66,7 @@ class MenuLauncher: NSObject {
         }
     }
     
+    // Fade out animation
     @objc func HandleDismiss(){
         UIView.animate(withDuration: 0.5, animations: {
             self.blackview.alpha = 0
@@ -56,12 +77,35 @@ class MenuLauncher: NSObject {
         })
     }
     
+    // set the number of cells will be display in menu bar
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MenuObjects.count
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MenuCell
+        
+        let menu = MenuObjects[indexPath.item]
+        cell.menu = menu
+        
+        return cell
+    }
     
+    // set the width and height of the cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 40)
+    }
+    
+    // reduce gap between cells (defualt 10)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
     
     override init() {
         super.init()
+        
+        collectionview.dataSource = self
+        collectionview.delegate = self
+        collectionview.register(MenuCell.self, forCellWithReuseIdentifier: cellID)
     }
-    
-    
 }
