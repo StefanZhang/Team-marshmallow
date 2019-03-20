@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2524EEE72242A2FD00C5DC81 /* MenuLauncherWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524EEE62242A2FD00C5DC81 /* MenuLauncherWT.swift */; };
 		7FBF965C5C3B1E5C0F8DE1AB /* Pods_PlacenoteSDKExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC572E55F179D977C01BA451 /* Pods_PlacenoteSDKExample.framework */; };
 		840963372224F8E900AE4C02 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840963362224F8E900AE4C02 /* AdminLoginViewController.swift */; };
 		841987002202696000404F88 /* NavigationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841986FF2202696000404F88 /* NavigationNode.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2524EEE62242A2FD00C5DC81 /* MenuLauncherWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLauncherWT.swift; sourceTree = "<group>"; };
 		2904538A54D1EA278D335F50 /* Pods-PlacenoteSDKExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.release.xcconfig"; sourceTree = "<group>"; };
 		840963362224F8E900AE4C02 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		841986FF2202696000404F88 /* NavigationNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationNode.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				842D53B1221E62FE00A4DBF7 /* UserLocalizationViewController.swift */,
 				840963362224F8E900AE4C02 /* AdminLoginViewController.swift */,
 				8421BD11223C2C570006F617 /* MapSort.swift */,
+				2524EEE62242A2FD00C5DC81 /* MenuLauncherWT.swift */,
 			);
 			path = PlacenoteSDKExample;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				A9BA5F032201067A00998DFB /* Vertex.swift in Sources */,
 				840963372224F8E900AE4C02 /* AdminLoginViewController.swift in Sources */,
 				8421BD12223C2C570006F617 /* MapSort.swift in Sources */,
+				2524EEE72242A2FD00C5DC81 /* MenuLauncherWT.swift in Sources */,
 				843AA8F2221377070070EF03 /* ViewControllerWT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
