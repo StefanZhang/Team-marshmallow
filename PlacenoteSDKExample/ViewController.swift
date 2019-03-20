@@ -862,11 +862,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     {
       
       updateGraph()
+      // If the user is at a checkpoint it will find the closest map and start loading it
       if (getClosetNode(camera_pos: camLoc, map: graph))
       {
-        print("Closest map:")
         let bestMap = findMap()
-        print(bestMap)
         mapLoading(map: bestMap.0, index: bestMap.1)
         self.newMapfound == true
         //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
@@ -882,21 +881,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     label.center = CGPoint(x: 160, y: 285)
     label.textAlignment = .center
-//    let frame = scnView.session.currentFrame
-//    let camera = frame?.camera
-//    let loc = camera?.transform
-//    let loc01 = loc?.columns.3
-//
-//    let x1 = loc01?.x ?? 0.000
-//    let y1 = loc01?.y ?? 0.000
-//    let z1 = loc01?.z ?? 0.000
-//
-//    let formattedx = String(format: "%.3f", x1)
-//    let formattedy = String(format: "%.3f", y1)
-//    let formattedz = String(format: "%.3f", z1)
-    
-//    label.text = //formattedx + "|" + formattedy + "|" + formattedz   //x + y + z
-//    self.view.addSubview(label)    //shapeManager.spawnNewBreadCrumb(position1: SCNVector3(x: 1.125, y: 2.256, z: 3.64))
+
 
     //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
     
@@ -923,7 +908,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   // Loads a map using the map name and the index in the list on maps
   func mapLoading(map: (String, LibPlacenote.MapMetadata), index: Int) -> Void
   {
-    let x = maps[index].0
+
     LibPlacenote.instance.loadMap(mapId: maps[index].0,
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
@@ -1038,7 +1023,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   // Finds out if the user is at a checkpoint or not (must be at least 1 object placed in the map to work)
   func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
-      print(shapeManager.getShapePositions().count)
+
     if shapeManager.getShapePositions().count > 0 {
     for position in shapeManager.getShapePositions()
     {
@@ -1046,7 +1031,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 
       let node = Hash_Node_Dict[pos]
       let tre = node?.geometry?.description
-      print(tre)
+
       if(tre != nil)
       {
         let T = Array(tre!)[4]
