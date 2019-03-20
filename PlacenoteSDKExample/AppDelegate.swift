@@ -36,14 +36,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var MapLocationDict = [String:String]()
     
     //AWS
-    var storyboard: UIStoryboard?
+    var storyboard: UIStoryboard? {
+        return UIStoryboard(name: "Main", bundle: nil)
+    }
     var navigationController: UINavigationController?
-    var adminLoginViewController: AdminLoginViewController?
+    var loginViewController: AdminLoginViewController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // setup logging
+        // setup AWS logging
         AWSDDLog.sharedInstance.logLevel = .verbose
+        AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         
         // AWS Cognito initialization
         setCognitoUserPool()
@@ -61,34 +64,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setCognitoUserPool() {
-        let CognitoIdentityUserPoolRegion: AWSRegionType = .USEast2
-        let CognitoIdentityUserPoolId = "us-east-2_eSmLbpR34"
-        let CognitoIdentityUserPoolAppClientId = "2ohb870m9b8ecat963666vpj6e"
-        let CognitoIdentityUserPoolAppClientSecret = "1a94e9itcfc25f4q33dj5oiv14sb850cb9jmuhfacohcej6avjk8"
         
-        // Warn user if configuration not updated
-        if (CognitoIdentityUserPoolId == "us-east-2_eSmLbpR34") {
-            let alertController = UIAlertController(title: "Invalid Configuration",
-                                                    message: "Please configure user pool constants in Constants.swift file.",
-                                                    preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            alertController.addAction(okAction)
-            
-            self.window?.rootViewController!.present(alertController, animated: true, completion:  nil)
-        }
+        let clientId:String = "2ohb870m9b8ecat963666vpj6e"
+        let poolId:String = "us-east-2_eSmLbpR34"
+        let clientSecret:String = "1a94e9itcfc25f4q33dj5oiv14sb850cb9jmuhfacohcej6avjk8"
+        let region:AWSRegionType = .USEast2
         
-        // setup service configuration
-        let serviceConfiguration = AWSServiceConfiguration(region: CognitoIdentityUserPoolRegion, credentialsProvider: nil)
-        
-        // create pool configuration
-        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoIdentityUserPoolAppClientId,
-                                                                        clientSecret: CognitoIdentityUserPoolAppClientSecret,
-                                                                        poolId: CognitoIdentityUserPoolId)
-        // initialize user pool client
-        AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: poolConfiguration, forKey: AWSCognitoUserPoolsSignInProviderKey)
-        // fetch the user pool client we initialized in above step
-        let pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
-        //self.storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let serviceConfiguration:AWSServiceConfiguration = AWSServiceConfiguration(region: region, credentialsProvider: nil)
+        let cognitoConfiguration:AWSCognitoIdentityUserPoolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: clientId, clientSecret: clientSecret, poolId: poolId)
+        AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: cognitoConfiguration, forKey: userPoolID)
+        let pool:AWSCognitoIdentityUserPool = AppDelegate.defaultUserPool()
         pool.delegate = self
     }
     
@@ -401,27 +386,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // AWS
 extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
     
-//    func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
-//        if (self.navigationController == nil) {
-//            self.navigationController = self.window?.rootViewController as? UINavigationController
-//        }
-//        
-//        if (self.adminLoginViewController == nil) {
-//            self.adminLoginViewController = self.storyboard?.instantiateViewController(withIdentifier: "adminLoginViewController") as? AdminLoginViewController
-//        }
-//        
-//        DispatchQueue.main.async {
-//            //self.navigationController!.popToRootViewController(animated: true)
-//            if(self.adminLoginViewController!.isViewLoaded || self.adminLoginViewController!.view.window == nil) {
-//                self.navigationController?.present(self.adminLoginViewController!, animated: true, completion: nil)
-//            }
-//            
-//        }
-//        return self.adminLoginViewController!
-//    }
     
-    
-    func startRememberDevice() -> AWSCognitoIdentityRememberDevice {
-        return self as! AWSCognitoIdentityRememberDevice
+    func startPasswordAuthentication() -> AWSCognitoIdentityPasswordAuthentication {
+        if(self.navigationController == nil) {
+            self.navigationController = self.window?.rootViewController as? UINavigationController
+        }
+        
+        if(self.loginViewController == nil) {
+            self.loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "adminLoginViewController") as? AdminLoginViewController
+        }
+        
+        DispatchQueue.main.async {
+            if(self.loginViewController!.isViewLoaded || self.loginViewController!.view.window == nil) {
+                self.navigationController?.present(self.loginViewController!, animated: true, completion: nil)
+            }
+        }
+        
+        return self.loginViewController!
     }
+    
+//    func startNewPasswordRequired() -> AWSCognitoIdentityNewPasswordRequired {
+//        if (self.resetPasswordViewController == nil) {
+//            self.resetPasswordViewController = self.storyboard?.instantiateViewController(withIdentifier: "adminLoginViewController") as? AdminLoginViewController
+//        }
+//
+//        DispatchQueue.main.async {
+//            if(self.resetPasswordViewController!.isViewLoaded || self.resetPasswordViewController!.view.window == nil) {
+//                self.navigationController?.present(self.resetPasswordViewController!, animated: true, completion: nil)
+//            }
+//        }
+//
+//        return self.resetPasswordViewController!
+//    }
+    //    func startRememberDevice() -> AWSCognitoIdentityRememberDevice {
+    //        return self as! AWSCognitoIdentityRememberDevice
+    //    }
 }

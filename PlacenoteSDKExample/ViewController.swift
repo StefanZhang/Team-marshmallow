@@ -12,6 +12,7 @@ import CoreLocation
 import SceneKit
 import ARKit
 import PlacenoteSDK
+import AWSCognitoIdentityProvider
 
 // Array of V3 of nearest breadcrumbs
 var nearestShapes = [SCNVector3]()
@@ -54,6 +55,8 @@ var Dest_Cat_Dict = [String:String]()
 //Dictionary that contains the checkpoint's vector3 as the key and their core location as the value
 var Checkpoint_Array = [String]()
 
+
+
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
   
   
@@ -77,7 +80,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   @IBOutlet var fileTransferLabel: UILabel!
   
   let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
- 
+  
+  // AWS user profile inititialization
+  var user:AWSCognitoIdentityUser?
+  var userAttributes:[AWSCognitoIdentityProviderAttributeType]?
   
   //AR Scene
   private var scnScene: SCNScene!
@@ -127,9 +133,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   //Setup view once loaded
   override func viewDidLoad() {
 
-    
-    
     super.viewDidLoad()
+    //AWS get user attributes to see if logged in already
+    self.fetchUserAttributes()
 
     setupView()
     setupScene()
@@ -177,6 +183,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     // Pause the view's session
     scnView.session.pause()
+  }
+  
+  func fetchUserAttributes() {
+    user = AppDelegate.defaultUserPool().currentUser()
+    user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
+      guard task.result != nil else {
+        return nil
+      }
+      self.userAttributes = task.result?.userAttributes
+      self.userAttributes?.forEach({ (attribute) in
+        print("Name: " + attribute.name!)
+      })
+      DispatchQueue.main.async {
+        //self.setAttributeValues()
+      }
+      return nil
+    })
   }
   
   //Function to setup the view and setup the AR Scene including options
