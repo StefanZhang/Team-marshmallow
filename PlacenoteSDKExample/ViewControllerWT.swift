@@ -16,6 +16,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Places..."] // placeholder when fetching array
@@ -73,6 +74,8 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         else{
             cell?.textLabel?.text = tempArray[indexPath.row]
         }
+        cell?.textLabel?.font = UIFont(name: "Ariel", size: 20)
+        cell?.textLabel?.textAlignment = .center
         return cell!
     }
     
@@ -80,6 +83,11 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         // if searchbar is being used
         search = tempArray.filter({$0.lowercased().prefix(searchText.count) == searchText.lowercased()})
         searching = true
+        if (self.pickerView.isHidden == false){
+            self.pickerView.isHidden = true
+            self.tableView.isHidden = false
+            segmentedControl.selectedSegmentIndex = 0
+        }
         self.tableView.reloadData()
     }
     
@@ -130,7 +138,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
                     // Array(Set()) is used around the array to make sure there are no duplicate values
                     self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
                     // show pickerview when table loads
-                    self.pickerView.isHidden = false
+                    self.tableView.isHidden = false
                     loop = false
                 }
             }
@@ -156,7 +164,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         var pickerLabel: UILabel? = (view as? UILabel)
         if pickerLabel == nil {
             pickerLabel = UILabel()
-            pickerLabel?.font = UIFont(name: "Times New Roman", size: 16)
+            pickerLabel?.font = UIFont(name: "Ariel", size: 20)
             pickerLabel?.textAlignment = .center
         }
         pickerLabel?.text = pickerData[row]
@@ -176,6 +184,19 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         else{ // filters by the type of destination the user wants
             self.setPlaceArray(tempDict[pickerData[row]]!)
+        }
+    }
+    @IBAction func indexChanged(_ sender: Any) {
+        switch segmentedControl.selectedSegmentIndex
+        {
+        case 0:
+            self.pickerView.isHidden = true
+            self.tableView.isHidden = false
+        case 1:
+            self.pickerView.isHidden = false
+            self.tableView.isHidden = true
+        default:
+            break
         }
     }
 }

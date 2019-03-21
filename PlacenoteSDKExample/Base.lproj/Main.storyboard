@@ -45,42 +45,42 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="30Y-d7-QGn">
-                                <rect key="frame" x="0.0" y="266" width="414" height="56"/>
+                                <rect key="frame" x="20" y="266" width="374" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Mqg-rI-qeK" id="wTP-8g-FgW"/>
                                 </connections>
                             </searchBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hmCircleLogo_white" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
-                                <rect key="frame" x="130" y="52" width="150" height="148"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="hmCircleLogo_white" translatesAutoresizingMaskIntoConstraints="NO" id="bDL-XK-jBy">
+                                <rect key="frame" x="132" y="52" width="150" height="148"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="148" id="360-bf-ma3"/>
                                     <constraint firstAttribute="width" constant="150" id="R4c-Pp-ddI"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-7J-p9H">
-                                <rect key="frame" x="0.0" y="322" width="240" height="128"/>
+                                <rect key="frame" x="20" y="322" width="374" height="157"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="JpM-Me-TtK"/>
-                                    <constraint firstAttribute="height" constant="128" id="NXo-pv-Uio"/>
+                                    <constraint firstAttribute="height" constant="157" id="WKI-77-jvx"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="6aL-16-JMP" style="IBUITableViewCellStyleDefault" id="t85-EA-2AO">
-                                        <rect key="frame" x="0.0" y="28" width="240" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t85-EA-2AO" id="Gju-g0-CYj">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6aL-16-JMP">
-                                                    <rect key="frame" x="16" y="0.0" width="208" height="43.5"/>
+                                                    <rect key="frame" x="20" y="0.0" width="334" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -102,11 +102,20 @@
                                     <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1ob-qf-Qik">
+                                <rect key="frame" x="132" y="487" width="150" height="29"/>
+                                <segments>
+                                    <segment title="Places"/>
+                                    <segment title="Filter"/>
+                                </segments>
+                                <connections>
+                                    <action selector="indexChanged:" destination="Mqg-rI-qeK" eventType="valueChanged" id="d6V-zt-27P"/>
+                                </connections>
+                            </segmentedControl>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Znb-dC-qTQ">
-                                <rect key="frame" x="248" y="322" width="158" height="128"/>
+                                <rect key="frame" x="20" y="322" width="374" height="157"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="0gl-MF-WD7"/>
-                                    <constraint firstAttribute="width" constant="158" id="MIN-Bn-eFo"/>
+                                    <constraint firstAttribute="height" constant="157" id="Wp5-Ic-jEv"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="Mqg-rI-qeK" id="hM7-ZS-QBB"/>
@@ -116,29 +125,35 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="1ob-qf-Qik" firstAttribute="top" secondItem="VY8-7J-p9H" secondAttribute="bottom" constant="8" symbolic="YES" id="1du-jY-ZYH"/>
                             <constraint firstItem="ah2-Y0-3Ng" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="101" id="3sn-CB-Fyc"/>
-                            <constraint firstItem="VY8-7J-p9H" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="44C-H9-JoZ"/>
+                            <constraint firstItem="VY8-7J-p9H" firstAttribute="trailing" secondItem="30Y-d7-QGn" secondAttribute="trailing" id="4Dc-Eg-YsH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dxk-LY-KR4" secondAttribute="trailing" constant="101" id="4eS-0V-KlV"/>
-                            <constraint firstAttribute="trailing" secondItem="Znb-dC-qTQ" secondAttribute="trailing" constant="8" id="4xg-Md-xkM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ah2-Y0-3Ng" secondAttribute="trailing" constant="101" id="6Xl-43-piI"/>
-                            <constraint firstItem="30Y-d7-QGn" firstAttribute="top" secondItem="RNd-19-nnl" secondAttribute="bottom" id="AYx-Zj-Ydt"/>
+                            <constraint firstItem="30Y-d7-QGn" firstAttribute="trailing" secondItem="miY-RM-DVz" secondAttribute="trailingMargin" id="BNU-9i-G2N"/>
                             <constraint firstItem="bDL-XK-jBy" firstAttribute="top" secondItem="NdQ-Mc-mGy" secondAttribute="bottom" constant="8" id="C7c-FW-AR6"/>
-                            <constraint firstAttribute="trailing" secondItem="Znb-dC-qTQ" secondAttribute="trailing" constant="8" id="KGT-d5-9za"/>
-                            <constraint firstAttribute="trailing" secondItem="30Y-d7-QGn" secondAttribute="trailing" id="MqH-sX-aSl"/>
+                            <constraint firstItem="VY8-7J-p9H" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="Lls-86-RFC"/>
                             <constraint firstAttribute="trailing" secondItem="RNd-19-nnl" secondAttribute="trailing" id="OYD-pr-JnO"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leading" id="OYS-bP-2MU"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="top" secondItem="ah2-Y0-3Ng" secondAttribute="bottom" constant="8" id="Ona-y9-1rY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bDL-XK-jBy" secondAttribute="trailing" constant="110" id="QfT-b1-3lA"/>
-                            <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leading" id="VyX-4G-TD1"/>
-                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="XGQ-rG-TbS"/>
-                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="ZEh-Uq-dMH"/>
+                            <constraint firstItem="VY8-7J-p9H" firstAttribute="centerX" secondItem="1ob-qf-Qik" secondAttribute="centerX" id="TaB-ei-MgS"/>
+                            <constraint firstItem="30Y-d7-QGn" firstAttribute="top" secondItem="RNd-19-nnl" secondAttribute="bottom" id="USz-dH-Sjq"/>
+                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="trailing" secondItem="miY-RM-DVz" secondAttribute="trailingMargin" id="YvG-NX-lhy"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="top" secondItem="bDL-XK-jBy" secondAttribute="bottom" constant="6" id="ZoM-vC-mEi"/>
-                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="leading" secondItem="VY8-7J-p9H" secondAttribute="trailing" constant="8" id="bbC-PS-INx"/>
-                            <constraint firstItem="VY8-7J-p9H" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leading" id="iVf-rV-xdE"/>
+                            <constraint firstItem="bDL-XK-jBy" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="112" id="a0S-06-bc2"/>
+                            <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" id="a1O-A1-A4D"/>
+                            <constraint firstItem="1ob-qf-Qik" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="112" id="bUL-G5-P02"/>
+                            <constraint firstItem="VY8-7J-p9H" firstAttribute="leading" secondItem="30Y-d7-QGn" secondAttribute="leading" id="d1C-3y-W3N"/>
+                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" id="f2q-Z2-juP"/>
+                            <constraint firstItem="bDL-XK-jBy" firstAttribute="top" secondItem="NdQ-Mc-mGy" secondAttribute="bottom" constant="8" id="gRm-S8-ug4"/>
                             <constraint firstItem="bDL-XK-jBy" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="110" id="jZi-Lu-JAx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1ob-qf-Qik" secondAttribute="trailing" constant="112" id="kzY-3M-kRg"/>
+                            <constraint firstItem="1ob-qf-Qik" firstAttribute="top" secondItem="VY8-7J-p9H" secondAttribute="bottom" constant="8" id="oGl-by-9fI"/>
                             <constraint firstItem="jMH-Hq-Nbo" firstAttribute="top" secondItem="dxk-LY-KR4" secondAttribute="bottom" constant="36" id="pne-tF-0Wh"/>
-                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="leading" secondItem="VY8-7J-p9H" secondAttribute="trailing" constant="8" id="qN2-6X-ub1"/>
+                            <constraint firstItem="Znb-dC-qTQ" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="qrb-iv-inI"/>
                             <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="101" id="ugb-Hi-NQf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bDL-XK-jBy" secondAttribute="trailing" constant="112" id="vSn-KW-REx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YEg-Du-yQD"/>
@@ -148,6 +163,7 @@
                         <outlet property="pickerView" destination="Znb-dC-qTQ" id="DMI-2o-6mc"/>
                         <outlet property="searchBar" destination="30Y-d7-QGn" id="m93-cD-ffw"/>
                         <outlet property="searchDisplayController" destination="44L-61-Y1w" id="IA1-Qb-wj8"/>
+                        <outlet property="segmentedControl" destination="1ob-qf-Qik" id="Jsk-dV-U9M"/>
                         <outlet property="tableView" destination="VY8-7J-p9H" id="wgQ-Jx-xyo"/>
                     </connections>
                 </viewController>
