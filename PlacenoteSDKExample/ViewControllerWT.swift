@@ -28,6 +28,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         self.pickerView.isHidden = true // hide the pickerview until the tableview is loaded
+        self.segmentedControl.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
         pickerData = ["all places","bathroom","classroom"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places
@@ -136,7 +137,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
                 // Array(Set()) is used around the array to make sure there are no duplicate values
                 self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
                 // show pickerview when table loads
-                self.tableView.isHidden = false
+                self.segmentedControl.isHidden = false
             }
         })
     }
