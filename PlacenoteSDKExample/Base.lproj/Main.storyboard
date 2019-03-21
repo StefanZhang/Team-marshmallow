@@ -543,6 +543,9 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="cls-Gq-Svo" kind="show" id="jyE-gs-TUu"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0JD-rA-XxT">
                                 <rect key="frame" x="0.0" y="201" width="414" height="48"/>
@@ -690,6 +693,26 @@
             </objects>
             <point key="canvasLocation" x="1992.753623188406" y="-734.59821428571422"/>
         </scene>
+        <!--View ControllerUM-->
+        <scene sceneID="h76-FT-yWu">
+            <objects>
+                <viewController id="cls-Gq-Svo" customClass="ViewControllerUM" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ULT-SA-No7"/>
+                        <viewControllerLayoutGuide type="bottom" id="yK4-iT-TCb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WWt-hb-12Z" customClass="ARSCNView">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <connections>
+                        <outlet property="userView" destination="WWt-hb-12Z" id="hUM-UP-mSr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I5w-dO-NPC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3039" y="-741"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="jIy-XH-2dj">
             <objects>
@@ -713,7 +736,8 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AsE-Zy-RWk"/>
-        <segue reference="942-2o-vEu"/>
+        <segue reference="het-dD-Qn7"/>
+        <segue reference="NzB-eX-ef0"/>
+        <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
