@@ -26,7 +26,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.pickerView.isHidden = true
         SetUpLeftNaviBar()
         pickerData = ["all places","bathroom","classroom"]
         tempArray.sort() // sorts list of places
@@ -127,8 +127,15 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.setPlaceArray(self.appDelegate.getDestinationName())
+        var loop = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            while loop{
+                if self.appDelegate.getDestinationName().count > 1{
+                    self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+                    self.pickerView.isHidden = false
+                    loop = false
+                }
+            }
         })
     }
     
@@ -166,7 +173,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         print(pickerData[row])
         var tempDict = appDelegate.getCategoryDict()
         if (pickerData[row] == "all places"){
-            self.setPlaceArray(self.appDelegate.getDestinationName())
+            self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
         }
         else{
             self.setPlaceArray(tempDict[pickerData[row]]!)
