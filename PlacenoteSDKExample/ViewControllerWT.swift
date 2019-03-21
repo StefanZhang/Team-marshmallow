@@ -131,16 +131,12 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        var loop = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            while loop{
-                if self.appDelegate.getDestinationName().count > 1{
-                    // Array(Set()) is used around the array to make sure there are no duplicate values
-                    self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
-                    // show pickerview when table loads
-                    self.tableView.isHidden = false
-                    loop = false
-                }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            if self.appDelegate.getDestinationName().count > 1{
+                // Array(Set()) is used around the array to make sure there are no duplicate values
+                self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+                // show pickerview when table loads
+                self.tableView.isHidden = false
             }
         })
     }
