@@ -45,11 +45,24 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     let menuLauncher = MenuLauncher()
+
     // This function get called once the menu botton is being hit
     // 1. Black(gray) out the screen other then the menu with animation
     // 2. Display the menu
     @objc func ShowMenu(){
+        menuLauncher.ViewControllerWT = self
         menuLauncher.ShowMenu()
+    }
+    
+    func showadminpage(){
+        let admin = ViewController()
+        
+        navigationController?.pushViewController(admin, animated: true)
+    }
+    
+    func showempty(){
+        let temp = UIViewController()
+        navigationController?.pushViewController(temp, animated: true)
     }
 
     

@@ -58,6 +58,6 @@ class MenuCell: BaseCell {
         // add height to icon
         addConstraintsWithFormat(format: "V:|[v0(25)]|", views: iconimageview)
         
-//        addConstraint(NSLayoutConstraint(item: iconimageview, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        //addConstraint(NSLayoutConstraint(item: iconimageview, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
     }
 }

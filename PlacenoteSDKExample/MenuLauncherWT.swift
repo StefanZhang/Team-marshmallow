@@ -28,6 +28,10 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     // Black out the sreen
     let blackview = UIView()
     
+    var ViewControllerWT: ViewControllerWT?
+    
+    //var ViewController: ViewController?
+    
     let collectionview: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let colview = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -93,12 +97,30 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     
     // set the width and height of the cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 40)
+        return CGSize(width: collectionView.frame.width, height: 30)
     }
     
     // reduce gap between cells (defualt 10)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return 15
+    }
+    
+    // handle the menu selection
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let menu = MenuObjects[indexPath.item]
+        
+        //HandleDismiss()
+        
+        if menu.name == "Admin Login"{
+            print("true")
+            self.ViewControllerWT?.showempty()
+            HandleDismiss()
+            
+        }
+        else{
+            print("false")
+        }
     }
     
     override init() {
