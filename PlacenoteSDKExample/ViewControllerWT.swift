@@ -43,8 +43,11 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func SetUpLeftNaviBar(){
         let MenuButton = UIBarButtonItem(image: UIImage(named: "menu_icon"), style: .plain, target: self, action: #selector(ShowMenu))
-    
+        let logoImage = UIImage(named: "hmCircleLogo")?.withRenderingMode(.alwaysOriginal)
+        let hrLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)
+        hrLogo.imageInsets = UIEdgeInsets(top: 0, left: 525, bottom: 00, right: 00)
         navigationItem.leftBarButtonItem = MenuButton
+        navigationItem.rightBarButtonItem = hrLogo
     }
     
     let menuLauncher = MenuLauncher()
