@@ -32,6 +32,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.pickerView.isHidden = true // hide the pickerview until the tableview is loaded
         self.segmentedControl.isHidden = true
         self.btnGo.isHidden = true
+        self.adminMode.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
         pickerData = ["all places","bathroom","classroom"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places

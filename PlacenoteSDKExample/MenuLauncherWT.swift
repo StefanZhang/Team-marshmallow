@@ -110,13 +110,11 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         
         let menu = MenuObjects[indexPath.item]
         
-        //HandleDismiss()
-        
         if menu.name == "Admin Login"{
             print("true")
-            self.ViewControllerWT?.showempty()
+            let view = ViewControllerWT
+            view?.adminMode.sendActions(for: .touchUpInside)
             HandleDismiss()
-            
         }
         else{
             print("false")
