@@ -152,6 +152,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="adminMode" destination="dxk-LY-KR4" id="sby-2l-Qpv"/>
                         <outlet property="btnGo" destination="ah2-Y0-3Ng" id="9Le-MT-j3g"/>
                         <outlet property="pickerView" destination="Znb-dC-qTQ" id="DMI-2o-6mc"/>
                         <outlet property="searchBar" destination="30Y-d7-QGn" id="m93-cD-ffw"/>

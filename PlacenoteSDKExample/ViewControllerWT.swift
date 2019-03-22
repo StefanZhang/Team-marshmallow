@@ -13,6 +13,7 @@ var Destination_array = [String]() // Store Destination Name
 
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak var adminMode: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickerView: UIPickerView!
