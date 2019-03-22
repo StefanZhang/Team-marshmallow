@@ -38,6 +38,8 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         searchBar.delegate = self
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur")!)
+        
     }
     
     
