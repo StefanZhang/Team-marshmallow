@@ -111,14 +111,17 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         let menu = MenuObjects[indexPath.item]
         
         if menu.name == "Admin Login"{
-            print("true")
             let view = ViewControllerWT
             view?.adminMode.sendActions(for: .touchUpInside)
             HandleDismiss()
         }
-        else{
-            print("false")
+        if menu.name == "User Instructions"{
+            print("instruction")
         }
+        if menu.name == "About HermanMiller"{
+            print("about")
+        }
+        
     }
     
     override init() {
