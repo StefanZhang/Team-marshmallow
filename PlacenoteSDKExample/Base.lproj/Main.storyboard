@@ -450,7 +450,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HQA-7p-g0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2119" y="-3"/>
+            <point key="canvasLocation" x="2123" y="-3"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WIx-HE-bO0">
@@ -659,6 +659,14 @@
                                     <segue destination="fY2-BX-kzM" kind="show" id="NzB-eX-ef0"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y11-9a-1h8">
+                                <rect key="frame" x="0.0" y="106" width="414" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -668,11 +676,12 @@
                     </view>
                     <connections>
                         <outlet property="navView" destination="jMz-Ut-B5F" id="Cdr-hV-Ykv"/>
+                        <outlet property="statusLabel" destination="y11-9a-1h8" id="lmN-AJ-vp4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1bd-m8-vPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992.753623188406" y="-734.59821428571422"/>
+            <point key="canvasLocation" x="1895.6521739130437" y="-731.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jIy-XH-2dj">
@@ -697,7 +706,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AsE-Zy-RWk"/>
-        <segue reference="942-2o-vEu"/>
+        <segue reference="NzB-eX-ef0"/>
+        <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>

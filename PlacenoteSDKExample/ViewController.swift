@@ -890,7 +890,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       {
         let bestMap = findMap()
         mapLoading(map: bestMap.0, index: bestMap.1)
-        self.newMapfound == true
+        self.newMapfound = true
         //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       }
     }
