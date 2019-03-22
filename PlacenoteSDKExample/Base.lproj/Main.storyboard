@@ -21,12 +21,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxk-LY-KR4">
-                                <rect key="frame" x="121" y="805" width="172" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxk-LY-KR4">
+                                <rect key="frame" x="20" y="52" width="52" height="36"/>
                                 <color key="backgroundColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="52" id="BKy-Lo-J2D"/>
+                                    <constraint firstAttribute="height" constant="36" id="azf-QX-PVP"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Admin Mode">
+                                <state key="normal" title="AM">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -78,23 +82,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah2-Y0-3Ng">
-                                <rect key="frame" x="121" y="761" width="172" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Begin">
-                                    <color key="titleColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
-                                </connections>
-                            </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1ob-qf-Qik">
                                 <rect key="frame" x="132" y="448" width="150" height="29"/>
                                 <segments>
@@ -112,32 +99,52 @@
                                     <outlet property="delegate" destination="Mqg-rI-qeK" id="RNE-6d-hf8"/>
                                 </connections>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah2-Y0-3Ng">
+                                <rect key="frame" x="147" y="757" width="120" height="65"/>
+                                <color key="backgroundColor" red="0.0" green="0.6705882352941176" blue="0.30196078431372547" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="KF5-Ux-4Lj"/>
+                                    <constraint firstAttribute="height" constant="65" id="ctf-7I-RyO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="52"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="GO">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="fY2-BX-kzM" kind="show" id="AsE-Zy-RWk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Znb-dC-qTQ" firstAttribute="top" secondItem="VY8-7J-p9H" secondAttribute="top" id="2pB-eP-q88"/>
-                            <constraint firstItem="ah2-Y0-3Ng" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="101" id="3sn-CB-Fyc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dxk-LY-KR4" secondAttribute="trailing" constant="101" id="4eS-0V-KlV"/>
                             <constraint firstItem="VY8-7J-p9H" firstAttribute="top" secondItem="30Y-d7-QGn" secondAttribute="bottom" id="6X4-11-Tzu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ah2-Y0-3Ng" secondAttribute="trailing" constant="101" id="6Xl-43-piI"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="top" secondItem="NdQ-Mc-mGy" secondAttribute="bottom" constant="80" id="80u-kW-Gtr"/>
                             <constraint firstItem="Znb-dC-qTQ" firstAttribute="leading" secondItem="VY8-7J-p9H" secondAttribute="leading" id="9Wr-hV-NjV"/>
                             <constraint firstAttribute="trailing" secondItem="RNd-19-nnl" secondAttribute="trailing" id="Aag-Qv-Kbv"/>
+                            <constraint firstItem="ah2-Y0-3Ng" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="127" id="BEQ-Zh-jCx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1ob-qf-Qik" secondAttribute="trailing" constant="112" id="BjL-fQ-Jem"/>
                             <constraint firstItem="VY8-7J-p9H" firstAttribute="trailing" secondItem="30Y-d7-QGn" secondAttribute="trailing" id="D9L-MO-4Ru"/>
                             <constraint firstItem="1ob-qf-Qik" firstAttribute="top" secondItem="Znb-dC-qTQ" secondAttribute="bottom" constant="8" symbolic="YES" id="EQV-mu-Feb"/>
                             <constraint firstItem="VY8-7J-p9H" firstAttribute="leading" secondItem="30Y-d7-QGn" secondAttribute="leading" id="IQA-mk-0Ij"/>
+                            <constraint firstItem="jMH-Hq-Nbo" firstAttribute="top" secondItem="ah2-Y0-3Ng" secondAttribute="bottom" constant="40" id="Ki3-0O-ahj"/>
                             <constraint firstItem="RNd-19-nnl" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leading" id="LeE-9k-Ze9"/>
-                            <constraint firstItem="dxk-LY-KR4" firstAttribute="top" secondItem="ah2-Y0-3Ng" secondAttribute="bottom" constant="8" id="Ona-y9-1rY"/>
+                            <constraint firstItem="dxk-LY-KR4" firstAttribute="top" secondItem="NdQ-Mc-mGy" secondAttribute="bottom" constant="8" id="NWs-bj-Xr2"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="trailing" secondItem="miY-RM-DVz" secondAttribute="trailingMargin" id="PfW-Il-qU6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ah2-Y0-3Ng" secondAttribute="trailing" constant="127" id="Ryu-gV-bXR"/>
+                            <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" id="SUc-oc-nxQ"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" id="VST-Yz-dfs"/>
                             <constraint firstItem="30Y-d7-QGn" firstAttribute="top" secondItem="RNd-19-nnl" secondAttribute="bottom" constant="25" id="Vmp-Q4-AsF"/>
                             <constraint firstItem="Znb-dC-qTQ" firstAttribute="trailing" secondItem="VY8-7J-p9H" secondAttribute="trailing" id="ZTh-ds-QZ4"/>
                             <constraint firstItem="1ob-qf-Qik" firstAttribute="top" secondItem="VY8-7J-p9H" secondAttribute="bottom" constant="8" symbolic="YES" id="fy6-c0-BQq"/>
                             <constraint firstItem="1ob-qf-Qik" firstAttribute="top" secondItem="VY8-7J-p9H" secondAttribute="bottom" constant="8" id="grQ-Pl-K3F"/>
                             <constraint firstItem="VY8-7J-p9H" firstAttribute="centerX" secondItem="1ob-qf-Qik" secondAttribute="centerX" id="iMv-e0-aYH"/>
-                            <constraint firstItem="jMH-Hq-Nbo" firstAttribute="top" secondItem="dxk-LY-KR4" secondAttribute="bottom" constant="36" id="pne-tF-0Wh"/>
-                            <constraint firstItem="dxk-LY-KR4" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="101" id="ugb-Hi-NQf"/>
                             <constraint firstItem="1ob-qf-Qik" firstAttribute="leading" secondItem="miY-RM-DVz" secondAttribute="leadingMargin" constant="112" id="yhI-7V-0RK"/>
                         </constraints>
                     </view>
@@ -145,6 +152,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="btnGo" destination="ah2-Y0-3Ng" id="9Le-MT-j3g"/>
                         <outlet property="pickerView" destination="Znb-dC-qTQ" id="DMI-2o-6mc"/>
                         <outlet property="searchBar" destination="30Y-d7-QGn" id="m93-cD-ffw"/>
                         <outlet property="searchDisplayController" destination="44L-61-Y1w" id="IA1-Qb-wj8"/>
