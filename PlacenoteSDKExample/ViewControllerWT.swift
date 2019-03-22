@@ -17,6 +17,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var btnGo: UIButton!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Places..."] // placeholder when fetching array
@@ -29,6 +30,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         super.viewDidLoad()
         self.pickerView.isHidden = true // hide the pickerview until the tableview is loaded
         self.segmentedControl.isHidden = true
+        self.btnGo.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
         pickerData = ["all places","bathroom","classroom"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places
@@ -38,13 +40,18 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         searchBar.delegate = self
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur")!)
+        
     }
     
     
     func SetUpLeftNaviBar(){
         let MenuButton = UIBarButtonItem(image: UIImage(named: "menu_icon"), style: .plain, target: self, action: #selector(ShowMenu))
-    
+        let logoImage = UIImage(named: "hmCircleLogo")?.withRenderingMode(.alwaysOriginal)
+        let hrLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)
+        hrLogo.imageInsets = UIEdgeInsets(top: 0, left: 525, bottom: 00, right: 00)
         navigationItem.leftBarButtonItem = MenuButton
+        navigationItem.rightBarButtonItem = hrLogo
     }
     
     let menuLauncher = MenuLauncher()
@@ -124,6 +131,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.btnGo.isHidden = false
         if searching == false{
             selectedPlace = self.tempArray[indexPath.row]
         }
