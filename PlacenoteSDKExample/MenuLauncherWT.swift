@@ -115,13 +115,18 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
             view?.adminMode.sendActions(for: .touchUpInside)
             HandleDismiss()
         }
+        
         if menu.name == "User Instructions"{
-            print("instruction")
-        }
-        if menu.name == "About HermanMiller"{
-            print("about")
+            let view = ViewControllerWT
+            view?.UserIns.sendActions(for: .touchUpInside)
+            HandleDismiss()
         }
         
+        if menu.name == "About HermanMiller"{
+            let view = ViewControllerWT
+            view?.about.sendActions(for: .touchUpInside)
+            HandleDismiss()
+        }
     }
     
     override init() {

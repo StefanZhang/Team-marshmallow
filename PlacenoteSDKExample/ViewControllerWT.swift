@@ -14,11 +14,13 @@ var Destination_array = [String]() // Store Destination Name
 class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak var adminMode: UIButton!
+    @IBOutlet weak var UserIns: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var btnGo: UIButton!
+    @IBOutlet weak var about: UIButton!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Places..."] // placeholder when fetching array
@@ -33,6 +35,8 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.segmentedControl.isHidden = true
         self.btnGo.isHidden = true
         self.adminMode.isHidden = true
+        self.UserIns.isHidden = true
+        self.about.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
         SetUpRightNaviBar()
         pickerData = ["all places","bathroom","classroom"] // types of places, hardcoded (for now)
