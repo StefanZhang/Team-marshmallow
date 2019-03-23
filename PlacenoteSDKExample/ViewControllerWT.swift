@@ -34,6 +34,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.btnGo.isHidden = true
         self.adminMode.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
+        SetUpRightNaviBar()
         pickerData = ["all places","bathroom","classroom"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places
         // setup delegates and data sources
@@ -46,17 +47,23 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         
     }
     
-    
     func SetUpLeftNaviBar(){
         let MenuButton = UIBarButtonItem(image: UIImage(named: "menu_icon"), style: .plain, target: self, action: #selector(ShowMenu))
-        let logoImage = UIImage(named: "hmCircleLogo")?.withRenderingMode(.alwaysOriginal)
-        let hrLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)
-        hrLogo.imageInsets = UIEdgeInsets(top: 0, left: 525, bottom: 00, right: 00)
         navigationItem.leftBarButtonItem = MenuButton
-        navigationItem.rightBarButtonItem = hrLogo
+    }
+    
+    func SetUpRightNaviBar(){
+        let logoButton = UIBarButtonItem(image: UIImage(named: "hmCircleLogo"), style: .plain, target: self, action: #selector(Showmap))
+        logoButton.imageInsets = UIEdgeInsets(top: 0, left: 525, bottom: 00, right: 00)
+        navigationItem.rightBarButtonItem = logoButton
     }
     
     let menuLauncher = MenuLauncher()
+    
+    
+    @objc func Showmap(){
+        print("Map!")
+    }
 
     // This function get called once the menu botton is being hit
     // 1. Black(gray) out the screen other then the menu with animation
@@ -65,18 +72,6 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         menuLauncher.ViewControllerWT = self
         menuLauncher.ShowMenu()
     }
-    
-    func showadminpage(){
-        let admin = ViewController()
-        
-        navigationController?.pushViewController(admin, animated: true)
-    }
-    
-    func showempty(){
-        let temp = UIViewController()
-        navigationController?.pushViewController(temp, animated: true)
-    }
-
     
     override func viewWillAppear(_ animated: Bool) {
         //super.viewWillAppear(animated)
