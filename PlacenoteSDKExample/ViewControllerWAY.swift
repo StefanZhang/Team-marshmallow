@@ -14,6 +14,9 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var btnHere: UIButton!
     
+    // Store the destination selected by WT
+    var destination : [String] = []
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Destinations..."]
     var search = [String]()
@@ -31,6 +34,11 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         searchBar.delegate = self
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
+        
+        // test destination
+        print("This is destination")
+        dump(destination)
+        
     }
     
     func SetUpNaviBar(){
@@ -119,6 +127,19 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             self.setPlaceArray()
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "WAYtoUM"){
+            let viewControllerUM = segue.destination as? ViewControllerUM
+            let selectedPlace = getSelectedPlace()
+            let result = appDelegate.WhichMapANDWhichPos(DestName: selectedPlace)
+            dump(result)
+            dump(self.destination)
+            
+            viewControllerUM?.destination = self.destination
+            viewControllerUM?.initialLocation = result
+        }
     }
 }
 

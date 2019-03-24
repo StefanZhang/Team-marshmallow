@@ -261,4 +261,14 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         searchBar.frame.origin = CGPoint(x: 16, y: 229)
         return true
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "WTtoWAY"){
+            let viewControllerWAY = segue.destination as? ViewControllerWAY
+            let selectedPlace = getSelectedPlace()
+            let result = appDelegate.WhichMapANDWhichPos(DestName: selectedPlace)
+            dump(result)
+            viewControllerWAY?.destination = result
+        }
+    }
 }

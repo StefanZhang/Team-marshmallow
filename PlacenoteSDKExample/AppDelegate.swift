@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var DestPosDict = [String:String]() // Dict with key of Destination Name, val of corresponding corrdinates
     var ultimateGraph = AdjacencyList<String>() // Graph for all the maps. used in ultimate navigation
     
+    var allVertices = [Vertex<String>]()
     // Dictionary for map location. key is mapname. value is lat+lon+alt
     var MapLocationDict = [String:String]()
     
@@ -87,11 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // for ultimate navigation
-    func graphOfMaps() {
+    func createGraphOfMaps() {
         //let ultimateGraph = AdjacencyList<String>()
        
         //let mapLocArray = Array(MapLocationDict.values)
-        var allVertices = [Vertex<String>]()
+        
         
         for mapLoc in MapLocationDict.values {
             allVertices.append(ultimateGraph.createVertex(data: mapLoc))
@@ -105,11 +106,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("This is the ultimate graph")
 //        dump(ultimateGraph)
         // later will be moved into the user navigation viewcontroller
-        if (!allVertices.isEmpty){
-            let maps = aStarForMaps(start: allVertices.first!, destination: allVertices.last!)
-            dump(maps)
-            
-        }
+//        if (!allVertices.isEmpty){
+//            let maps = aStarForMaps(start: allVertices.first!, destination: allVertices.last!)
+//            dump(maps)
+//            
+//        }
         
     }
     
@@ -305,7 +306,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         // for ultimate navigation
-        graphOfMaps()
+        createGraphOfMaps()
         
 //        print("This is mapLocationDict")
 //        dump(MapLocationDict)
