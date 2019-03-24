@@ -70,7 +70,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func SetUpRightNaviBar(){
         let logoImage = UIImage(named: "hmCircleLogo")?.withRenderingMode(.alwaysOriginal)
-        let logoButton = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: #selector(Showmap))
+        let logoButton = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: #selector(aboutHM))
         logoButton.imageInsets = UIEdgeInsets(top: 0, left: 525, bottom: 00, right: 00)
         navigationItem.rightBarButtonItem = logoButton
     }
@@ -78,8 +78,8 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     let menuLauncher = MenuLauncher()
     
     
-    @objc func Showmap(){
-        print("Map!")
+    @objc func aboutHM(){
+        self.about.sendActions(for: .touchUpInside)
     }
 
     // This function get called once the menu botton is being hit

@@ -43,7 +43,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     
     // Contains all the menu obejct
     let MenuObjects: [MenuObject] = {
-        return [MenuObject(name: "Admin Login", imgName: "settings"), MenuObject(name: "User Instructions", imgName: "like"), MenuObject(name: "About HermanMiller", imgName: "home")]
+        return [MenuObject(name: "Admin Login", imgName: "settings"), MenuObject(name: "User Instructions", imgName: "like"), MenuObject(name: "Floor Map", imgName: "home")]
     }()
     
     // Display menu with specific coordinates and animation
@@ -122,9 +122,8 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
             HandleDismiss()
         }
         
-        if menu.name == "About HermanMiller"{
-            let view = ViewControllerWT
-            view?.about.sendActions(for: .touchUpInside)
+        if menu.name == "Floor Map"{
+            print("Floor map")
             HandleDismiss()
         }
     }
