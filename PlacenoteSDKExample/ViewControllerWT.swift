@@ -54,7 +54,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         if self.bigPhones.contains(self.modelName){
             // if the user has an iPhone X, need to change where the search bar goes
             searchBar.frame.size = CGSize(width: 343, height: 56)
-            searchBar.frame.origin = CGPoint(x: 16, y: 229)
+            searchBar.frame.origin = CGPoint(x: 16, y: 253)
         }
         else{
             searchBar.frame.size = CGSize(width: 343, height: 56)
@@ -262,7 +262,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         if self.bigPhones.contains(self.modelName){
             // if the user has an iPhone X, need to change where the search bar goes
             searchBar.frame.size = CGSize(width: 374, height: 56)
-            searchBar.frame.origin = CGPoint(x: 0, y: 20)
+            searchBar.frame.origin = CGPoint(x: 0, y: 44)
         }
         else{
             searchBar.frame.size = CGSize(width: 374, height: 56)
@@ -276,7 +276,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         if self.bigPhones.contains(self.modelName){
             // if the user has an iPhone X, need to change where the search bar goes
             searchBar.frame.size = CGSize(width: 343, height: 56)
-            searchBar.frame.origin = CGPoint(x: 16, y: 229)
+            searchBar.frame.origin = CGPoint(x: 16, y: 253)
         }
         else{
             searchBar.frame.size = CGSize(width: 343, height: 56)
