@@ -48,7 +48,10 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur")!)
-        
+        // initialize search bar coordinates
+        searchBar.frame.size = CGSize(width: 343, height: 56)
+        searchBar.frame.origin = CGPoint(x: 16, y: 229)
+        searchBar.isUserInteractionEnabled = false
     }
     
     func SetUpLeftNaviBar(){
@@ -145,8 +148,10 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             // still a shadow after the row is selected
             // only after using search to find place
         }
-        print(selectedPlace)
-        print(appDelegate.WhichMapANDWhichPos(DestName: selectedPlace))
+        self.searchBar.endEditing(true)
+        //self.searchBarShouldEndEditing(searchBar)
+        //print(selectedPlace)
+        //print(appDelegate.WhichMapANDWhichPos(DestName: selectedPlace))
     }
     
     func getSelectedPlace() -> String{
@@ -169,8 +174,10 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             if self.appDelegate.getDestinationName().count > 1{
                 // Array(Set()) is used around the array to make sure there are no duplicate values
                 self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
-                // show pickerview when table loads
+                // show segmented control when table loads
                 self.segmentedControl.isHidden = false
+                // allow users to search
+                self.searchBar.isUserInteractionEnabled = true
             }
         })
     }
@@ -229,4 +236,19 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             break
         }
     }
+    
+    // when search bar is starting to be used
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.frame.size = CGSize(width: 374, height: 56)
+        searchBar.frame.origin = CGPoint(x: 0, y: 20)
+        return true
+    }
+    
+    // when search bar is done being used
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.frame.size = CGSize(width: 343, height: 56)
+        searchBar.frame.origin = CGPoint(x: 16, y: 229)
+        return true
+    }
+    
 }
