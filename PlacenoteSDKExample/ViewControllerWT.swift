@@ -41,7 +41,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.about.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
         SetUpRightNaviBar()
-        pickerData = ["all places","bathroom","classroom"] // types of places, hardcoded (for now)
+        pickerData = ["All Places","Bathroom","Conference Room","Other"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places
         // setup delegates and data sources
         tableView.dataSource = self
@@ -236,7 +236,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(pickerData[row])
         var tempDict = appDelegate.getCategoryDict()
-        if (pickerData[row] == "all places"){ // used to display all places
+        if (pickerData[row] == "All Places"){ // used to display all places
             // Array(Set()) is used around the array to make sure there are no duplicate values
             self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
         }
