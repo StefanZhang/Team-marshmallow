@@ -170,16 +170,27 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-            if self.appDelegate.getDestinationName().count > 1{
-                // Array(Set()) is used around the array to make sure there are no duplicate values
-                self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
-                // show segmented control when table loads
-                self.segmentedControl.isHidden = false
-                // allow users to search
-                self.searchBar.isUserInteractionEnabled = true
-            }
-        })
+        var counter = 0
+        weak var timer: Timer?
+        
+        // loops every second to see if destinations can be loaded
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0,
+                                     repeats: true) {
+                                        theTimer in
+                                        counter += 1
+                                        print(counter)
+                                        if self.appDelegate.getDestinationName().count > 1 {
+                                            // do stuff after destinations load in here
+                                            
+                                            // Array(Set()) is used around the array to make sure there are no duplicate values
+                                            self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+                                            // show segmented control when table loads
+                                            self.segmentedControl.isHidden = false
+                                            // allow users to search
+                                            self.searchBar.isUserInteractionEnabled = true
+                                            theTimer.invalidate()
+                                        }
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -250,5 +261,4 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         searchBar.frame.origin = CGPoint(x: 16, y: 229)
         return true
     }
-    
 }
