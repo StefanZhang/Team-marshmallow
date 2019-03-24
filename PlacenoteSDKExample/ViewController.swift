@@ -26,6 +26,9 @@ var Hash_Node_Dict = [String:SCNNode]()
 //Input map name from User
 var mapname = ""
 
+// destination category
+var destCat = "Bathroom"
+
 //Input destination name from user
 var destination_name_meta = ""
 
@@ -55,9 +58,21 @@ var Dest_Cat_Dict = [String:String]()
 //Dictionary that contains the checkpoint's vector3 as the key and their core location as the value
 var Checkpoint_Array = [String]()
 
+let pickerSet = ["Bathroom","Conference Room","Other"]
 
-
-class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+  
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {return 1}
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {return pickerSet.count}
+  
+  // this function returns
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    destCat = pickerSet[row]
+    print(destCat)
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { return pickerSet[row] }
   
   
   //UI Elements
@@ -1224,15 +1239,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewDestination(position_1: loc02)
 
       //Pop up the drop destination window
-      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination and Category", message: "Name it with a specific name, like 'Room 3320' and 'Study Room'", preferredStyle: UIAlertControllerStyle.alert)
+      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination and select Category", message: "Name the destination so it is unique, then scroll to select the category the destination falls under.", preferredStyle: UIAlertControllerStyle.alert)
 
       DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
         textField.placeholder = "Enter Destination name:"
       })
       
-      DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
-        textField.placeholder = "Enter Category:"
-      })
+//      DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
+//        textField.placeholder = "Enter Category:"
+//      })
+      
+      //Create a frame (placeholder/wrapper) for the picker and then create the picker
+      let pickerFrame: CGRect = CGRect(x: 35, y: 170, width: 200, height: 140) // CGRectMake(left, top, width, height) - left and top are like margins
+      let picker: UIPickerView = UIPickerView(frame: pickerFrame)
+      picker.delegate = self
+      picker.dataSource = self
+      
+      //Add the picker to the alert controller
+      DestinationName_alert.view.addSubview(picker)
       
       DestinationName_alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
         
@@ -1242,15 +1266,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           destination_pos = self.SCNV3toString(vec: loc02)
           Dest_Cat_Dict.removeAll()
           Dest_Pos_Dict[destination_name_meta] = destination_pos
+          Dest_Cat_Dict[destination_name_meta] = destCat
         }
         
-        if let category_name = DestinationName_alert.textFields?[1].text {
-          Dest_Cat_Dict.removeAll()
-          category_name_meta = category_name
-          Dest_Cat_Dict[destination_name_meta] = category_name_meta
-        }
+//        if let category_name = DestinationName_alert.textFields?[1].text {
+//          Dest_Cat_Dict.removeAll()
+//
+//
+//        }
         
       }))
+      
+      let height:NSLayoutConstraint = NSLayoutConstraint(item: DestinationName_alert.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.52)
+      DestinationName_alert.view.addConstraint(height)
       self.present(DestinationName_alert, animated: true, completion: nil)
 
     }
