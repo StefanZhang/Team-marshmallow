@@ -241,7 +241,13 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
         }
         else{ // filters by the type of destination the user wants
-            self.setPlaceArray(tempDict[pickerData[row]]!)
+            if tempDict[pickerData[row]] != nil{
+                self.setPlaceArray(tempDict[pickerData[row]]!)
+            }
+            else{
+                print("places dont exist")
+                self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+            }
         }
     }
     @IBAction func indexChanged(_ sender: Any) {
