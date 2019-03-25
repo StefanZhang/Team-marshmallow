@@ -20,12 +20,18 @@ class AdminLoginViewController: UIViewController {
     
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
+        
+        self.navigationItem.leftBarButtonItem  = logoutBarButtonItem
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     
+        //self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     @IBAction func loginPressed(_ sender: AnyObject) {
         //print(self.username.text!)
@@ -35,6 +41,11 @@ class AdminLoginViewController: UIViewController {
             self.passwordAuthenticationCompletion?.set(result: authDetails)
         }
     }
+    
+    @objc func GoBackUser(){
+        print("Here!")
+    }
+    
     
 }
 
