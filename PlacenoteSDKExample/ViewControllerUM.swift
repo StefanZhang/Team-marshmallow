@@ -195,10 +195,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 
                                                     //Use metadata acquired from fetchMapList
                                                     let userdata = self.maps[indexPath].1.userdata as? [String:Any]
-                                                    // This is placenote originally
-                                                    //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-                                                    //                                        self.statusLabel.text = "Map Loaded. Look Around"
-                                                    //                                      }
+                                                    
                                                     if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                                         self.userLabel.text = "Map Loaded. Look Around"
                                                     }

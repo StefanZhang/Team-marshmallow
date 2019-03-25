@@ -92,6 +92,8 @@ class ShapeManager {
         return false
     }
 
+    dump(shapeArray)
+    
      //This is placenote originially
     for item in shapeArray! { //left off here because I'm trying to keep the same color
       let x_string: String = item["shape"]!["x"]!
