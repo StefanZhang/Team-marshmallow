@@ -189,12 +189,17 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             let length = mapIDs.count
             for indexPath in 0..<length {
 
-                LibPlacenote.instance.loadMap(mapId: mapIDs[indexPath],
+                let id = mapIDs[indexPath]
+                LibPlacenote.instance.loadMap(mapId: id,
                                               downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                                 if (completed) {
 
+                                                    
                                                     //Use metadata acquired from fetchMapList
-                                                    let userdata = self.maps[indexPath].1.userdata as? [String:Any]
+                                                    print("This is map data")
+                                                    dump(self.maps[indexPath])
+                                                    let mapdata = self.maps[indexPath]
+                                                    let userdata = mapdata.1.userdata as? [String:Any]
                                                     
                                                     if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                                         self.userLabel.text = "Map Loaded. Look Around"
@@ -232,5 +237,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     }
     
     @IBAction func showPathButton(_ sender: Any) {
+        shapeManager.clearView()
+        let graph = AdjacencyList<String>()
+        let shapePositions = shapeManager.getShapePositions()
+        let shapeNodes = shapeManager.getShapeNodes()
+        
     }
 }
