@@ -22,9 +22,9 @@ class AdminLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
-        self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
+        
+        self.navigationItem.leftBarButtonItem  = logoutBarButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,7 +41,6 @@ class AdminLoginViewController: UIViewController {
             self.passwordAuthenticationCompletion?.set(result: authDetails)
         }
     }
-    
     
     @objc func GoBackUser(){
         print("Here!")

@@ -13,6 +13,7 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var btnHere: UIButton!
+    @IBOutlet weak var backbutton: UIButton!
     
     // Store the destination selected by WT
     var destination : [String] = []
@@ -25,29 +26,25 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.backbutton.isHidden = true
         SetUpNaviBar()
-        
         tempArray.sort() // sorts list of places
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
-        //navigationController?.isNavigationBarHidden = true
-        // Do any additional setup after loading the view.
-        
+
         // test destination
         print("This is destination")
         dump(destination)
-        
     }
     
     func SetUpNaviBar(){
-        
-        let MenuButton = UIButton(type: .system)
-        let buttonImage = UIImage(named: "menu_icon")
-        MenuButton.setImage(buttonImage, for: .normal)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: MenuButton)
-        
+        let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
+        navigationItem.leftBarButtonItem  = logoutBarButtonItem
+    }
+    
+    @objc func GoBackUser(){
+        self.backbutton.sendActions(for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {

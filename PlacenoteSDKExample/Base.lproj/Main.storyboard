@@ -657,7 +657,7 @@
                                     <outlet property="delegate" destination="fY2-BX-kzM" id="QWc-Kl-Zo9"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-jm-FSg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-jm-FSg" userLabel="BackWAY">
                                 <rect key="frame" x="20" y="52" width="34" height="30"/>
                                 <state key="normal" title="Back">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -692,6 +692,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backbutton" destination="gDL-jm-FSg" id="Ood-SZ-TGf"/>
                         <outlet property="btnHere" destination="o8g-OQ-BkH" id="PMF-7b-hPB"/>
                         <outlet property="searchBar" destination="Rl4-8B-qlP" id="KFU-4W-82I"/>
                         <outlet property="tableView" destination="sws-5f-t4C" id="Ya4-i4-ijw"/>
@@ -958,6 +959,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AsE-Zy-RWk"/>
-        <segue reference="zqz-A1-w9q"/>
+        <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
