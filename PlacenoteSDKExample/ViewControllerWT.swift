@@ -291,6 +291,16 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         return true
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "WTtoWAY"){
+            let viewControllerWAY = segue.destination as? ViewControllerWAY
+            let selectedPlace = getSelectedPlace()
+            let result = appDelegate.WhichMapANDWhichPos(DestName: selectedPlace)
+            dump(result)
+            viewControllerWAY?.destination = result
+        }
+    }
 }
 
 public extension UIDevice {
