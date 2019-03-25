@@ -439,7 +439,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1409" y="-3"/>
+            <point key="canvasLocation" x="932" y="-29"/>
         </scene>
         <!--Admin Login-->
         <scene sceneID="i1T-e3-Yn3">
@@ -465,7 +465,7 @@
                                     <color key="titleColor" red="0.99521893262863159" green="0.19826292991638184" blue="0.0015933444956317544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Mqg-rI-qeK" kind="show" id="942-2o-vEu"/>
+                                    <segue destination="Mqg-rI-qeK" kind="show" id="zqz-A1-w9q"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jXt-gS-cau">
@@ -510,7 +510,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HQA-7p-g0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2119" y="-3"/>
+            <point key="canvasLocation" x="1648" y="-29"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WIx-HE-bO0">
@@ -920,6 +920,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AsE-Zy-RWk"/>
-        <segue reference="TTY-d4-17w"/>
+        <segue reference="zqz-A1-w9q"/>
     </inferredMetricsTieBreakers>
 </document>
