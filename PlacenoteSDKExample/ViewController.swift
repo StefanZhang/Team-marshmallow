@@ -455,6 +455,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       tapRecognizer?.isEnabled = false
       localizationStarted = false
       toggleMappingUI(true) //hide mapping UI
+      canDropBC = false
     }
      updateGraph()
     
@@ -640,10 +641,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       
                                       //Use metadata acquired from fetchMapList
                                       let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
-                                      // This is placenote originally
-//                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-//                                        self.statusLabel.text = "Map Loaded. Look Around"
-//                                      }
+                                
                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                         self.statusLabel.text = "Map Loaded. Look Around"
                                       }
@@ -884,14 +882,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
         shapeManager.spawnNewBreadCrumb(position1: camLoc)
+        
+        dump(shapeManager.getShapeArray())
+        
         last_loc = camLoc
       }
     }
     
     nearestShapes = shapeManager.checkAdjacent(selfPos: camLoc, distance: 0.3)
     if (!nearestShapes.isEmpty) {
-      print("This is the closest BC")
-      dump(nearestShapes)
+//      print("This is the closest BC")
+//      dump(nearestShapes)
     }
 
     // part one recognize that you are at a checkpoint
@@ -912,19 +913,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     //part two delete everything from map and load next one
     // shapeManager.clearShapes()
     
-    
-    
-    // This is the camera position
-    
     label.center = CGPoint(x: 160, y: 285)
     label.textAlignment = .center
 
-
-    //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
-    
-    
-    
-    
     if (!LibPlacenote.instance.initialized()) {
       print("SDK is not initialized")
       return

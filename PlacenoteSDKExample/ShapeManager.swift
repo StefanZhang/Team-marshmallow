@@ -91,7 +91,7 @@ class ShapeManager {
         print ("Shape Manager: No shapes for this map")
         return false
     }
-
+    print("Test shape array")
     dump(shapeArray)
     
      //This is placenote originially
