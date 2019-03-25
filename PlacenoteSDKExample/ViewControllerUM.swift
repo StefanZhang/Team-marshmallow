@@ -86,7 +86,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var planesVizNodes = [UUID: SCNNode]();
     
     private var graph  = AdjacencyList<String>()
-    
+    private var mapStack = [Vertex<String>]()
     //let desination = ViewControllerWT.getSelectedPlace(ViewControllerWT)
 
     override func viewDidLoad() {
@@ -148,10 +148,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     }
     
     @IBAction func loadMapButton(_ sender: Any) {
-//        print("This is graph info")
-//        dump(appDelegate.allVertices)
-//        dump(appDelegate.ultimateGraph)
-//        
+        //print("This is graph info")
+        //dump(appDelegate.allVertices)
+        //dump(appDelegate.ultimateGraph)
+//
         let desMapName = destination[0]
         let initMapName = initialLocation[0]
         let desMapLoc = appDelegate.MapLocationDict[desMapName]
@@ -159,13 +159,81 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         
         let desVertex = getVertexByLoc(mapLoc: desMapLoc!)
         let initVertex = getVertexByLoc(mapLoc: initMapLoc!)
-//        print("This is desVertex")
-//        dump(desVertex)
-//        dump(initVertex)
         
-        let mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
-        dump(mapStack)
+        mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
+
+        maps = appDelegate.maps
+        
+        if (!mapStack.isEmpty){
+            userLabel.text = "Loading Map"
+            
+            var mapIDs = [String]()
+            var mapIndexArray = [Int]()
+            // For every map in the mapStack, find its mapID
+            for mapToLoad in mapStack {
+                var mapIndex = 0
+                for map in maps {
+                    let str = mapLocToString(lat: (map.1.location?.latitude)!, lon: (map.1.location?.longitude)!, alt: (map.1.location?.altitude)!)
+                    if (str == mapToLoad.description) {
+                        mapIDs.append(map.0)
+                        mapIndexArray.append(mapIndex)
+                        break
+                    }
+                    mapIndex += 1
+                }
+            }
+//            dump(maps)
+//            dump(mapIDs)
+//            dump(mapIndexArray)
+            
+            let length = mapIDs.count
+            for indexPath in 0..<length {
+
+                LibPlacenote.instance.loadMap(mapId: mapIDs[indexPath],
+                                              downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+                                                if (completed) {
+
+                                                    //Use metadata acquired from fetchMapList
+                                                    let userdata = self.maps[indexPath].1.userdata as? [String:Any]
+                                                    // This is placenote originally
+                                                    //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                                    //                                        self.statusLabel.text = "Map Loaded. Look Around"
+                                                    //                                      }
+                                                    if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                                        self.userLabel.text = "Map Loaded. Look Around"
+                                                    }
+                                                    else {
+                                                        self.userLabel.text = "Map Loaded. Shape file not found"
+                                                    }
+                                                    LibPlacenote.instance.startSession(extend: true)
+
+
+                                                    
+                                                } else if (faulted) {
+                                                    print ("Couldnt load map: " + self.maps[indexPath].0)
+                                                    self.userLabel.text = "Load error Map Id: " +  self.maps[indexPath].0
+                                                } else {
+                                                    print ("Progress: " + percentage.description)
+                                                }
+                }
+                )
+            }
+        }
+        
+        
     }
+    
+   
+    
+    func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
+        let x = NSString(format: "%.16f", lat)
+        let y = NSString(format: "%.16f", lon)
+        let z = NSString(format: "%.16f", alt)
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        let resultString = s3 as String
+        return resultString
+    }
+    
     @IBAction func showPathButton(_ sender: Any) {
     }
 }

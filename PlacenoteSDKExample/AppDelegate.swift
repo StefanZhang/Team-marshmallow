@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
+    var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())]
     var MapName_array = [String]() //Array of Map Name
     var DestinationName_array = [String]() //Array of Destination Name
     var CategoryDict = [String:[String]]() //Dict with key of Category, and val of array of corresponding destination

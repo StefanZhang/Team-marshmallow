@@ -611,7 +611,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     print("Retrieving mapId: " + maps[indexPath.row].0)
     statusLabel.text = "Retrieving mapId: " + maps[indexPath.row].0
 
-
     LibPlacenote.instance.loadMap(mapId: maps[indexPath.row].0,
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
