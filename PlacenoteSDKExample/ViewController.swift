@@ -56,7 +56,8 @@ var Dest_Pos_Dict = [String:String]()
 var Dest_Cat_Dict = [String:String]()
 
 //Dictionary that contains the checkpoint's vector3 as the key and their core location as the value
-var Checkpoint_Array = [String]()
+var CheckpointV3 = [String]()
+var CheckpointCoreLoc = [String]()
 
 let pickerSet = ["Bathroom","Conference Room","Other"]
 
@@ -354,7 +355,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       mapTable.isHidden = true
       toggleSliderUI(true, reset: false)
       toggleMappingUI(false)
-      shapeManager.clearShapes() //creating new map, remove old shapes.
+      //shapeManager.clearShapes() //creating new map, remove old shapes.
       
       //Pop up the save map window
       let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
@@ -374,6 +375,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
     }
     else if (mappingStarted) { //mapping been running, save map
+      print("This is shapearray")
+      dump(self.shapeManager.getShapeArray() )
+      
+      let shapeArray = self.shapeManager.getShapeArray()
+      
       print("Saving Map")
       statusLabel.text = "Saving Map"
       mappingStarted = false
@@ -398,8 +404,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             var userdata: [String:Any] = [:]
-//            dump(self.shapeManager.getShapeArray())
-            userdata["shapeArray"] = self.shapeManager.getShapeArray()
+            
+            print("This is shapearray")
+            dump(shapeArray)
+            
+            userdata["shapeArray"] = shapeArray
             
             if (Dest_Pos_Dict.isEmpty){
               print("No Destination Dropped for this map")
@@ -416,11 +425,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             // store checkpoint and their corresponding CoreLocation
-            if (Checkpoint_Array.isEmpty){
+            if (CheckpointV3.isEmpty){
               print("No Checkpoint Dropped for this map")
             }
             else{
-              userdata["CheckpointArray"] = Checkpoint_Array
+              userdata["CheckpointV3"] = CheckpointV3
+            }
+            
+            if (CheckpointCoreLoc.isEmpty){
+              print("No Checkpoint Dropped for this map")
+            }
+            else{
+              userdata["CheckpointCoreLoc"] = CheckpointCoreLoc
             }
             
             metadata.userdata = userdata
@@ -1169,7 +1185,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let z = loc01?.z
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewCheckpoint(position_01: loc02)
-      //updateGraph()
       
       locationManager.requestWhenInUseAuthorization()
       var currentLocation: CLLocation!
@@ -1180,14 +1195,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         currentLocation = locationManager.location
         let currentLat = currentLocation.coordinate.latitude
         let currentLong = currentLocation.coordinate.longitude
+        let currentAlt = currentLocation.altitude
         
-        let x = NSString(format: "%.8f", currentLat)
-        let y = NSString(format: "%.8f", currentLong)
-        let s3 = NSString(format:"%@,%@",x,y)
+        let x = NSString(format: "%.16f", currentLat)
+        let y = NSString(format: "%.16f", currentLong)
+        let z = NSString(format: "%.16f", currentAlt)
+        
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
         let currentCLStr = s3 as String
         let cp_str = SCNV3toString(vec: loc02)
-        let pair = cp_str + "," + currentCLStr
-        Checkpoint_Array.append(pair)
+        
+        CheckpointV3.append(cp_str)
+        CheckpointCoreLoc.append(currentCLStr)
+        
       }
       
       
