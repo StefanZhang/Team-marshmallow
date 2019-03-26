@@ -16,11 +16,11 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var adminMode: UIButton!
     @IBOutlet weak var UserIns: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var btnGo: UIButton!
     @IBOutlet weak var about: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Places..."] // placeholder when fetching array
@@ -28,8 +28,6 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     var searching = false // if the user is searching
     var selectedPlace = "" // place that the user picked to go
     var pickerData: [String] = [String]() // to populate the pickerview
-    let modelName = UIDevice.modelName
-    let bigPhones = ["iPhone XS", "iPhone X", "iPhone XR"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,16 +49,6 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur")!)
-        // initialize search bar coordinates
-        if self.bigPhones.contains(self.modelName){
-            // if the user has an iPhone X, need to change where the search bar goes
-            searchBar.frame.size = CGSize(width: 343, height: 56)
-            searchBar.frame.origin = CGPoint(x: 16, y: 253)
-        }
-        else{
-            searchBar.frame.size = CGSize(width: 343, height: 56)
-            searchBar.frame.origin = CGPoint(x: 16, y: 229)
-        }
         searchBar.isUserInteractionEnabled = false
         tableView.isUserInteractionEnabled = false
     }
@@ -143,6 +131,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         // when the cancel button on the search bar is clicked
         searching = false
         searchBar.text = ""
+        self.searchBar.endEditing(true)
         self.tableView.reloadData()
     }
     
@@ -184,25 +173,40 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         super.viewDidAppear(animated)
         var counter = 0
         weak var timer: Timer?
+        var needtimer = true
+        
+        if self.appDelegate.getDestinationName().count > 1 {
+            // do stuff after destinations load in here
+            needtimer = false
+            // Array(Set()) is used around the array to make sure there are no duplicate values
+            self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+            // show segmented control when table loads
+            self.segmentedControl.isHidden = false
+            // allow users to search
+            self.searchBar.isUserInteractionEnabled = true
+            self.tableView.isUserInteractionEnabled = true
+        }
         
         // loops every second to see if destinations can be loaded
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0,
-                                     repeats: true) {
-                                        theTimer in
-                                        counter += 1
-                                        print(counter)
-                                        if self.appDelegate.getDestinationName().count > 1 {
-                                            // do stuff after destinations load in here
-                                            
-                                            // Array(Set()) is used around the array to make sure there are no duplicate values
-                                            self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
-                                            // show segmented control when table loads
-                                            self.segmentedControl.isHidden = false
-                                            // allow users to search
-                                            self.searchBar.isUserInteractionEnabled = true
-                                            self.tableView.isUserInteractionEnabled = true
-                                            theTimer.invalidate()
-                                        }
+        if needtimer == true{
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0,
+                                         repeats: true) {
+                                            theTimer in
+                                            counter += 1
+                                            print(counter)
+                                            if self.appDelegate.getDestinationName().count > 1 {
+                                                // do stuff after destinations load in here
+                                                
+                                                // Array(Set()) is used around the array to make sure there are no duplicate values
+                                                self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+                                                // show segmented control when table loads
+                                                self.segmentedControl.isHidden = false
+                                                // allow users to search
+                                                self.searchBar.isUserInteractionEnabled = true
+                                                self.tableView.isUserInteractionEnabled = true
+                                                theTimer.invalidate()
+                                            }
+            }
         }
     }
     
@@ -267,33 +271,6 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
     }
     
-    // when search bar is starting to be used
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        if self.bigPhones.contains(self.modelName){
-            // if the user has an iPhone X, need to change where the search bar goes
-            searchBar.frame.size = CGSize(width: 374, height: 56)
-            searchBar.frame.origin = CGPoint(x: 0, y: 44)
-        }
-        else{
-            searchBar.frame.size = CGSize(width: 374, height: 56)
-            searchBar.frame.origin = CGPoint(x: 0, y: 20)
-        }
-        return true
-    }
-    
-    // when search bar is done being used
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        if self.bigPhones.contains(self.modelName){
-            // if the user has an iPhone X, need to change where the search bar goes
-            searchBar.frame.size = CGSize(width: 343, height: 56)
-            searchBar.frame.origin = CGPoint(x: 16, y: 253)
-        }
-        else{
-            searchBar.frame.size = CGSize(width: 343, height: 56)
-            searchBar.frame.origin = CGPoint(x: 16, y: 229)
-        }
-        return true
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "WTtoWAY"){
@@ -304,76 +281,4 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             viewControllerWAY?.destination = result
         }
     }
-}
-
-public extension UIDevice {
-    
-    static let modelName: String = {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let machineMirror = Mirror(reflecting: systemInfo.machine)
-        let identifier = machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8, value != 0 else { return identifier }
-            return identifier + String(UnicodeScalar(UInt8(value)))
-        }
-        
-        func mapToDevice(identifier: String) -> String { // swiftlint:disable:this cyclomatic_complexity
-            #if os(iOS)
-            switch identifier {
-            case "iPod5,1":                                 return "iPod Touch 5"
-            case "iPod7,1":                                 return "iPod Touch 6"
-            case "iPhone3,1", "iPhone3,2", "iPhone3,3":     return "iPhone 4"
-            case "iPhone4,1":                               return "iPhone 4s"
-            case "iPhone5,1", "iPhone5,2":                  return "iPhone 5"
-            case "iPhone5,3", "iPhone5,4":                  return "iPhone 5c"
-            case "iPhone6,1", "iPhone6,2":                  return "iPhone 5s"
-            case "iPhone7,2":                               return "iPhone 6"
-            case "iPhone7,1":                               return "iPhone 6 Plus"
-            case "iPhone8,1":                               return "iPhone 6s"
-            case "iPhone8,2":                               return "iPhone 6s Plus"
-            case "iPhone9,1", "iPhone9,3":                  return "iPhone 7"
-            case "iPhone9,2", "iPhone9,4":                  return "iPhone 7 Plus"
-            case "iPhone8,4":                               return "iPhone SE"
-            case "iPhone10,1", "iPhone10,4":                return "iPhone 8"
-            case "iPhone10,2", "iPhone10,5":                return "iPhone 8 Plus"
-            case "iPhone10,3", "iPhone10,6":                return "iPhone X"
-            case "iPhone11,2":                              return "iPhone XS"
-            case "iPhone11,4", "iPhone11,6":                return "iPhone XS Max"
-            case "iPhone11,8":                              return "iPhone XR"
-            case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
-            case "iPad3,1", "iPad3,2", "iPad3,3":           return "iPad 3"
-            case "iPad3,4", "iPad3,5", "iPad3,6":           return "iPad 4"
-            case "iPad4,1", "iPad4,2", "iPad4,3":           return "iPad Air"
-            case "iPad5,3", "iPad5,4":                      return "iPad Air 2"
-            case "iPad6,11", "iPad6,12":                    return "iPad 5"
-            case "iPad7,5", "iPad7,6":                      return "iPad 6"
-            case "iPad2,5", "iPad2,6", "iPad2,7":           return "iPad Mini"
-            case "iPad4,4", "iPad4,5", "iPad4,6":           return "iPad Mini 2"
-            case "iPad4,7", "iPad4,8", "iPad4,9":           return "iPad Mini 3"
-            case "iPad5,1", "iPad5,2":                      return "iPad Mini 4"
-            case "iPad6,3", "iPad6,4":                      return "iPad Pro (9.7-inch)"
-            case "iPad6,7", "iPad6,8":                      return "iPad Pro (12.9-inch)"
-            case "iPad7,1", "iPad7,2":                      return "iPad Pro (12.9-inch) (2nd generation)"
-            case "iPad7,3", "iPad7,4":                      return "iPad Pro (10.5-inch)"
-            case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4":return "iPad Pro (11-inch)"
-            case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":return "iPad Pro (12.9-inch) (3rd generation)"
-            case "AppleTV5,3":                              return "Apple TV"
-            case "AppleTV6,2":                              return "Apple TV 4K"
-            case "AudioAccessory1,1":                       return "HomePod"
-            case "i386", "x86_64":                          return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
-            default:                                        return identifier
-            }
-            #elseif os(tvOS)
-            switch identifier {
-            case "AppleTV5,3": return "Apple TV 4"
-            case "AppleTV6,2": return "Apple TV 4K"
-            case "i386", "x86_64": return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
-            default: return identifier
-            }
-            #endif
-        }
-        
-        return mapToDevice(identifier: identifier)
-    }()
-    
 }

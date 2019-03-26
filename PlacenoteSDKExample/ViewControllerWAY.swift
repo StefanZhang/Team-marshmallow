@@ -27,8 +27,6 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     var searching = false // if the user is searching
     var selectedPlace = "" // place that the user picked to go
     var pickerData: [String] = [String]() // to populate the pickerview
-    let modelName = UIDevice.modelName
-    let bigPhones = ["iPhone XS", "iPhone X", "iPhone XR"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,16 +45,6 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur")!)
-        // initialize search bar coordinates
-//        if self.bigPhones.contains(self.modelName){
-//            // if the user has an iPhone X, need to change where the search bar goes
-//            searchBar.frame.size = CGSize(width: 343, height: 56)
-//            searchBar.frame.origin = CGPoint(x: 16, y: 253)
-//        }
-//        else{
-//            searchBar.frame.size = CGSize(width: 343, height: 56)
-//            searchBar.frame.origin = CGPoint(x: 16, y: 229)
-//        }
         searchBar.isUserInteractionEnabled = false
         tableView.isUserInteractionEnabled = false
 
@@ -161,25 +149,40 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         super.viewDidAppear(animated)
         var counter = 0
         weak var timer: Timer?
+        var needtimer = true
+        
+        if self.appDelegate.getDestinationName().count > 1 {
+            // do stuff after destinations load in here
+            needtimer = false
+            // Array(Set()) is used around the array to make sure there are no duplicate values
+            self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+            // show segmented control when table loads
+            self.segmentedControl.isHidden = false
+            // allow users to search
+            self.searchBar.isUserInteractionEnabled = true
+            self.tableView.isUserInteractionEnabled = true
+        }
         
         // loops every second to see if destinations can be loaded
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0,
-                                     repeats: true) {
-                                        theTimer in
-                                        counter += 1
-                                        print(counter)
-                                        if self.appDelegate.getDestinationName().count > 1 {
-                                            // do stuff after destinations load in here
-                                            
-                                            // Array(Set()) is used around the array to make sure there are no duplicate values
-                                            self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
-                                            // show segmented control when table loads
-                                            self.segmentedControl.isHidden = false
-                                            // allow users to search
-                                            self.searchBar.isUserInteractionEnabled = true
-                                            self.tableView.isUserInteractionEnabled = true
-                                            theTimer.invalidate()
-                                        }
+        if needtimer == true{
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0,
+                                         repeats: true) {
+                                            theTimer in
+                                            counter += 1
+                                            print(counter)
+                                            if self.appDelegate.getDestinationName().count > 1 {
+                                                // do stuff after destinations load in here
+                                                
+                                                // Array(Set()) is used around the array to make sure there are no duplicate values
+                                                self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+                                                // show segmented control when table loads
+                                                self.segmentedControl.isHidden = false
+                                                // allow users to search
+                                                self.searchBar.isUserInteractionEnabled = true
+                                                self.tableView.isUserInteractionEnabled = true
+                                                theTimer.invalidate()
+                                            }
+            }
         }
     }
     
@@ -245,33 +248,6 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    // when search bar is starting to be used
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-//        if self.bigPhones.contains(self.modelName){
-//            // if the user has an iPhone X, need to change where the search bar goes
-//            searchBar.frame.size = CGSize(width: 374, height: 56)
-//            searchBar.frame.origin = CGPoint(x: 0, y: 44)
-//        }
-//        else{
-//            searchBar.frame.size = CGSize(width: 374, height: 56)
-//            searchBar.frame.origin = CGPoint(x: 0, y: 20)
-//        }
-        return true
-    }
-    
-    // when search bar is done being used
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-//        if self.bigPhones.contains(self.modelName){
-//            // if the user has an iPhone X, need to change where the search bar goes
-//            searchBar.frame.size = CGSize(width: 343, height: 56)
-//            searchBar.frame.origin = CGPoint(x: 16, y: 253)
-//        }
-//        else{
-//            searchBar.frame.size = CGSize(width: 343, height: 56)
-//            searchBar.frame.origin = CGPoint(x: 16, y: 229)
-//        }
-        return true
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "WAYtoUM"){
