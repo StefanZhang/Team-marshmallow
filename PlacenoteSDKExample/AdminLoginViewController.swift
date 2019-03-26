@@ -12,6 +12,7 @@ import AWSCognitoIdentityProvider
 
 class AdminLoginViewController: UIViewController {
 
+    @IBOutlet weak var BButton: UIButton!
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
@@ -22,15 +23,12 @@ class AdminLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
-        
-        self.navigationItem.leftBarButtonItem  = logoutBarButtonItem
+        BButton.addTarget(self, action: #selector(GoBackUser), for: .touchUpInside)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
-        //self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @IBAction func loginPressed(_ sender: AnyObject) {
@@ -42,10 +40,18 @@ class AdminLoginViewController: UIViewController {
         }
     }
     
+//    func setupnav(){
+//        let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
+//        self.navigationItem.leftBarButtonItem  = logoutBarButtonItem
+//    }
+    
     @objc func GoBackUser(){
         print("Here!")
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "Where_To")
+//        self.present(vc, animated: true, completion: nil)
+        
     }
-    
     
 }
 

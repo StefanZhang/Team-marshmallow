@@ -33,9 +33,6 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.delegate = self
         searchBar.delegate = self
 
-        // test destination
-        print("This is destination")
-        dump(destination)
     }
     
     func SetUpNaviBar(){
