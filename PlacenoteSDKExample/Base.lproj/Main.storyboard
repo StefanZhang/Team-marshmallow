@@ -720,6 +720,16 @@
                                     <segue destination="fY2-BX-kzM" kind="show" id="NzB-eX-ef0"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SA-iN-aE8">
+                                <rect key="frame" x="0.0" y="90" width="414" height="64"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="33k-o8-9e1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -729,6 +739,7 @@
                     </view>
                     <connections>
                         <outlet property="navView" destination="jMz-Ut-B5F" id="Cdr-hV-Ykv"/>
+                        <outlet property="statusLabel" destination="3SA-iN-aE8" id="lWj-3Y-phl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1bd-m8-vPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -955,7 +966,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AsE-Zy-RWk"/>
+        <segue reference="NzB-eX-ef0"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
