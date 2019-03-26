@@ -44,7 +44,7 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         searchBar.delegate = self
         //navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur2")!)
         searchBar.isUserInteractionEnabled = false
         tableView.isUserInteractionEnabled = false
 
