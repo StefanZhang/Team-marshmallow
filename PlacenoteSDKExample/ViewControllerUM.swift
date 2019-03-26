@@ -28,6 +28,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var maxSizeReached = false
     
     //Information passed from WT and WAY
+    // First element is mapName, second element is V3
     var destination : [String] = []
     var initialLocation : [String] = []
     
@@ -96,20 +97,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         super.viewDidLoad()
         userView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
-        
-        userView = self.view as! ARSCNView
-        userView.delegate = self
-        userView.session.delegate = self as! ARSessionDelegate
-        userView.isPlaying = true
-        
-        userScene = SCNScene()
-        userView.scene = userScene
-        ptViz = FeaturePointVisualizer(inputScene: userScene);
-        ptViz?.enableFeaturePoints()
-        
-        if let camera: SCNNode = userView?.pointOfView {
-            camManager = CameraManager(scene: userScene, cam: camera)
-        }
+        setupView()
+        setupScene()
         
         shapeManager = ShapeManager(scene: userScene, view: userView)
         LibPlacenote.instance.multiDelegate += self;
@@ -125,6 +114,31 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         }
     }
     
+    //Function to setup the view and setup the AR Scene including options
+    func setupView() {
+        userView = self.view as! ARSCNView
+        userView.showsStatistics = false
+        userView.autoenablesDefaultLighting = true
+        userView.delegate = self
+        userView.session.delegate = self
+        userView.isPlaying = true
+        userView.debugOptions = []
+        //hide the radius search UI, reset values as we are initializating
+        //userView.debugOptions = ARSCNDebugOptions.showFeaturePoints
+        //userView.debugOptions = ARSCNDebugOptions.showWorldOrigin
+    }
+    
+    //Function to setup AR Scene
+    func setupScene() {
+        userScene = SCNScene()
+        userView.scene = userScene
+        ptViz = FeaturePointVisualizer(inputScene: userScene);
+        ptViz?.enableFeaturePoints()
+        
+        if let camera: SCNNode = userView?.pointOfView {
+            camManager = CameraManager(scene: userScene, cam: camera)
+        }
+    }
 
     //Initialize view and scene
     override func viewWillAppear(_ animated: Bool) {
@@ -133,11 +147,26 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         
     }
     
-    func configureSession() {
-        let config = ARWorldTrackingConfiguration()
-        config.worldAlignment = ARWorldTrackingConfiguration.WorldAlignment.gravity
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        userView.session.run(config)
+        // Pause the view's session
+        userView.session.pause()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        userView.frame = view.bounds
+    }
+    
+    func configureSession() {
+        // Create a session configuration
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.worldAlignment = ARWorldTrackingConfiguration.WorldAlignment.gravity //TODO: Maybe not heading?
+        
+        
+        // Run the view's session
+        userView.session.run(configuration)
     }
     
 
@@ -199,7 +228,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                 LibPlacenote.instance.loadMap(mapId: id,
                                               downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                                 if (completed) {
-
+                                                    self.mappingStarted = true
+                                                    self.localizationStarted = true
                                                     
                                                     //Use metadata acquired from fetchMapList
                                                     print("This is map data")
@@ -250,13 +280,120 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     
     @IBAction func showPathButton(_ sender: Any) {
         shapeManager.clearView()
-        let graph = AdjacencyList<String>()
+        var graph = AdjacencyList<String>()
         let shapePositions = shapeManager.getShapePositions()
         let shapeNodes = shapeManager.getShapeNodes()
         
+        graph = updateGraph(graph: graph)
+        dump(graph)
+        
+        let dict = graph.adjacencyDict
+        let vertices = dict.keys
+        
+        if (!shapePositions.isEmpty){
+            let start = shapePositions[0] // type V3
+            //let start = nearestShapes[0] // type V3
+            let startStr = SCNV3toString(vec: start)
+            
+            let des = shapePositions[shapePositions.count-1] // type V3
+            let desStr = SCNV3toString(vec: des)
+            
+            var startVer = vertices.first
+            var desVer = vertices.first
+            
+            for vertex in vertices{
+                if startStr == vertex.description {
+                    startVer = vertex
+                }
+                if desStr == vertex.description {
+                    desVer = vertex
+                }
+            }
+            
+            let OutVer = graph.aStar(start: startVer!, destination: desVer!)
+            var selectedPos = [SCNVector3]()
+            for ver in OutVer {
+                for str in shapePositions {
+                    if ver.description == SCNV3toString(vec: str) {
+                        selectedPos.append(str)
+                    }
+                }
+            }
+            
+            print("Selected Postions:")
+            print(selectedPos)
+            for pos in selectedPos {
+                shapeManager.spawnNewBreadCrumb(position1: pos)
+            }
+            
+        }
+        
+        
     }
     
+    func updateGraph (graph: AdjacencyList<String>) -> AdjacencyList<String> {
+        // load the position from breadcrums
+        let shapePositions = shapeManager.getShapePositions()
+        let shapeNodes = shapeManager.getShapeNodes()
+        
+        let distance = Float(2)
+        let length = shapePositions.count
+        if (length > 1){
+            
+            for i in 0..<length { // pos is Vector3
+                for j in i+1..<length{
+                    if (nodeDistance(first: shapePositions[i], second: shapePositions[j]) < distance && nodeDistance(first: shapePositions[i], second: shapePositions[j]) > 0.0001) {
+                        
+                        let str1 = SCNV3toString(vec: shapePositions[i])
+                        let str2 = SCNV3toString(vec: shapePositions[j])
+                        let vertex1Array = graph.checkVertex(loc: str1)
+                        let vertex2Array = graph.checkVertex(loc: str2)
+                        
+                        var v1 = Vertex(loc: "0")
+                        var v2 = Vertex(loc: "0")
+                        
+                        // Checking if graph already have these vertex
+                        if (!vertex1Array.isEmpty) {
+                            v1 = vertex1Array[0]
+                        }
+                        else{
+                            v1 = graph.createVertex(data: str1)
+                            Hash_Node_Dict[str1] = shapeNodes[i]
+                        }
+                        
+                        if (!vertex2Array.isEmpty) {
+                            v2 = vertex2Array[0]
+                        }
+                        else{
+                            v2 = graph.createVertex(data: str2)
+                            Hash_Node_Dict[str2] = shapeNodes[j]
+                        }
+                        // make vertices connected
+                        graph.add(.undirected, from: v1, to: v2, weight: 1.5)
+                    }
+                }
+                
+            }
+        }
+        
+        return graph
+    }
     
+    func nodeDistance (first: SCNVector3, second: SCNVector3) -> Float {
+        let x = first.x - second.x
+        let y = first.y - second.y
+        let z = first.z - second.z
+        return sqrt(x*x + y*y + z*z)
+    }
+    
+    func SCNV3toString(vec: SCNVector3) -> String{
+        let x = NSString(format: "%.8f", vec.x)
+        let y = NSString(format: "%.8f", vec.y)
+        let z = NSString(format: "%.8f", vec.z)
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        let resultString = s3 as String
+        return resultString
+    }
     
     // MARK: - CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
