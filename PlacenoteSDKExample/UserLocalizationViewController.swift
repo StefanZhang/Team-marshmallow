@@ -53,9 +53,8 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         //Declare yourself to be one of the delegates of PNDelegate to receive pose and status updates
         LibPlacenote.instance.multiDelegate += self;
         
-        let bestMap = findMap()
-        mapLoading(map: bestMap.0, index: bestMap.1)
-        self.newMapfound = true
+        LibPlacenote.instance.fetchMapList(listCb: onMapList)
+        
     }
     
     //Initialize view and scene
@@ -102,6 +101,14 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         super.viewDidLayoutSubviews()
         navView.frame = view.bounds
     }
+    
+    
+    @IBAction func startPressed(_ sender: Any) {
+        let bestMap = findMap()
+        mapLoading(map: bestMap.0, index: bestMap.1)
+        self.newMapfound = true
+    }
+    
     
     
     // MARK: - PNDelegate functions
@@ -169,32 +176,32 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         return node
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-        
-        // Create a SceneKit plane to visualize the plane anchor using its position and extent.
-        let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-        let planeNode = SCNNode(geometry: plane)
-        planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
-        
-        node.transform = LibPlacenote.instance.processPose(pose: node.transform); //transform through
-        planesVizNodes[anchor.identifier] = node; //keep track of plane nodes so you can move them once you localize to a new map.
-        
-        /*
-         `SCNPlane` is vertically oriented in its local coordinate space, so
-         rotate the plane to match the horizontal orientation of `ARPlaneAnchor`.
-         */
-        planeNode.eulerAngles.x = -.pi / 2
-        
-        // Make the plane visualization semitransparent to clearly show real-world placement.
-        planeNode.opacity = 0.25
-        
-        /*
-         Add the plane visualization to the ARKit-managed node so that it tracks
-         changes in the plane anchor as plane estimation continues.
-         */
-        node.addChildNode(planeNode)
-    }
+//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+//        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+//        
+//        // Create a SceneKit plane to visualize the plane anchor using its position and extent.
+//        let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+//        let planeNode = SCNNode(geometry: plane)
+//        planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
+//        
+//        node.transform = LibPlacenote.instance.processPose(pose: node.transform); //transform through
+//        planesVizNodes[anchor.identifier] = node; //keep track of plane nodes so you can move them once you localize to a new map.
+//        
+//        /*
+//         `SCNPlane` is vertically oriented in its local coordinate space, so
+//         rotate the plane to match the horizontal orientation of `ARPlaneAnchor`.
+//         */
+//        planeNode.eulerAngles.x = -.pi / 2
+//        
+//        // Make the plane visualization semitransparent to clearly show real-world placement.
+//        planeNode.opacity = 0.25
+//        
+//        /*
+//         Add the plane visualization to the ARKit-managed node so that it tracks
+//         changes in the plane anchor as plane estimation continues.
+//         */
+//        node.addChildNode(planeNode)
+//    }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         // Update content only for plane anchors and nodes matching the setup created in `renderer(_:didAdd:for:)`.
@@ -249,6 +256,28 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         let z = first.z - second.z
         return sqrt(x*x + y*y + z*z)
     }
+    
+    
+    //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
+    func onMapList(success: Bool, mapList: [String: LibPlacenote.MapMetadata]) -> Void {
+        maps.removeAll()
+        if (!success) {
+            print ("failed to fetch map list")
+            statusLabel.text = "Map List not retrieved"
+            return
+        }
+        
+        //Cycle through the maplist and create a database of all the maps (place.key) and its metadata (place.value)
+        for place in mapList {
+            maps.append((place.key, place.value))
+        }
+        
+        statusLabel.text = "Map List"
+
+    }
+    
+    
+    
     
     // Loads a map using the map name and the index in the list on maps
     func mapLoading(map: (String, LibPlacenote.MapMetadata), index: Int) -> Void
