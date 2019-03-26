@@ -171,6 +171,27 @@
                                     <outlet property="delegate" destination="Mqg-rI-qeK" id="wTP-8g-FgW"/>
                                 </connections>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43D-3v-CEw">
+                                <rect key="frame" x="340" y="830" width="55" height="36"/>
+                                <color key="backgroundColor" red="0.99521893260000005" green="0.1982629299" blue="0.001593344496" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="52" id="3NQ-gB-2xa"/>
+                                    <constraint firstAttribute="height" constant="36" id="UZt-Vc-NJe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Map">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="ZWX-HB-TgX" kind="show" id="rJ5-zn-yOi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -204,6 +225,7 @@
                         <outlet property="about" destination="IDc-IW-j3J" id="cE1-4b-MWQ"/>
                         <outlet property="adminMode" destination="dxk-LY-KR4" id="sby-2l-Qpv"/>
                         <outlet property="btnGo" destination="ah2-Y0-3Ng" id="9Le-MT-j3g"/>
+                        <outlet property="fpbutton" destination="43D-3v-CEw" id="r5Y-g6-Tnp"/>
                         <outlet property="pickerView" destination="Znb-dC-qTQ" id="DMI-2o-6mc"/>
                         <outlet property="searchBar" destination="30Y-d7-QGn" id="m93-cD-ffw"/>
                         <outlet property="searchDisplayController" destination="44L-61-Y1w" id="IA1-Qb-wj8"/>
@@ -558,7 +580,35 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYm-ad-6kE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1409" y="676"/>
+            <point key="canvasLocation" x="932" y="751"/>
+        </scene>
+        <!--View ControllerFP-->
+        <scene sceneID="mHW-F5-Q5P">
+            <objects>
+                <viewController id="ZWX-HB-TgX" customClass="ViewControllerFP" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cSR-lo-9Qr"/>
+                        <viewControllerLayoutGuide type="bottom" id="jWm-tQ-fiN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vzM-AR-ycF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5v6-iq-bP9">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="webview" destination="5v6-iq-bP9" id="Ub9-Fl-7NO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lQ4-cw-hZt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-371.01449275362324" y="1127.6785714285713"/>
         </scene>
         <!--Where are you?-->
         <scene sceneID="Yfy-B0-yDk">

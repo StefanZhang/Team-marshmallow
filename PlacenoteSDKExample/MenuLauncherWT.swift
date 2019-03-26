@@ -123,7 +123,8 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         }
         
         if menu.name == "Floor Map"{
-            print("Floor map")
+            let view = ViewControllerWT
+            view?.fpbutton.sendActions(for: .touchUpInside)
             HandleDismiss()
         }
     }
