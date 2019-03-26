@@ -141,9 +141,9 @@ class ShapeManager {
     dump(String(shapeTypes.count) + " Shape types count" )
     print("Here are all the children: ")
     //
-    for child in scnScene.rootNode.childNodes{
-        child.removeFromParentNode()
-    }
+//    for child in scnScene.rootNode.childNodes{
+//        child.removeFromParentNode()
+//    }
     
   }
   
@@ -269,7 +269,7 @@ class ShapeManager {
     let geometryNode = SCNNode(geometry: geometry)
     geometryNode.position = position
     // Maybe this makes the loaded spheres smaller
-    //geometryNode.scale = SCNVector3(x:0.1, y:0.1, z:0.1)
+    // geometryNode.scale = SCNVector3(x:0.1, y:0.1, z:0.1)
     
     return geometryNode
   }

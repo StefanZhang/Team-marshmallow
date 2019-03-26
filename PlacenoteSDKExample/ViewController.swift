@@ -291,9 +291,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       if mappingStarted {
         statusLabel.text = "Moved too fast. Map Lost"
       }
-      //changed
       tapRecognizer?.isEnabled = false
-      //tapRecognizer?.isEnabled = true
       
     }
     
@@ -889,10 +887,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
     }
     
-    //changed
-    //let camPos = pose.columns.3
-    // Camera Location in Vector3
-    
     let distance = Float(1.5)
     if (nodeDistance(first: camLoc, second: last_loc) > distance && canDropBC == true){
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
@@ -911,20 +905,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //      dump(nearestShapes)
     }
 
+    //Zhenru commented it
     // part one recognize that you are at a checkpoint
-    if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
-    {
-      
-      updateGraph()
-      // If the user is at a checkpoint it will find the closest map and start loading it
-      if (getClosetNode(camera_pos: camLoc, map: graph))
-      {
-        let bestMap = findMap()
-        mapLoading(map: bestMap.0, index: bestMap.1)
-        self.newMapfound = true
-        //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
-      }
-    }
+//    if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
+//    {
+//
+//      updateGraph()
+//      // If the user is at a checkpoint it will find the closest map and start loading it
+//      if (getClosetNode(camera_pos: camLoc, map: graph))
+//      {
+//        let bestMap = findMap()
+//        mapLoading(map: bestMap.0, index: bestMap.1)
+//        self.newMapfound = true
+//        //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+//      }
+//    }
     
     //part two delete everything from map and load next one
     // shapeManager.clearShapes()
