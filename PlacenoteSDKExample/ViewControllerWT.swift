@@ -62,6 +62,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
             searchBar.frame.origin = CGPoint(x: 16, y: 229)
         }
         searchBar.isUserInteractionEnabled = false
+        tableView.isUserInteractionEnabled = false
     }
     
     func SetUpLeftNaviBar(){
@@ -199,6 +200,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
                                             self.segmentedControl.isHidden = false
                                             // allow users to search
                                             self.searchBar.isUserInteractionEnabled = true
+                                            self.tableView.isUserInteractionEnabled = true
                                             theTimer.invalidate()
                                         }
         }
