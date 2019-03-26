@@ -56,7 +56,8 @@ var Dest_Pos_Dict = [String:String]()
 var Dest_Cat_Dict = [String:String]()
 
 //Dictionary that contains the checkpoint's vector3 as the key and their core location as the value
-var Checkpoint_Array = [String]()
+var CheckpointV3 = [String]()
+var CheckpointCoreLoc = [String]()
 
 let pickerSet = ["Bathroom","Conference Room","Other"]
 
@@ -290,9 +291,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       if mappingStarted {
         statusLabel.text = "Moved too fast. Map Lost"
       }
-      //changed
       tapRecognizer?.isEnabled = false
-      //tapRecognizer?.isEnabled = true
       
     }
     
@@ -354,7 +353,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       mapTable.isHidden = true
       toggleSliderUI(true, reset: false)
       toggleMappingUI(false)
-      shapeManager.clearShapes() //creating new map, remove old shapes.
+      //shapeManager.clearShapes() //creating new map, remove old shapes.
       
       //Pop up the save map window
       let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
@@ -374,6 +373,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
     }
     else if (mappingStarted) { //mapping been running, save map
+      print("This is shapearray")
+      dump(self.shapeManager.getShapeArray() )
+      
+      let shapeArray = self.shapeManager.getShapeArray()
+      
       print("Saving Map")
       statusLabel.text = "Saving Map"
       mappingStarted = false
@@ -398,8 +402,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             var userdata: [String:Any] = [:]
-//            dump(self.shapeManager.getShapeArray())
-            userdata["shapeArray"] = self.shapeManager.getShapeArray()
+            
+            print("This is shapearray")
+            dump(shapeArray)
+            
+            userdata["shapeArray"] = shapeArray
             
             if (Dest_Pos_Dict.isEmpty){
               print("No Destination Dropped for this map")
@@ -416,11 +423,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             // store checkpoint and their corresponding CoreLocation
-            if (Checkpoint_Array.isEmpty){
+            if (CheckpointV3.isEmpty){
               print("No Checkpoint Dropped for this map")
             }
             else{
-              userdata["CheckpointArray"] = Checkpoint_Array
+              userdata["CheckpointV3"] = CheckpointV3
+            }
+            
+            if (CheckpointCoreLoc.isEmpty){
+              print("No Checkpoint Dropped for this map")
+            }
+            else{
+              userdata["CheckpointCoreLoc"] = CheckpointCoreLoc
             }
             
             metadata.userdata = userdata
@@ -455,6 +469,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       tapRecognizer?.isEnabled = false
       localizationStarted = false
       toggleMappingUI(true) //hide mapping UI
+      canDropBC = false
     }
      updateGraph()
     
@@ -640,10 +655,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                                       
                                       //Use metadata acquired from fetchMapList
                                       let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
-                                      // This is placenote originally
-//                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-//                                        self.statusLabel.text = "Map Loaded. Look Around"
-//                                      }
+                                
                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                         self.statusLabel.text = "Map Loaded. Look Around"
                                       }
@@ -875,56 +887,46 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
     }
     
-    //changed
-    //let camPos = pose.columns.3
-    // Camera Location in Vector3
-    
     let distance = Float(1.5)
     if (nodeDistance(first: camLoc, second: last_loc) > distance && canDropBC == true){
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
         shapeManager.spawnNewBreadCrumb(position1: camLoc)
+        
+        dump(shapeManager.getShapeArray())
+        
         last_loc = camLoc
       }
     }
     
     nearestShapes = shapeManager.checkAdjacent(selfPos: camLoc, distance: 0.3)
     if (!nearestShapes.isEmpty) {
-      print("This is the closest BC")
-      dump(nearestShapes)
+//      print("This is the closest BC")
+//      dump(nearestShapes)
     }
 
+    //Zhenru commented it
     // part one recognize that you are at a checkpoint
-    if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
-    {
-      
-      updateGraph()
-      // If the user is at a checkpoint it will find the closest map and start loading it
-      if (getClosetNode(camera_pos: camLoc, map: graph))
-      {
-        let bestMap = findMap()
-        mapLoading(map: bestMap.0, index: bestMap.1)
-        self.newMapfound = true
-        //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
-      }
-    }
+//    if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
+//    {
+//
+//      updateGraph()
+//      // If the user is at a checkpoint it will find the closest map and start loading it
+//      if (getClosetNode(camera_pos: camLoc, map: graph))
+//      {
+//        let bestMap = findMap()
+//        mapLoading(map: bestMap.0, index: bestMap.1)
+//        self.newMapfound = true
+//        //shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
+//      }
+//    }
     
     //part two delete everything from map and load next one
     // shapeManager.clearShapes()
     
-    
-    
-    // This is the camera position
-    
     label.center = CGPoint(x: 160, y: 285)
     label.textAlignment = .center
 
-
-    //shapeManager.spawnRandomShape(position: subtraction(left:loc02,right:loc03))
-    
-    
-    
-    
     if (!LibPlacenote.instance.initialized()) {
       print("SDK is not initialized")
       return
@@ -1178,7 +1180,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let z = loc01?.z
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewCheckpoint(position_01: loc02)
-      //updateGraph()
       
       locationManager.requestWhenInUseAuthorization()
       var currentLocation: CLLocation!
@@ -1189,14 +1190,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         currentLocation = locationManager.location
         let currentLat = currentLocation.coordinate.latitude
         let currentLong = currentLocation.coordinate.longitude
+        let currentAlt = currentLocation.altitude
         
-        let x = NSString(format: "%.8f", currentLat)
-        let y = NSString(format: "%.8f", currentLong)
-        let s3 = NSString(format:"%@,%@",x,y)
+        let x = NSString(format: "%.16f", currentLat)
+        let y = NSString(format: "%.16f", currentLong)
+        let z = NSString(format: "%.16f", currentAlt)
+        
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
         let currentCLStr = s3 as String
         let cp_str = SCNV3toString(vec: loc02)
-        let pair = cp_str + "," + currentCLStr
-        Checkpoint_Array.append(pair)
+        
+        CheckpointV3.append(cp_str)
+        CheckpointCoreLoc.append(currentCLStr)
+        
       }
       
       

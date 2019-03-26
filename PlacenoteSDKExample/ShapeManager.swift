@@ -91,7 +91,9 @@ class ShapeManager {
         print ("Shape Manager: No shapes for this map")
         return false
     }
-
+    print("Test shape array")
+    dump(shapeArray)
+    
      //This is placenote originially
     for item in shapeArray! { //left off here because I'm trying to keep the same color
       let x_string: String = item["shape"]!["x"]!
@@ -139,9 +141,9 @@ class ShapeManager {
     dump(String(shapeTypes.count) + " Shape types count" )
     print("Here are all the children: ")
     //
-    for child in scnScene.rootNode.childNodes{
-        child.removeFromParentNode()
-    }
+//    for child in scnScene.rootNode.childNodes{
+//        child.removeFromParentNode()
+//    }
     
   }
   
@@ -267,7 +269,7 @@ class ShapeManager {
     let geometryNode = SCNNode(geometry: geometry)
     geometryNode.position = position
     // Maybe this makes the loaded spheres smaller
-    //geometryNode.scale = SCNVector3(x:0.1, y:0.1, z:0.1)
+    // geometryNode.scale = SCNVector3(x:0.1, y:0.1, z:0.1)
     
     return geometryNode
   }

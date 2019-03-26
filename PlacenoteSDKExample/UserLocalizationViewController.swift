@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import PlacenoteSDK
+import CoreLocation
 
 class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PNDelegate {
     
@@ -51,6 +52,9 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         //IMPORTANT: need to run this line to subscribe to pose and status events
         //Declare yourself to be one of the delegates of PNDelegate to receive pose and status updates
         LibPlacenote.instance.multiDelegate += self;
+        
+        LibPlacenote.instance.fetchMapList(listCb: onMapList)
+        
     }
     
     //Initialize view and scene
@@ -97,6 +101,14 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         super.viewDidLayoutSubviews()
         navView.frame = view.bounds
     }
+    
+    
+    @IBAction func startPressed(_ sender: Any) {
+        let bestMap = findMap()
+        mapLoading(map: bestMap.0, index: bestMap.1)
+        self.newMapfound = true
+    }
+    
     
     
     // MARK: - PNDelegate functions
@@ -164,32 +176,32 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         return node
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
-        
-        // Create a SceneKit plane to visualize the plane anchor using its position and extent.
-        let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-        let planeNode = SCNNode(geometry: plane)
-        planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
-        
-        node.transform = LibPlacenote.instance.processPose(pose: node.transform); //transform through
-        planesVizNodes[anchor.identifier] = node; //keep track of plane nodes so you can move them once you localize to a new map.
-        
-        /*
-         `SCNPlane` is vertically oriented in its local coordinate space, so
-         rotate the plane to match the horizontal orientation of `ARPlaneAnchor`.
-         */
-        planeNode.eulerAngles.x = -.pi / 2
-        
-        // Make the plane visualization semitransparent to clearly show real-world placement.
-        planeNode.opacity = 0.25
-        
-        /*
-         Add the plane visualization to the ARKit-managed node so that it tracks
-         changes in the plane anchor as plane estimation continues.
-         */
-        node.addChildNode(planeNode)
-    }
+//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+//        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+//        
+//        // Create a SceneKit plane to visualize the plane anchor using its position and extent.
+//        let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+//        let planeNode = SCNNode(geometry: plane)
+//        planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
+//        
+//        node.transform = LibPlacenote.instance.processPose(pose: node.transform); //transform through
+//        planesVizNodes[anchor.identifier] = node; //keep track of plane nodes so you can move them once you localize to a new map.
+//        
+//        /*
+//         `SCNPlane` is vertically oriented in its local coordinate space, so
+//         rotate the plane to match the horizontal orientation of `ARPlaneAnchor`.
+//         */
+//        planeNode.eulerAngles.x = -.pi / 2
+//        
+//        // Make the plane visualization semitransparent to clearly show real-world placement.
+//        planeNode.opacity = 0.25
+//        
+//        /*
+//         Add the plane visualization to the ARKit-managed node so that it tracks
+//         changes in the plane anchor as plane estimation continues.
+//         */
+//        node.addChildNode(planeNode)
+//    }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         // Update content only for plane anchors and nodes matching the setup created in `renderer(_:didAdd:for:)`.
@@ -215,81 +227,104 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
     
     // MARK: - ARSessionDelegate
     
-//    //Provides a newly captured camera image and accompanying AR information to the delegate.
-//    func session(_ session: ARSession, didUpdate: ARFrame) {
-//        let image: CVPixelBuffer = didUpdate.capturedImage
-//        let pose: matrix_float4x4 = didUpdate.camera.transform
-//
-//        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
-//
-//
-//        // There was navigation/breadcrumb dropping here in OG viewController
-//
-//
-//
-//        if (!LibPlacenote.instance.initialized()) {
-//            statusLabel.text = "SDK not initialized"
-//            return
-//        }
-//
-//        if (mappingStarted || localizationStarted) {
-//            LibPlacenote.instance.setFrame(image: image, pose: pose)
-//        }
-//    }
-//
-//
-//    func nodeDistance (first: SCNVector3, second: SCNVector3) -> Float {
-//        let x = first.x - second.x
-//        let y = first.y - second.y
-//        let z = first.z - second.z
-//        return sqrt(x*x + y*y + z*z)
-//    }
-//    // Loads a map using the map name and the index in the list on maps
-//    func mapLoading(map: (String, LibPlacenote.MapMetadata), index: Int) -> Void
-//    {
-//
-//        LibPlacenote.instance.loadMap(mapId: maps[index].0,
-//                                      downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
-//                                        if (completed) {
-//                                            self.mappingStarted = true //extending the map
-//                                            self.localizationStarted = true
-//
-//
-//
-//
-//
-//                                            //Using this method you can individual retrieve the metadata for a single map,
-//                                            //However, as we called a blanket fetchMapList before, it already acquired all the metadata for all maps
-//                                            //We'll just use that meta data for now.
-//
-//                                            /*LibPlacenote.instance.getMapMetadata(mapId: self.maps[indexPath.row].0, getMetadataCb: {(success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
-//                                             let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
-//                                             if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-//                                             self.statusLabel.text = "Map Loaded. Look Around"
-//                                             } else {
-//                                             self.statusLabel.text = "Map Loaded. Shape file not found"
-//                                             }
-//                                             LibPlacenote.instance.startSession(extend: true)
-//                                             })*/
-//
-//                                            //Use metadata acquired from fetchMapList
-//                                            let userdata = self.maps[index].1.userdata as? [String:Any]
-//                                            // This is placenote originally
-//                                            //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-//                                            //                                        self.statusLabel.text = "Map Loaded. Look Around"
-//                                            //                                      }
-//
-//                                            if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-//                                                self.statusLabel.text = "Map Loaded. Look Around"
-//                                                //dump(userdata?["CheckpointDict"] as? [String:String])
-//
-//                                            }
-//                                            else {
-//                                                self.statusLabel.text = "Map Loaded. Shape file not found"
-//                                            }
-//                                            LibPlacenote.instance.startSession(extend: true)
-//
-//
+    //Provides a newly captured camera image and accompanying AR information to the delegate.
+    func session(_ session: ARSession, didUpdate: ARFrame) {
+        let image: CVPixelBuffer = didUpdate.capturedImage
+        let pose: matrix_float4x4 = didUpdate.camera.transform
+
+        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+
+
+        // There was navigation/breadcrumb dropping here in OG viewController
+
+
+
+        if (!LibPlacenote.instance.initialized()) {
+            statusLabel.text = "SDK not initialized"
+            return
+        }
+
+        if (mappingStarted || localizationStarted) {
+            LibPlacenote.instance.setFrame(image: image, pose: pose)
+        }
+    }
+
+
+    func nodeDistance (first: SCNVector3, second: SCNVector3) -> Float {
+        let x = first.x - second.x
+        let y = first.y - second.y
+        let z = first.z - second.z
+        return sqrt(x*x + y*y + z*z)
+    }
+    
+    
+    //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())
+    func onMapList(success: Bool, mapList: [String: LibPlacenote.MapMetadata]) -> Void {
+        maps.removeAll()
+        if (!success) {
+            print ("failed to fetch map list")
+            statusLabel.text = "Map List not retrieved"
+            return
+        }
+        
+        //Cycle through the maplist and create a database of all the maps (place.key) and its metadata (place.value)
+        for place in mapList {
+            maps.append((place.key, place.value))
+        }
+        
+        statusLabel.text = "Map List"
+
+    }
+    
+    
+    
+    
+    // Loads a map using the map name and the index in the list on maps
+    func mapLoading(map: (String, LibPlacenote.MapMetadata), index: Int) -> Void
+    {
+
+        LibPlacenote.instance.loadMap(mapId: maps[index].0,
+                                      downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+                                        if (completed) {
+                                            self.mappingStarted = true //extending the map
+                                            self.localizationStarted = true
+
+
+
+
+
+                                            //Using this method you can individual retrieve the metadata for a single map,
+                                            //However, as we called a blanket fetchMapList before, it already acquired all the metadata for all maps
+                                            //We'll just use that meta data for now.
+
+                                            /*LibPlacenote.instance.getMapMetadata(mapId: self.maps[indexPath.row].0, getMetadataCb: {(success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
+                                             let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
+                                             if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                             self.statusLabel.text = "Map Loaded. Look Around"
+                                             } else {
+                                             self.statusLabel.text = "Map Loaded. Shape file not found"
+                                             }
+                                             LibPlacenote.instance.startSession(extend: true)
+                                             })*/
+
+                                            //Use metadata acquired from fetchMapList
+                                            let userdata = self.maps[index].1.userdata as? [String:Any]
+                                            // This is placenote originally
+                                            //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                            //                                        self.statusLabel.text = "Map Loaded. Look Around"
+                                            //                                      }
+
+                                            if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                                self.statusLabel.text = "Map Loaded. Look Around"
+                                                //dump(userdata?["CheckpointDict"] as? [String:String])
+
+                                            }
+                                            else {
+                                                self.statusLabel.text = "Map Loaded. Shape file not found"
+                                            }
+                                            LibPlacenote.instance.startSession(extend: true)
+
+
 //                                            if (self.reportDebug) {
 //                                                LibPlacenote.instance.startReportRecord (uploadProgressCb: ({(completed: Bool, faulted: Bool, percentage: Float) -> Void in
 //                                                    if (completed) {
@@ -305,58 +340,59 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
 //                                                )
 //                                                print ("Started Debug Report")
 //                                            }
+
+                                            //self.tapRecognizer?.isEnabled = true
+                                        } else if (faulted) {
+                                            print ("Couldnt load map: " + self.maps[index].0)
+                                            self.statusLabel.text = "Load error Map Id: " +  self.maps[index].0
+                                        } else {
+                                            print ("Progress: " + percentage.description)
+                                        }
+        }
+        )
+
+    }
+    // Looks at all the maps and finds the one that is most likely the one the user is trying to load
+    func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
+    {
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
+        var currentLocation: CLLocation!
+
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+
+            currentLocation = locManager.location
+
+        }
+        var distance = 100.00
+        let x1 = currentLocation.coordinate.longitude
+        let y1 = currentLocation.coordinate.latitude
+        var nextMap = maps[0]
+        var counter = 0
+        var index = 0
+        for map in maps
+        {
+
+            let x2 = map.1.location?.longitude
+            let y2 = map.1.location?.latitude
+            if x2 != nil
+            {
+                let xDistance = x2! - x1
+                let yDistance = y2! - y1
+
+                if sqrt(xDistance * xDistance + yDistance * yDistance) < distance
+                {
+                    distance = sqrt(xDistance * xDistance + yDistance * yDistance)
+                    nextMap = map
+                    index = counter
+                }
+            }
+            counter = counter + 1
+        }
+        return (nextMap, index)
+    }
 //
-//                                            self.tapRecognizer?.isEnabled = true
-//                                        } else if (faulted) {
-//                                            print ("Couldnt load map: " + self.maps[index].0)
-//                                            self.statusLabel.text = "Load error Map Id: " +  self.maps[index].0
-//                                        } else {
-//                                            print ("Progress: " + percentage.description)
-//                                        }
-//        }
-//        )
-//
-//    }
-//    // Looks at all the maps and finds the one that is most likely the one the user is trying to load
-//    func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
-//    {
-//        let locManager = CLLocationManager()
-//        locManager.requestWhenInUseAuthorization()
-//        var currentLocation: CLLocation!
-//
-//        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-//            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
-//
-//            currentLocation = locManager.location
-//
-//        }
-//        var distance = 100.00
-//        let x1 = currentLocation.coordinate.longitude
-//        let y1 = currentLocation.coordinate.latitude
-//        var nextMap = maps[0]
-//        var counter = 0
-//        var index = 0
-//        for map in maps
-//        {
-//
-//            let x2 = map.1.location?.longitude
-//            let y2 = map.1.location?.latitude
-//            if x2 != nil
-//            {
-//                let xDistance = x2! - x1
-//                let yDistance = y2! - y1
-//
-//                if sqrt(xDistance * xDistance + yDistance * yDistance) < distance
-//                {
-//                    distance = sqrt(xDistance * xDistance + yDistance * yDistance)
-//                    nextMap = map
-//                    index = counter
-//                }
-//            }
-//            counter = counter + 1
-//        }
-//        return (nextMap, index)
-//    }
 //    // Finds out if the user is at a checkpoint or not (must be at least 1 object placed in the map to work)
 //    func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
 //
