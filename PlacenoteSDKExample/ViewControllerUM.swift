@@ -245,6 +245,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                         dump(userdata?["CheckpointCoreLoc"])
                                                         dump(userdata?["destinationDict"])
                                                         
+                                                        let checkpointV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
                                                     }
                                                     else {
                                                         self.userLabel.text = "Map Loaded. Shape file not found"
@@ -267,7 +268,54 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         
     }
     
-   
+    func findCorrectCheckpoint(CpV3: [String], CpCL: [String], MapToLoad: (String,LibPlacenote.MapMetadata) ) -> SCNVector3 {
+        var minDistance = 1000.0
+        var resCpV3Str = ""
+        for i in 0..<CpCL.count {
+            let cp = CpCL[i]
+            let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
+
+//            dump(cpLocation) //8 digits after decimal
+            let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
+
+//            let lat1 = Float(cp.split(separator: ",")[0])
+//            let long1 = Float(cp.split(separator: ",")[1])
+//
+//            let lat2 = MapToLoad.1.location?.latitude
+//            let long2 = MapToLoad.1.location?.longitude
+            
+            //DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
+            let dis = cpLocation.distance(from: mapLoaction)
+            //dump(dis)
+            if (dis < minDistance) {
+                minDistance = dis
+                resCpV3Str = CpV3[i]
+            }
+        }
+        if (resCpV3Str != "" ) {
+            let x = Double(resCpV3Str.split(separator: ",")[0])
+            let y = Double(resCpV3Str.split(separator: ",")[1])
+            let z = Double(resCpV3Str.split(separator: ",")[2])
+            let result = SCNVector3(x!,y!,z!)
+            return result
+        }
+        return SCNVector3(0,0,0)
+    }
+    
+    func DistanceForCL (lat1: Float, long1: Float, lat2: Float, long2: Float){
+        let pi = Float.pi
+        
+        let dLat = (lat2-lat1) * pi / 180
+        let dLon = (long2-long1) * pi / 180
+        
+        let lat3 = lat1 * pi / 180
+        let lat4 = lat2 * pi / 180
+        
+        let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat3) * cos(lat4)
+        let c = 2 * atan2f(sqrtf(a), sqrtf(1-a))
+        
+        dump(6371 * c)
+    }
     
     func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
         let x = NSString(format: "%.16f", lat)
