@@ -19,6 +19,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var btnGo: UIButton!
+    @IBOutlet weak var fpbutton: UIButton!
     @IBOutlet weak var about: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -37,6 +38,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.adminMode.isHidden = true
         self.UserIns.isHidden = true
         self.about.isHidden = true
+        self.fpbutton.isHidden = true
         SetUpLeftNaviBar() // shows navigation bar
         SetUpRightNaviBar()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
