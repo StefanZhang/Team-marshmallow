@@ -259,7 +259,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                             let bestCPV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
                                                         }
                                                         
-                                                        let checkpointV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
                                                     }
                                                     else {
                                                         self.userLabel.text = "Map Loaded. Shape file not found"
@@ -359,7 +358,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         let dict = graph.adjacencyDict
         let vertices = dict.keys
         
-        if (!shapePositions.isEmpty){
+        if (!shapePositions.isEmpty && !vertices.isEmpty){
 //            let start = shapePositions[0] // type V3
 //            //let start = nearestShapes[0] // type V3
 //            let startStr = SCNV3toString(vec: start)
