@@ -812,9 +812,8 @@
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zO-yU-zdE">
-                                <rect key="frame" x="138" y="605" width="99" height="62"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zO-yU-zdE">
+                                <rect key="frame" x="138" y="637" width="99" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="startPressed:" destination="RZp-YH-C88" eventType="touchUpInside" id="bNU-8R-aqK"/>
@@ -823,9 +822,12 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="h0q-PH-Wxz" firstAttribute="top" secondItem="6zO-yU-zdE" secondAttribute="bottom" constant="111" id="SB1-V4-5v5"/>
                             <constraint firstItem="vci-EV-nBG" firstAttribute="top" secondItem="JjW-bB-Uqg" secondAttribute="bottom" constant="8" id="nAY-mX-PdB"/>
                             <constraint firstItem="vci-EV-nBG" firstAttribute="leading" secondItem="jMz-Ut-B5F" secondAttribute="leadingMargin" id="sKQ-fk-1nS"/>
                             <constraint firstItem="3SA-iN-aE8" firstAttribute="top" secondItem="vci-EV-nBG" secondAttribute="bottom" constant="50" id="tKT-qO-4cA"/>
+                            <constraint firstItem="6zO-yU-zdE" firstAttribute="leading" secondItem="jMz-Ut-B5F" secondAttribute="leadingMargin" constant="122" id="ywh-uL-DjZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6zO-yU-zdE" secondAttribute="trailing" constant="122" id="zY7-Zf-o3Q"/>
                         </constraints>
                     </view>
                     <connections>
