@@ -9,8 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="MetaOT-Black_0.otf">
-            <string>MetaOT-Black</string>
+        <array key="MetaOT-HairIta_0.otf">
+            <string>MetaOT-HairIta</string>
+        </array>
+        <array key="MetaOT-Medi_0.otf">
+            <string>MetaOT-Medi</string>
         </array>
     </customFonts>
     <scenes>
@@ -47,14 +50,8 @@
                                     <segue destination="BV1-FR-VrT" kind="show" id="nqQ-C4-B3R"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where To?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNd-19-nnl">
-                                <rect key="frame" x="0.0" y="138" width="375" height="60"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-7J-p9H">
-                                <rect key="frame" x="16" y="265" width="343" height="175"/>
+                                <rect key="frame" x="16" y="275" width="343" height="175"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="t5Q-Tk-mZb"/>
@@ -81,7 +78,7 @@
                                 </prototypes>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1ob-qf-Qik">
-                                <rect key="frame" x="128" y="449" width="119" height="29"/>
+                                <rect key="frame" x="128" y="459" width="119" height="29"/>
                                 <segments>
                                     <segment title="Places"/>
                                     <segment title="Filter"/>
@@ -91,7 +88,7 @@
                                 </connections>
                             </segmentedControl>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Znb-dC-qTQ">
-                                <rect key="frame" x="16" y="265" width="343" height="176"/>
+                                <rect key="frame" x="16" y="275" width="343" height="176"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="176" id="K8u-YK-hXr"/>
                                 </constraints>
@@ -108,7 +105,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="XpD-3K-vYw"/>
                                     <constraint firstAttribute="height" constant="65" id="ctf-7I-RyO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
+                                <fontDescription key="fontDescription" name="MetaOT-HairIta" family="Meta OT" pointSize="53"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="GO">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -165,7 +162,7 @@
                                 </connections>
                             </button>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCO-Ae-C11">
-                                <rect key="frame" x="16" y="209" width="343" height="56"/>
+                                <rect key="frame" x="16" y="219" width="343" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Mqg-rI-qeK" id="bh0-96-BEh"/>
@@ -192,6 +189,12 @@
                                     <segue destination="ZWX-HB-TgX" kind="show" id="rJ5-zn-yOi"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where To?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNd-19-nnl">
+                                <rect key="frame" x="0.0" y="138" width="375" height="70"/>
+                                <fontDescription key="fontDescription" name="MetaOT-HairIta" family="Meta OT" pointSize="47"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -593,7 +596,7 @@
                         <viewControllerLayoutGuide type="bottom" id="jWm-tQ-fiN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vzM-AR-ycF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5v6-iq-bP9">
@@ -655,20 +658,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where Are You?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKR-iq-r6r">
-                                <rect key="frame" x="0.0" y="138" width="375" height="54"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                <rect key="frame" x="0.0" y="138" width="375" height="70"/>
+                                <fontDescription key="fontDescription" name="MetaOT-HairIta" family="Meta OT" pointSize="47"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDT-Hf-hSS">
-                                <rect key="frame" x="20" y="225" width="374" height="216"/>
+                                <rect key="frame" x="20" y="241" width="374" height="216"/>
                                 <connections>
                                     <outlet property="dataSource" destination="fY2-BX-kzM" id="evj-yW-msd"/>
                                     <outlet property="delegate" destination="fY2-BX-kzM" id="Ls3-ID-htH"/>
                                 </connections>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uv4-Lu-1je">
-                                <rect key="frame" x="20" y="259" width="374" height="175"/>
+                                <rect key="frame" x="20" y="275" width="374" height="175"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="aC3-X7-p67"/>
@@ -701,7 +704,7 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wOa-Wd-yJN">
-                                <rect key="frame" x="128" y="449" width="119" height="29"/>
+                                <rect key="frame" x="128" y="465" width="119" height="29"/>
                                 <segments>
                                     <segment title="Places"/>
                                     <segment title="Filter"/>
@@ -712,7 +715,7 @@
                                 </connections>
                             </segmentedControl>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gt6-yQ-ERq">
-                                <rect key="frame" x="20" y="203" width="374" height="56"/>
+                                <rect key="frame" x="20" y="219" width="374" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="fY2-BX-kzM" id="PAB-tk-1Uh"/>
@@ -935,13 +938,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Instructions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcB-iD-glE">
-                                <rect key="frame" x="0.0" y="201" width="375" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <rect key="frame" x="0.0" y="201" width="375" height="47.666666666666657"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Medi" family="Meta OT" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TsK-xM-MqM">
-                                <rect key="frame" x="20" y="257" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="256.66666666666669" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1009,7 +1012,7 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About HermanMiller" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTM-5D-VHa">
                                 <rect key="frame" x="0.0" y="201" width="375" height="48"/>
-                                <fontDescription key="fontDescription" name="MetaOT-Black" family="Meta OT" pointSize="32"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Medi" family="Meta OT" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1059,7 +1062,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NzB-eX-ef0"/>
+        <segue reference="AsE-Zy-RWk"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>

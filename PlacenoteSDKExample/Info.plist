@@ -43,6 +43,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MetaOT-Black_0.otf</string>
+		<string>MetaOT-Hairlta_0.otf</string>
+		<string>MetaOT-Medi_0.otf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
