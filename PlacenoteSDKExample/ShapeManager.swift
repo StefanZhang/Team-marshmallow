@@ -87,10 +87,10 @@ class ShapeManager {
   func loadShapeArray(shapeArray: [[String: [String: String]]]?) -> Bool {
     print("Shape Count")
     dump(getShapeArray().count)
-    if getShapeArray().count > 0
-    {
-        clearShapes() //clear currently viewing shapes and delete any record of them.
-    }
+//    if getShapeArray().count > 0
+//    {
+//        clearShapes() //clear currently viewing shapes and delete any record of them.
+//    }
     if (shapeArray == nil) {
         print ("Shape Manager: No shapes for this map")
         return false
