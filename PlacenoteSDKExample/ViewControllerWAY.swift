@@ -53,10 +53,13 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     func SetUpNaviBar(){
         let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
         navigationItem.leftBarButtonItem  = logoutBarButtonItem
+        
+        
         let logoImage = UIImage(named: "hmCircleLogo")?.withRenderingMode(.alwaysOriginal)
         let logoButton = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: #selector(Nothing))
-        logoButton.imageInsets = UIEdgeInsets(top: 0, left: 525, bottom: 00, right: 00)
+        logoButton.imageInsets = UIEdgeInsets(top: 0, left: 495, bottom: 00, right: 00)
         navigationItem.rightBarButtonItem = logoButton
+        
     }
     
     @objc func GoBackUser(){
