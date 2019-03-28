@@ -93,6 +93,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var mapStack = [Vertex<String>]()
     //let desination = ViewControllerWT.getSelectedPlace(ViewControllerWT)
 
+    var CheckpointV3 = [String]()
+    var CheckpointCoreLoc = [String]()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         userView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
@@ -222,6 +227,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             //dump(mapIndexArray)
             
             let length = mapIDs.count
+            if (length > 1 && destination[0] != initialLocation[0]) {
+                // when there are more than one map to load, i.e. des and initloc are in different maps, then find checkpoint inside the first map
+                
+            }
             for indexPath in 0..<length {
 
                 let id = mapIDs[indexPath]
@@ -244,8 +253,12 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                         dump(userdata?["CheckpointV3"])
                                                         dump(userdata?["CheckpointCoreLoc"])
                                                         dump(userdata?["destinationDict"])
+                                                        if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil) {
+                                                            self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
+                                                            self.CheckpointV3 = userdata?["CheckpointV3"]  as! [String]
+                                                            let bestCPV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
+                                                        }
                                                         
-                                                        let checkpointV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
                                                     }
                                                     else {
                                                         self.userLabel.text = "Map Loaded. Shape file not found"
@@ -326,6 +339,13 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         return resultString
     }
     
+    func StringToV3 (str: String) -> SCNVector3 {
+        let x = Float( str.split(separator: ",")[0] )
+        let y = Float( str.split(separator: ",")[1] )
+        let z = Float( str.split(separator: ",")[2] )
+        return SCNVector3(x!,y!,z!)
+    }
+    
     @IBAction func showPathButton(_ sender: Any) {
         shapeManager.clearView()
         var graph = AdjacencyList<String>()
@@ -333,18 +353,24 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         let shapeNodes = shapeManager.getShapeNodes()
         
         graph = updateGraph(graph: graph)
-        dump(graph)
+        //dump(graph)
         
         let dict = graph.adjacencyDict
         let vertices = dict.keys
         
-        if (!shapePositions.isEmpty){
-            let start = shapePositions[0] // type V3
-            //let start = nearestShapes[0] // type V3
-            let startStr = SCNV3toString(vec: start)
+        if (!shapePositions.isEmpty && !vertices.isEmpty){
+//            let start = shapePositions[0] // type V3
+//            //let start = nearestShapes[0] // type V3
+//            let startStr = SCNV3toString(vec: start)
+//
+//            let des = shapePositions[shapePositions.count-1] // type V3
+//            let desStr = SCNV3toString(vec: des)
             
-            let des = shapePositions[shapePositions.count-1] // type V3
-            let desStr = SCNV3toString(vec: des)
+            let startStr = initialLocation[1]
+            //let start = StringToV3(str: startStr) // type V3
+            
+            let desStr = destination[1]
+            //let des = StringToV3(str: desStr) // V3
             
             var startVer = vertices.first
             var desVer = vertices.first
