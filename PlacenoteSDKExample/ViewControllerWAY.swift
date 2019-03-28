@@ -20,7 +20,7 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
  
     // Store the destination selected by WT
     var destination : [String] = []
-    
+
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Places..."] // placeholder when fetching array
     var search = [String]()
@@ -259,6 +259,12 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
             
             viewControllerUM?.destination = self.destination
             viewControllerUM?.initialLocation = result
+        }
+        if(segue.identifier == "WAYtoLocalize"){
+            let userLocalizeView = segue.destination as? UserLocalizationViewController
+            dump(self.destination)
+            
+            userLocalizeView?.destination = self.destination
         }
     }
 }
