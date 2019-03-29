@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="MetaOT-HairIta_0.otf">
-            <string>MetaOT-HairIta</string>
+        <array key="MetaOT-Black_0.otf">
+            <string>MetaOT-Black</string>
         </array>
         <array key="MetaOT-Medi_0.otf">
             <string>MetaOT-Medi</string>
@@ -105,7 +105,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="XpD-3K-vYw"/>
                                     <constraint firstAttribute="height" constant="65" id="ctf-7I-RyO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="MetaOT-HairIta" family="Meta OT" pointSize="53"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Medi" family="Meta OT" pointSize="52"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="GO">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -191,7 +191,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where To?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNd-19-nnl">
                                 <rect key="frame" x="0.0" y="138" width="375" height="70"/>
-                                <fontDescription key="fontDescription" name="MetaOT-HairIta" family="Meta OT" pointSize="47"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Black" family="Meta OT" pointSize="47"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -634,7 +634,7 @@
                                     <constraint firstAttribute="height" constant="65" id="UTq-ku-XtO"/>
                                     <constraint firstAttribute="width" constant="120" id="zcc-av-VX4"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Medi" family="Meta OT" pointSize="27"/>
                                 <state key="normal" title="No Idea">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -659,12 +659,12 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where Are You?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKR-iq-r6r">
                                 <rect key="frame" x="0.0" y="138" width="375" height="70"/>
-                                <fontDescription key="fontDescription" name="MetaOT-HairIta" family="Meta OT" pointSize="47"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Black" family="Meta OT" pointSize="47"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDT-Hf-hSS">
-                                <rect key="frame" x="20" y="241" width="374" height="216"/>
+                                <rect key="frame" x="16" y="275" width="343" height="175"/>
                                 <connections>
                                     <outlet property="dataSource" destination="fY2-BX-kzM" id="evj-yW-msd"/>
                                     <outlet property="delegate" destination="fY2-BX-kzM" id="Ls3-ID-htH"/>
@@ -704,7 +704,7 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wOa-Wd-yJN">
-                                <rect key="frame" x="128" y="465" width="119" height="29"/>
+                                <rect key="frame" x="128" y="458" width="119" height="29"/>
                                 <segments>
                                     <segment title="Places"/>
                                     <segment title="Filter"/>
@@ -728,7 +728,7 @@
                                     <constraint firstAttribute="height" constant="65" id="CSd-Si-29L"/>
                                     <constraint firstAttribute="width" constant="120" id="cdo-pE-fGx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
+                                <fontDescription key="fontDescription" name="MetaOT-Medi" family="Meta OT" pointSize="27"/>
                                 <state key="normal" title="I'm Here!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -746,24 +746,25 @@
                         <constraints>
                             <constraint firstItem="kce-fy-Uba" firstAttribute="top" secondItem="o8g-OQ-BkH" secondAttribute="bottom" constant="40" id="0hI-TU-rpS"/>
                             <constraint firstItem="uv4-Lu-1je" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leading" constant="20" id="3Br-Wa-Ho2"/>
+                            <constraint firstItem="iDT-Hf-hSS" firstAttribute="top" secondItem="gt6-yQ-ERq" secondAttribute="bottom" id="3dF-Of-2DV"/>
+                            <constraint firstItem="iDT-Hf-hSS" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leading" constant="16" id="5LO-VM-v99"/>
+                            <constraint firstAttribute="trailing" secondItem="iDT-Hf-hSS" secondAttribute="trailing" constant="16" id="7nA-sB-MRd"/>
+                            <constraint firstItem="wOa-Wd-yJN" firstAttribute="top" secondItem="iDT-Hf-hSS" secondAttribute="bottom" constant="8" id="9y1-3s-j84"/>
+                            <constraint firstItem="wOa-Wd-yJN" firstAttribute="top" secondItem="uv4-Lu-1je" secondAttribute="bottom" constant="8" id="Dkm-0R-pVc"/>
                             <constraint firstItem="uv4-Lu-1je" firstAttribute="top" secondItem="qKR-iq-r6r" secondAttribute="bottom" constant="67" id="FHb-bn-i20"/>
                             <constraint firstItem="gt6-yQ-ERq" firstAttribute="leading" secondItem="uv4-Lu-1je" secondAttribute="leading" id="H1W-V3-o6t"/>
                             <constraint firstItem="qKR-iq-r6r" firstAttribute="top" secondItem="nMf-9V-bNi" secondAttribute="bottom" constant="94" id="IEg-So-ZtV"/>
-                            <constraint firstItem="wOa-Wd-yJN" firstAttribute="top" secondItem="uv4-Lu-1je" secondAttribute="bottom" constant="15" id="JEP-dg-rge"/>
-                            <constraint firstItem="wOa-Wd-yJN" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leadingMargin" constant="112" id="PwT-Fz-3id"/>
+                            <constraint firstItem="wOa-Wd-yJN" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leadingMargin" constant="112" id="JaK-n7-u5M"/>
                             <constraint firstItem="o8g-OQ-BkH" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leadingMargin" constant="40" id="RUi-0q-6Hd"/>
                             <constraint firstItem="qKR-iq-r6r" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leading" id="SEQ-eb-DSy"/>
                             <constraint firstItem="gt6-yQ-ERq" firstAttribute="trailing" secondItem="uv4-Lu-1je" secondAttribute="trailing" id="TDM-56-k34"/>
                             <constraint firstItem="gDL-jm-FSg" firstAttribute="leading" secondItem="txh-JT-fcM" secondAttribute="leadingMargin" id="aDH-di-1p1"/>
-                            <constraint firstItem="wOa-Wd-yJN" firstAttribute="top" secondItem="iDT-Hf-hSS" secondAttribute="bottom" constant="8" symbolic="YES" id="dWv-Eb-Pep"/>
                             <constraint firstItem="gDL-jm-FSg" firstAttribute="top" secondItem="nMf-9V-bNi" secondAttribute="bottom" constant="8" id="khD-Ye-Pgh"/>
                             <constraint firstItem="gt6-yQ-ERq" firstAttribute="bottom" secondItem="uv4-Lu-1je" secondAttribute="top" id="kur-mZ-Z4a"/>
-                            <constraint firstItem="iDT-Hf-hSS" firstAttribute="leading" secondItem="uv4-Lu-1je" secondAttribute="leading" id="nnl-Yx-nP5"/>
                             <constraint firstAttribute="trailing" secondItem="qKR-iq-r6r" secondAttribute="trailing" id="oVH-o4-8HK"/>
                             <constraint firstAttribute="trailing" secondItem="uv4-Lu-1je" secondAttribute="trailing" constant="20" id="ovs-oW-IVF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wOa-Wd-yJN" secondAttribute="trailing" constant="112" id="t8Z-7v-50p"/>
-                            <constraint firstItem="iDT-Hf-hSS" firstAttribute="trailing" secondItem="uv4-Lu-1je" secondAttribute="trailing" id="u7v-Nw-RfN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="T3P-fz-O6m" secondAttribute="trailing" constant="40" id="v8M-GP-3yK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wOa-Wd-yJN" secondAttribute="trailing" constant="112" id="w9q-O7-QlQ"/>
                             <constraint firstItem="kce-fy-Uba" firstAttribute="top" secondItem="T3P-fz-O6m" secondAttribute="bottom" constant="40" id="ykW-9V-1j2"/>
                         </constraints>
                     </view>
@@ -779,7 +780,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bBW-b6-iAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="931.88405797101461" y="-731.25"/>
+            <point key="canvasLocation" x="930.39999999999998" y="-731.5270935960591"/>
         </scene>
         <!--User Localization-->
         <scene sceneID="fUb-xn-NFD">
@@ -1074,8 +1075,8 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0IV-MN-BjX"/>
-        <segue reference="NzB-eX-ef0"/>
+        <segue reference="jyE-gs-TUu"/>
+        <segue reference="AsE-Zy-RWk"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
