@@ -86,13 +86,19 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var camManager: CameraManager? = nil;
     private var ptViz: FeaturePointVisualizer? = nil;
     
+    private var looking = false
     private var planesVizAnchors = [ARAnchor]();
     private var planesVizNodes = [UUID: SCNNode]();
     
     private var graph  = AdjacencyList<String>()
     private var mapStack = [Vertex<String>]()
+    
+    
     //let desination = ViewControllerWT.getSelectedPlace(ViewControllerWT)
-
+    
+    var mapDataStack = [(String,LibPlacenote.MapMetadata)]()
+    var indexPath = 0
+    
     var CheckpointV3 = [String]()
     var CheckpointCoreLoc = [String]()
     
@@ -207,7 +213,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             
             var mapIDs = [String]()
             var mapIndexArray = [Int]()
-            var mapDataStack = [(String,LibPlacenote.MapMetadata)]()
+            
             // For every map in the mapStack, find its mapID
             for mapToLoad in mapStack {
                 var mapIndex = 0
@@ -227,55 +233,56 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             //dump(mapIndexArray)
             
             let length = mapIDs.count
-            if (length > 1 && destination[0] != initialLocation[0]) {
+            if (length > 1 ) {
                 // when there are more than one map to load, i.e. des and initloc are in different maps, then find checkpoint inside the first map
                 
             }
-            for indexPath in 0..<length {
-
-                let id = mapIDs[indexPath]
-                LibPlacenote.instance.loadMap(mapId: id,
-                                              downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
-                                                if (completed) {
-                                                    self.mappingStarted = true
-                                                    self.localizationStarted = true
-                                                    
-                                                    //Use metadata acquired from fetchMapList
-                                                    print("This is map data")
-                                                    dump(mapDataStack[indexPath])
-                                                    let mapdata = mapDataStack[indexPath]
-                                                    let userdata = mapdata.1.userdata as? [String:Any]
-                                                    
-                                                    if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-                                                        self.userLabel.text = "Map Loaded. Look Around"
-                                                        
-                                                        print("This is checkpoint info")
-                                                        dump(userdata?["CheckpointV3"])
-                                                        dump(userdata?["CheckpointCoreLoc"])
-                                                        dump(userdata?["destinationDict"])
-                                                        if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil) {
-                                                            self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
-                                                            self.CheckpointV3 = userdata?["CheckpointV3"]  as! [String]
-                                                            let bestCPV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
-                                                        }
-                                                        
+            
+            let id = mapIDs[indexPath]
+            LibPlacenote.instance.loadMap(mapId: id,
+                                          downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+                                            if (completed) {
+                                                self.mappingStarted = true
+                                                self.localizationStarted = true
+                                                
+                                                //Use metadata acquired from fetchMapList
+                                                print("This is map data")
+                                                dump(self.mapDataStack[self.indexPath])
+                                                let mapdata = self.mapDataStack[self.indexPath]
+                                                let userdata = mapdata.1.userdata as? [String:Any]
+                                                
+                                                if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                                    self.userLabel.text = "Map Loaded. Look Around"
+                                                    self.looking = true
+                                                    self.indexPath += 1
+                                                    print("This is checkpoint info")
+                                                    dump(userdata?["CheckpointV3"])
+                                                    dump(userdata?["CheckpointCoreLoc"])
+                                                    dump(userdata?["destinationDict"])
+                                                    if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil && self.destination[0] != self.initialLocation[0]) {
+                                                        self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
+                                                        self.CheckpointV3 = userdata?["CheckpointV3"]  as! [String]
+                                                        let bestCPV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
+                                                        self.destination[1] = self.SCNV3toString(vec: bestCPV3)
                                                     }
-                                                    else {
-                                                        self.userLabel.text = "Map Loaded. Shape file not found"
-                                                    }
-                                                    LibPlacenote.instance.startSession(extend: true)
-
-
                                                     
-                                                } else if (faulted) {
-                                                    print ("Couldnt load map: " + self.maps[indexPath].0)
-                                                    self.userLabel.text = "Load error Map Id: " +  self.maps[indexPath].0
-                                                } else {
-                                                    print ("Progress: " + percentage.description)
                                                 }
-                }
-                )
+                                                else {
+                                                    self.userLabel.text = "Map Loaded. Shape file not found"
+                                                }
+                                                LibPlacenote.instance.startSession(extend: true)
+
+
+                                                
+                                            } else if (faulted) {
+                                                print ("Couldnt load map: " + self.maps[self.indexPath].0)
+                                                self.userLabel.text = "Load error Map Id: " +  self.maps[self.indexPath].0
+                                            } else {
+                                                print ("Progress: " + percentage.description)
+                                            }
             }
+            )
+            
         }
         
         
@@ -350,7 +357,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         shapeManager.clearView()
         var graph = AdjacencyList<String>()
         let shapePositions = shapeManager.getShapePositions()
-        let shapeNodes = shapeManager.getShapeNodes()
+        //let shapeNodes = shapeManager.getShapeNodes()
         
         graph = updateGraph(graph: graph)
         //dump(graph)
@@ -476,12 +483,115 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 
 
     // MARK: - ARSessionDelegate
+    func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
+        
+        if shapeManager.getShapePositions().count > 0 {
+            for node in shapeManager.getShapeNodes()
+            {
+
+                let tre = node.geometry?.description
+                
+                if(tre != nil)
+                {
+                    let T = Array(tre!)[4]
+                    if( T == "B")
+                    {
+                        
+                        if (nodeDistance(first: camera_pos, second: node.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.5)
+                        {
+                            let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                switch action.style{
+                                case .default:
+                                    print("default")
+                                    
+                                case .cancel:
+                                    print("cancel")
+                                    
+                                case .destructive:
+                                    print("destructive")
+                                    
+                                    
+                                }}))
+                            self.present(alert, animated: true, completion: nil)
+                            self.looking = false
+                            return true
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        return false
+    }
     
+func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
+  {
+
+    LibPlacenote.instance.loadMap(mapId: maps[index].0,
+                                  downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+                                    if (completed) {
+                                      self.mappingStarted = true //extending the map
+                                      self.localizationStarted = true
+                                      
+                                      
+                                      //Using this method you can individual retrieve the metadata for a single map,
+                                      //However, as we called a blanket fetchMapList before, it already acquired all the metadata for all maps
+                                      //We'll just use that meta data for now.
+                                      
+                                      /*LibPlacenote.instance.getMapMetadata(mapId: self.maps[indexPath.row].0, getMetadataCb: {(success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
+                                       let userdata = self.maps[indexPath.row].1.userdata as? [String:Any]
+                                       if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                       self.statusLabel.text = "Map Loaded. Look Around"
+                                       } else {
+                                       self.statusLabel.text = "Map Loaded. Shape file not found"
+                                       }
+                                       LibPlacenote.instance.startSession(extend: true)
+                                       })*/
+                                      
+                                      //Use metadata acquired from fetchMapList
+                                      let userdata = maps[index].1.userdata as? [String:Any]
+                                      // This is placenote originally
+                                      //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                      //                                        self.statusLabel.text = "Map Loaded. Look Around"
+                                      //                                      }
+                                      
+                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
+                                        self.userLabel.text = "Map Loaded. Look Around"
+                                        //dump(userdata?["CheckpointDict"] as? [String:String])
+                                        
+                                      }
+                                      else {
+                                        self.userLabel.text = "Map Loaded. Shape file not found"
+                                      }
+                                      LibPlacenote.instance.startSession(extend: true)
+                                      
+                                      
+                                      
+                                      //self.tapRecognizer?.isEnabled = true
+                                    } else if (faulted) {
+                                      print ("Couldnt load map: " + self.maps[index].0)
+                                      self.userLabel.text = "Load error Map Id: " +  self.maps[index].0
+                                    } else {
+                                      print ("Progress: " + percentage.description)
+                                    }
+    }
+    )
+    
+  }
     //Provides a newly captured camera image and accompanying AR information to the delegate.
     func session(_ session: ARSession, didUpdate: ARFrame) {
         let image: CVPixelBuffer = didUpdate.capturedImage
         let pose: matrix_float4x4 = didUpdate.camera.transform
-        
+        // Gets the current amount of feature points in a frame
+        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+        if looking == true{
+              if (getClosetNode(camera_pos: camLoc, map: graph))
+              {
+                mapLoading(maps: mapDataStack, index: indexPath )
+              }
+        }
         if (!LibPlacenote.instance.initialized()) {
             print("SDK is not initialized")
             return

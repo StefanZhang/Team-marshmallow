@@ -85,12 +85,7 @@ class ShapeManager {
   // Load shape array
     // This is where Matthew needs to get all the nodes from
   func loadShapeArray(shapeArray: [[String: [String: String]]]?) -> Bool {
-    print("Shape Count")
-    dump(getShapeArray().count)
-//    if getShapeArray().count > 0
-//    {
-//        clearShapes() //clear currently viewing shapes and delete any record of them.
-//    }
+    clearShapes()
     if (shapeArray == nil) {
         print ("Shape Manager: No shapes for this map")
         return false
