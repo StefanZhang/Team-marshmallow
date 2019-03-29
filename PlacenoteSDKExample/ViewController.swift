@@ -86,6 +86,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   @IBOutlet var filterSlider: UISlider!
   
   
+  @IBOutlet weak var btnShowPath: UIButton!
   @IBOutlet var newMapButton: UIButton!
   @IBOutlet var pickMapButton: UIButton!
   @IBOutlet var statusLabel: UILabel!
@@ -149,6 +150,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   //Setup view once loaded
   override func viewDidLoad() {
 
+    self.btnShowPath.isHidden = true
     super.viewDidLoad()
     //AWS get user attributes to see if logged in already
     self.fetchUserAttributes()
