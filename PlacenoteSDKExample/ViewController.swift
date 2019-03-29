@@ -894,13 +894,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       if(adjLocs.isEmpty){
         
         // Zhenru
-        let shapeLoc = LibPlacenote.instance.processPose(pose: pose)
-        //shapeManager.spawnNewBreadCrumb(position1: camLoc) //Original
-        shapeManager.spawnNewBreadCrumb(position1: shapeLoc.position())
-        last_loc = shapeLoc.position()
+        //let shapeLoc = LibPlacenote.instance.processPose(pose: pose)
+        shapeManager.spawnNewBreadCrumb(position1: camLoc) //Original
+        //shapeManager.spawnNewBreadCrumb(position1: shapeLoc.position())
+        //last_loc = shapeLoc.position()
         dump(shapeManager.getShapeArray())
         
-        //last_loc = camLoc //Original
+        last_loc = camLoc //Original
       }
     }
     
