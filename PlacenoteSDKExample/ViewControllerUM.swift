@@ -27,6 +27,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var seconds = 0
     private var maxSizeReached = false
     
+    //Zhenru
+    var newNodes = [SCNNode]()
+    
     //Information passed from WT and WAY
     // First element is mapName, second element is V3
     var destination : [String] = []
@@ -43,6 +46,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         if prevStatus != LibPlacenote.MappingStatus.running && currStatus == LibPlacenote.MappingStatus.running { //just localized draw shapes you've retrieved
             print ("Just localized, drawing view")
             shapeManager.drawView(parent: userScene.rootNode) //just localized redraw the shapes
+            
             if mappingStarted {
                 hour = calendar.component(.hour, from: date)
                 minutes = calendar.component(.minute, from: date)
@@ -58,7 +62,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             //currently being drawn from the arkit frame of reference to the Placenote map's frame of reference.
             for (_, node) in planesVizNodes {
                 node.transform = LibPlacenote.instance.processPose(pose: node.transform);
+
             }
+            
         }
         
         if prevStatus == LibPlacenote.MappingStatus.running && currStatus != LibPlacenote.MappingStatus.running { //just lost localization
@@ -485,10 +491,16 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     // MARK: - ARSessionDelegate
     func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
         
+        
         if shapeManager.getShapePositions().count > 0 {
-            for node in shapeManager.getShapeNodes()
+            //for node in shapeManager.getShapeNodes()
+            for node in newNodes
             {
 
+                
+//                dump(allChildNodes[0].position)
+//                dump(shapeNodes[0].position)
+                
                 let tre = node.geometry?.description
                 
                 if(tre != nil)
@@ -496,8 +508,15 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     let T = Array(tre!)[4]
                     if( T == "B")
                     {
-                        
-                        if (nodeDistance(first: camera_pos, second: node.position ?? SCNVector3(0.00, 0.00, 0.00)) < 1.5)
+//
+//                        print("This is distance")
+//                        dump(camera_pos)
+//                        dump(userScene.rootNode.worldPosition)
+//                        dump(node.position)
+//                        dump(node.worldPosition)
+                        dump(nodeDistance(first: camera_pos, second: node.position ) )
+
+                        if (nodeDistance(first: camera_pos, second: node.position ) < 2)
                         {
                             let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -585,11 +604,19 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
         let image: CVPixelBuffer = didUpdate.capturedImage
         let pose: matrix_float4x4 = didUpdate.camera.transform
         // Gets the current amount of feature points in a frame
-        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
-        if looking == true{
+        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y,pose.columns.3.z)
+//        dump(looking)
+//        print("Start")
+//        dump(camLoc)
+//        dump(userScene.rootNode.position)
+//        dump(userScene.rootNode.worldPosition)
+        
+        if( looking == true ){
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
-                mapLoading(maps: mapDataStack, index: indexPath )
+                if (mapDataStack.count >= 2) {
+                    mapLoading(maps: mapDataStack, index: indexPath )
+                }
               }
         }
         if (!LibPlacenote.instance.initialized()) {

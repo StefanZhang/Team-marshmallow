@@ -834,11 +834,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   //Provides a newly captured camera image and accompanying AR information to the delegate.
   func session(_ session: ARSession, didUpdate: ARFrame) {
     let image: CVPixelBuffer = didUpdate.capturedImage
-    let pose: matrix_float4x4 = didUpdate.camera.transform
-    // Gets the current amount of feature points in a frame
-
-    let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
     
+    let pose: matrix_float4x4 = didUpdate.camera.transform
+    
+    //Zhenru This is original
+    //let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+    let camLoc = pose.position()
     if shapeManager.getShapeNodes().count > 0
     {
       let firstnode = shapeManager.getShapeNodes()[0]
@@ -891,11 +892,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     if (nodeDistance(first: camLoc, second: last_loc) > distance && canDropBC == true){
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
-        shapeManager.spawnNewBreadCrumb(position1: camLoc)
         
+        // Zhenru
+        let shapeLoc = LibPlacenote.instance.processPose(pose: pose)
+        //shapeManager.spawnNewBreadCrumb(position1: camLoc) //Original
+        shapeManager.spawnNewBreadCrumb(position1: shapeLoc.position())
+        last_loc = shapeLoc.position()
         dump(shapeManager.getShapeArray())
         
-        last_loc = camLoc
+        //last_loc = camLoc //Original
       }
     }
     
