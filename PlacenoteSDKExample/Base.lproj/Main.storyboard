@@ -820,9 +820,8 @@
                                     <action selector="startPressed:" destination="RZp-YH-C88" eventType="touchUpInside" id="bNU-8R-aqK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4m0-BC-gzx">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4m0-BC-gzx">
                                 <rect key="frame" x="164" y="525" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="loadedPressed:" destination="RZp-YH-C88" eventType="touchUpInside" id="vkh-W2-3XB"/>
@@ -833,6 +832,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="h0q-PH-Wxz" firstAttribute="top" secondItem="6zO-yU-zdE" secondAttribute="bottom" constant="111" id="SB1-V4-5v5"/>
+                            <constraint firstItem="6zO-yU-zdE" firstAttribute="top" secondItem="4m0-BC-gzx" secondAttribute="bottom" constant="82" id="flh-DN-141"/>
                             <constraint firstItem="vci-EV-nBG" firstAttribute="top" secondItem="JjW-bB-Uqg" secondAttribute="bottom" constant="8" id="nAY-mX-PdB"/>
                             <constraint firstItem="vci-EV-nBG" firstAttribute="leading" secondItem="jMz-Ut-B5F" secondAttribute="leadingMargin" id="sKQ-fk-1nS"/>
                             <constraint firstItem="3SA-iN-aE8" firstAttribute="top" secondItem="vci-EV-nBG" secondAttribute="bottom" constant="50" id="tKT-qO-4cA"/>
@@ -873,10 +873,13 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ce-Tq-mjh">
-                                <rect key="frame" x="112" y="664" width="150" height="83"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ce-Tq-mjh">
+                                <rect key="frame" x="209" y="640" width="150" height="83"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="83" id="Sk0-Vp-p8a"/>
+                                    <constraint firstAttribute="width" constant="150" id="r9k-1C-mtF"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <state key="normal" title="Show Path">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -885,10 +888,13 @@
                                     <action selector="showPathButton:" destination="cls-Gq-Svo" eventType="touchUpInside" id="Ry4-9N-RbD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaB-db-CjY">
-                                <rect key="frame" x="112" y="514" width="150" height="79"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaB-db-CjY">
+                                <rect key="frame" x="16" y="640" width="150" height="83"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="VhP-Tx-bz3"/>
+                                    <constraint firstAttribute="height" constant="83" id="iW9-4b-39i"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <state key="normal" title="Load Map">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -901,7 +907,15 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="0Vq-gL-EuW" firstAttribute="top" secondItem="ULT-SA-No7" secondAttribute="bottom" constant="50" id="9Ik-Xc-GUj"/>
+                            <constraint firstItem="3Ce-Tq-mjh" firstAttribute="trailing" secondItem="WWt-hb-12Z" secondAttribute="trailingMargin" id="AC6-7o-aH2"/>
+                            <constraint firstItem="LaB-db-CjY" firstAttribute="leading" secondItem="WWt-hb-12Z" secondAttribute="leadingMargin" id="Egd-Nq-4ue"/>
+                            <constraint firstItem="yK4-iT-TCb" firstAttribute="top" secondItem="3Ce-Tq-mjh" secondAttribute="bottom" constant="55" id="IHU-Bd-d0r"/>
+                            <constraint firstItem="yK4-iT-TCb" firstAttribute="top" secondItem="3Ce-Tq-mjh" secondAttribute="bottom" constant="55" id="Ioy-J7-lgn"/>
+                            <constraint firstItem="LaB-db-CjY" firstAttribute="leading" secondItem="WWt-hb-12Z" secondAttribute="leadingMargin" id="P7h-hQ-s24"/>
                             <constraint firstItem="0Vq-gL-EuW" firstAttribute="top" secondItem="ULT-SA-No7" secondAttribute="bottom" constant="59" id="RWY-i9-DPW"/>
+                            <constraint firstItem="yK4-iT-TCb" firstAttribute="top" secondItem="LaB-db-CjY" secondAttribute="bottom" constant="55" id="VgX-jG-s9H"/>
+                            <constraint firstItem="3Ce-Tq-mjh" firstAttribute="trailing" secondItem="WWt-hb-12Z" secondAttribute="trailingMargin" id="m8e-zq-e7T"/>
+                            <constraint firstItem="yK4-iT-TCb" firstAttribute="top" secondItem="LaB-db-CjY" secondAttribute="bottom" constant="55" id="ujt-W5-ZIn"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1075,8 +1089,8 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jyE-gs-TUu"/>
-        <segue reference="AsE-Zy-RWk"/>
+        <segue reference="0IV-MN-BjX"/>
+        <segue reference="NzB-eX-ef0"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
