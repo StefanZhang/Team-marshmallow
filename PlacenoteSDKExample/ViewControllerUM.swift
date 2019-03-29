@@ -493,8 +493,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         
         
         if shapeManager.getShapePositions().count > 0 {
-            //for node in shapeManager.getShapeNodes()
-            for node in newNodes
+            for node in shapeManager.getShapeNodes()
+            //for node in newNodes
             {
 
                 
@@ -508,15 +508,16 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     let T = Array(tre!)[4]
                     if( T == "B")
                     {
-//
+////
 //                        print("This is distance")
 //                        dump(camera_pos)
-//                        dump(userScene.rootNode.worldPosition)
-//                        dump(node.position)
-//                        dump(node.worldPosition)
-                        dump(nodeDistance(first: camera_pos, second: node.position ) )
+                        let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
+////
+//                        dump(pose)
+////
+//                        dump(nodeDistance(first: pose, second: node.position ) )
 
-                        if (nodeDistance(first: camera_pos, second: node.position ) < 2)
+                        if (nodeDistance(first: pose, second: node.position ) < 2)
                         {
                             let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
