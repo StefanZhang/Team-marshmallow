@@ -25,6 +25,7 @@ class AdminLoginViewController: UIViewController {
         super.viewDidLoad()
         BButton.addTarget(self, action: #selector(GoBackUser), for: .touchUpInside)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur3")!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
