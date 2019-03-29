@@ -10,6 +10,7 @@ import UIKit
 import PlacenoteSDK
 import AWSCore
 import AWSCognitoIdentityProvider
+import CoreLocation
 
 let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
 let userPoolID = "UserPool"
@@ -218,6 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 cameFrom[neighbor.description] = current
                 g[neighbor.description] = tentative_gScore
                 f[neighbor.description] = g[neighbor.description]! + mapDistance(first: neighbor.description,second: destination.description)
+                
             }
         }
         print("Failure")
@@ -229,17 +231,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let strArray2 = second.split(separator: ",")
         let x1 = Double(strArray[0]) ?? 0.0
         let y1 = Double(strArray[1]) ?? 0.0
-        let z1 = Double(strArray[2]) ?? 0.0
+        //let z1 = Double(strArray[2]) ?? 0.0
         let x2 = Double(strArray2[0]) ?? 0.0
         let y2 = Double(strArray2[1]) ?? 0.0
-        let z2 = Double(strArray2[2]) ?? 0.0
+        //let z2 = Double(strArray2[2]) ?? 0.0
         
-        let x = x1 - x2
-        let y = y1 - y2
-        let z = z1 - z2
-        //dump(x*x + y*y + z*z)
-        return sqrt(x*x + y*y + z*z)
+        let firstCD = CLLocation(latitude: x1, longitude: y1)
+        let secondCD = CLLocation(latitude: x2, longitude: y2)
         
+        let distance = firstCD.distance(from: secondCD)
+        return distance
     }
     
     //Receive list of maps after it is retrieved. This is only fired when fetchMapList is called (see updateMapTable())

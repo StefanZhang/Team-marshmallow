@@ -35,6 +35,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     var destination : [String] = []
     var initialLocation : [String] = []
     
+    var startStr = ""
+    var desStr = ""
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     // For PNDelegate function
@@ -120,6 +123,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         shapeManager = ShapeManager(scene: userScene, view: userView)
         LibPlacenote.instance.multiDelegate += self;
         
+        desStr = destination[1]
+        startStr = initialLocation[1]
+        
         locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         
@@ -196,13 +202,30 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         return Vertex<String>(loc: "0")
     }
     
+    func findClosestBC(camV3: SCNVector3) -> String {
+        let camStr = SCNV3toString(vec: camV3)
+        for shapePosition in shapeManager.getShapePositions() {
+            if (camStr == SCNV3toString(vec: shapePosition)){
+                return SCNV3toString(vec: shapePosition)
+            }
+            
+        }
+        return ""
+    }
+    
     @IBAction func loadMapButton(_ sender: Any) {
         //print("This is graph info")
         //dump(appDelegate.allVertices)
         //dump(appDelegate.ultimateGraph)
 //
+        //dump(destination)
+        //dump(initialLocation)
+        
         let desMapName = destination[0]
         let initMapName = initialLocation[0]
+        dump(desMapName)
+        dump(initMapName)
+        
         let desMapLoc = appDelegate.MapLocationDict[desMapName]
         let initMapLoc = appDelegate.MapLocationDict[initMapName]
         
@@ -210,8 +233,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         let initVertex = getVertexByLoc(mapLoc: initMapLoc!)
         
         // array of locations of maps
+        
         mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
-
+        dump(mapStack) // This is giving end and start map
+        
         maps = appDelegate.maps
         
         if (!mapStack.isEmpty){
@@ -234,8 +259,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     mapIndex += 1
                 }
             }
-            dump(mapDataStack)
-            //dump(mapIDs)
+            //dump(mapDataStack)
+            dump(mapIDs)
             //dump(mapIndexArray)
             
             let length = mapIDs.count
@@ -258,18 +283,25 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                 let userdata = mapdata.1.userdata as? [String:Any]
                                                 
                                                 if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-                                                    self.userLabel.text = "Map Loaded. Look Around"
+                                                    self.userLabel.text = "Map Loaded. Look Around" + String(length) + String(self.indexPath)
                                                     self.looking = true
                                                     self.indexPath += 1
-                                                    print("This is checkpoint info")
-                                                    dump(userdata?["CheckpointV3"])
-                                                    dump(userdata?["CheckpointCoreLoc"])
-                                                    dump(userdata?["destinationDict"])
+//                                                    print("This is checkpoint info")
+//                                                    dump(userdata?["CheckpointV3"])
+//                                                    dump(userdata?["CheckpointCoreLoc"])
+//                                                    dump(userdata?["destinationDict"])
+                                                    if (self.indexPath != 0) {
+                                                        // if not the initial location map, then the startStr should be the first shape you see in the map
+                                                        // self.startStr = self.findClosestBC()
+                                                    }
                                                     if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil && self.destination[0] != self.initialLocation[0]) {
                                                         self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
                                                         self.CheckpointV3 = userdata?["CheckpointV3"]  as! [String]
                                                         let bestCPV3 = self.findCorrectCheckpoint(CpV3: userdata?["CheckpointV3"] as! [String], CpCL: userdata?["CheckpointCoreLoc"] as! [String], MapToLoad:mapdata)
-                                                        self.destination[1] = self.SCNV3toString(vec: bestCPV3)
+                                                        self.desStr = self.SCNV3toString(vec: bestCPV3)
+                                                    }
+                                                    else {
+                                                        self.userLabel.text = "The map does not contain Checkpoints"
                                                     }
                                                     
                                                 }
@@ -490,31 +522,21 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 
     // MARK: - ARSessionDelegate
     func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
-        
-        
         if shapeManager.getShapePositions().count > 0 {
             for node in shapeManager.getShapeNodes()
-            //for node in newNodes
             {
-
-                
-//                dump(allChildNodes[0].position)
-//                dump(shapeNodes[0].position)
-                
                 let tre = node.geometry?.description
-                
                 if(tre != nil)
                 {
                     let T = Array(tre!)[4]
-                    if( T == "B")
+                    if( T == "B") // Then this node is the checkpoint
                     {
-////
+                        let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
+                        // This processPosition only works if mappingStatus is running
+                        
 //                        print("This is distance")
 //                        dump(camera_pos)
-                        let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
-////
 //                        dump(pose)
-////
 //                        dump(nodeDistance(first: pose, second: node.position ) )
 
                         if (nodeDistance(first: pose, second: node.position ) < 2)
@@ -548,7 +570,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     
 func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
   {
-
+    userLabel.text = "Loading Map"
     LibPlacenote.instance.loadMap(mapId: maps[index].0,
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
