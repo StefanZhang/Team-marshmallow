@@ -1066,14 +1066,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5c-Ug-V4a">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5c-Ug-V4a">
                                 <rect key="frame" x="20" y="257" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTv-F1-rQB">
-                                <rect key="frame" x="16" y="265" width="343" height="292"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTv-F1-rQB">
+                                <rect key="frame" x="16" y="265" width="343" height="250.66666666666663"/>
                                 <mutableString key="text">Herman Miller is an American company based in Zeeland, Michigan, that produces office furniture, equipment, and home furnishings. Their signature products include the Equa chair, Aeron chair, Noguchi table, Marshmallow sofa, and the Eames Lounge Chair. Herman Miller is credited with the invention of the office cubicle (originally known as the "Action Office II") in 1968 under director of research Robert Propst. Along with their game changing design of the cubicle their innovative products such as the Eames chair and other products that have stood the test of time which has solidified their spot as leaders in the furniture industry for decades.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
@@ -1090,15 +1090,18 @@
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="gTM-5D-VHa" firstAttribute="top" secondItem="6ra-yf-8Ec" secondAttribute="bottom" constant="8" id="4dV-5m-XDl"/>
+                            <constraint firstItem="NTv-F1-rQB" firstAttribute="trailing" secondItem="miV-3X-KrS" secondAttribute="trailingMargin" id="Cf8-H7-QKh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6ra-yf-8Ec" secondAttribute="trailing" constant="96" id="DfW-P0-waI"/>
                             <constraint firstAttribute="trailing" secondItem="b5c-Ug-V4a" secondAttribute="trailing" constant="20" id="Ge3-oi-0KC"/>
-                            <constraint firstItem="NTv-F1-rQB" firstAttribute="trailing" secondItem="miV-3X-KrS" secondAttribute="trailingMargin" id="IC1-d9-4EK"/>
-                            <constraint firstItem="NTv-F1-rQB" firstAttribute="leading" secondItem="miV-3X-KrS" secondAttribute="leadingMargin" id="ITB-oP-HD5"/>
+                            <constraint firstItem="NTv-F1-rQB" firstAttribute="top" secondItem="b5c-Ug-V4a" secondAttribute="bottom" constant="8" id="I3A-Jx-z94"/>
+                            <constraint firstItem="NTv-F1-rQB" firstAttribute="leading" secondItem="miV-3X-KrS" secondAttribute="leadingMargin" id="Jhk-yH-eI5"/>
                             <constraint firstItem="gTM-5D-VHa" firstAttribute="leading" secondItem="miV-3X-KrS" secondAttribute="leading" id="Saz-BO-q9W"/>
+                            <constraint firstItem="gTM-5D-VHa" firstAttribute="leading" secondItem="miV-3X-KrS" secondAttribute="leading" id="VUd-x7-Edm"/>
                             <constraint firstItem="b5c-Ug-V4a" firstAttribute="leading" secondItem="miV-3X-KrS" secondAttribute="leading" constant="20" id="a1m-6N-8Um"/>
-                            <constraint firstItem="NTv-F1-rQB" firstAttribute="top" secondItem="b5c-Ug-V4a" secondAttribute="bottom" constant="8" id="cOj-0b-ClM"/>
                             <constraint firstItem="6ra-yf-8Ec" firstAttribute="top" secondItem="pVB-G7-gd2" secondAttribute="bottom" constant="8" id="cT9-pV-Ts4"/>
                             <constraint firstAttribute="trailing" secondItem="gTM-5D-VHa" secondAttribute="trailing" id="f85-ym-Jzo"/>
+                            <constraint firstAttribute="trailing" secondItem="gTM-5D-VHa" secondAttribute="trailing" id="mCZ-wr-u29"/>
+                            <constraint firstItem="b5c-Ug-V4a" firstAttribute="top" secondItem="gTM-5D-VHa" secondAttribute="bottom" constant="8" id="vIA-Vx-BIj"/>
                         </constraints>
                     </view>
                 </viewController>
