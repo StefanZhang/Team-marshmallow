@@ -17,6 +17,12 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
 
     private var graph  = AdjacencyList<String>()
     
+    var localizedPlace = "" // This is place found by localization
+    // Store the destination selected by WT
+    var destination : [String] = []
+    var camLoc = SCNVector3()
+    var foundBreadCrumb = SCNVector3()
+    
     @IBOutlet var navView: ARSCNView!
     @IBOutlet weak var statusLabel: UILabel!
     
@@ -109,6 +115,9 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         self.newMapfound = true
     }
     
+    @IBAction func loadedPressed(_ sender: Any) {
+        
+    }
     
     
     // MARK: - PNDelegate functions
@@ -232,7 +241,7 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         let image: CVPixelBuffer = didUpdate.capturedImage
         let pose: matrix_float4x4 = didUpdate.camera.transform
 
-        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+        camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
 
 
         // There was navigation/breadcrumb dropping here in OG viewController
@@ -306,7 +315,7 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
                                              }
                                              LibPlacenote.instance.startSession(extend: true)
                                              })*/
-
+                                            
                                             //Use metadata acquired from fetchMapList
                                             let userdata = self.maps[index].1.userdata as? [String:Any]
                                             // This is placenote originally
@@ -316,8 +325,15 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
 
                                             if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                                 self.statusLabel.text = "Map Loaded. Look Around"
-                                                //dump(userdata?["CheckpointDict"] as? [String:String])
-
+                                                
+                                                self.localizedPlace = self.maps[index].0
+                        
+                                                self.foundBreadCrumb = self.getClosestBC(camlocVec: self.camLoc)
+                                            
+                                                // Adding a button for this functionality for now
+                                                //self.performSegue(withIdentifier: "localizedToNav", sender:self)
+                                              
+                                                
                                             }
                                             else {
                                                 self.statusLabel.text = "Map Loaded. Shape file not found"
@@ -391,6 +407,40 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
             counter = counter + 1
         }
         return (nextMap, index)
+    }
+    
+    func getClosestBC (camlocVec: SCNVector3) -> SCNVector3 {
+        let shapePositions = shapeManager.getShapePositions()
+        
+        for vector3 in shapePositions {
+            if ( nodeDistance(first: vector3, second: camlocVec) < 1.0 ){
+                return vector3
+            }
+        }
+        return SCNVector3()
+    }
+    
+    func SCNV3toString(vec: SCNVector3) -> String{
+        let x = NSString(format: "%.8f", vec.x)
+        let y = NSString(format: "%.8f", vec.y)
+        let z = NSString(format: "%.8f", vec.z)
+        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        let resultString = s3 as String
+        return resultString
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "localizedToNav"){
+            let viewControllerUM = segue.destination as? ViewControllerUM
+            let mapName = localizedPlace
+            let initialBC = SCNV3toString(vec: foundBreadCrumb)
+            let result = [mapName, initialBC]
+            dump(result)
+            dump(self.destination)
+            
+            viewControllerUM?.destination = self.destination
+            viewControllerUM?.initialLocation = result
+        }
     }
 //
 //    // Finds out if the user is at a checkpoint or not (must be at least 1 object placed in the map to work)

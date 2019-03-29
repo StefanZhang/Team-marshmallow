@@ -20,7 +20,7 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
  
     // Store the destination selected by WT
     var destination : [String] = []
-    
+
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var tempArray = ["Fetching Places..."] // placeholder when fetching array
     var search = [String]()
@@ -53,10 +53,21 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     func SetUpNaviBar(){
         let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
         navigationItem.leftBarButtonItem  = logoutBarButtonItem
+        
+        
+        let logoImage = UIImage(named: "hmCircleLogo")?.withRenderingMode(.alwaysOriginal)
+        let logoButton = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: #selector(Nothing))
+        logoButton.imageInsets = UIEdgeInsets(top: 0, left: 495, bottom: 00, right: 00)
+        navigationItem.rightBarButtonItem = logoButton
+        
     }
     
     @objc func GoBackUser(){
         self.backbutton.sendActions(for: .touchUpInside)
+    }
+    
+    @objc func Nothing(){
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -259,6 +270,12 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
             
             viewControllerUM?.destination = self.destination
             viewControllerUM?.initialLocation = result
+        }
+        if(segue.identifier == "WAYtoLocalize"){
+            let userLocalizeView = segue.destination as? UserLocalizationViewController
+            dump(self.destination)
+            
+            userLocalizeView?.destination = self.destination
         }
     }
 }
