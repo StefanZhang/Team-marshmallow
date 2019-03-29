@@ -239,13 +239,11 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
     //Provides a newly captured camera image and accompanying AR information to the delegate.
     func session(_ session: ARSession, didUpdate: ARFrame) {
         let image: CVPixelBuffer = didUpdate.capturedImage
-        let pose: matrix_float4x4 = didUpdate.camera.transform
-
+        var pose: matrix_float4x4 = didUpdate.camera.transform
+        pose = LibPlacenote.instance.processPose(pose: pose)
         camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
-
-
+        
         // There was navigation/breadcrumb dropping here in OG viewController
-
 
 
         if (!LibPlacenote.instance.initialized()) {
@@ -326,7 +324,9 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
                                             if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                                 self.statusLabel.text = "Map Loaded. Look Around"
                                                 
-                                                self.localizedPlace = self.maps[index].0
+                                                self.localizedPlace = self.maps[index].1.name!
+                                                
+                                                dump(self.localizedPlace)
                         
                                                 self.foundBreadCrumb = self.getClosestBC(camlocVec: self.camLoc)
                                             
