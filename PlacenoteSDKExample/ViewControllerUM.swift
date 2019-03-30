@@ -567,11 +567,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         }
         return false
     }
-    
-func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
+//modified this function to work with the findmap
+func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void //changed map to maps
   {
     userLabel.text = "Loading Map"
-    LibPlacenote.instance.loadMap(mapId: maps[index].0,
+    LibPlacenote.instance.loadMap(mapId: self.maps[index].0, //changed maps to self.maps
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
                                       self.mappingStarted = true //extending the map
@@ -593,7 +593,7 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
                                        })*/
                                       
                                       //Use metadata acquired from fetchMapList
-                                      let userdata = maps[index].1.userdata as? [String:Any]
+                                      let userdata = self.maps[index].1.userdata as? [String:Any] //maps to self.maps
                                       // This is placenote originally
                                       //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                       //                                        self.statusLabel.text = "Map Loaded. Look Around"
@@ -622,6 +622,47 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
     )
     
   }
+    
+    func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
+    {
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
+        var currentLocation: CLLocation!
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+            
+            currentLocation = locManager.location
+            
+        }
+        var distance = 100.00
+        let x1 = currentLocation.coordinate.longitude
+        let y1 = currentLocation.coordinate.latitude
+        var nextMap = self.maps[0]
+        var counter = 0
+        var index = 0
+        for map in self.maps
+        {
+            
+            let x2 = map.1.location?.longitude
+            let y2 = map.1.location?.latitude
+            if x2 != nil
+            {
+                let xDistance = x2! - x1
+                let yDistance = y2! - y1
+                
+                if sqrt(xDistance * xDistance + yDistance * yDistance) < distance
+                {
+                    distance = sqrt(xDistance * xDistance + yDistance * yDistance)
+                    nextMap = map
+                    index = counter
+                }
+            }
+            counter = counter + 1
+        }
+        return (nextMap, index)
+    }
+    
     //Provides a newly captured camera image and accompanying AR information to the delegate.
     func session(_ session: ARSession, didUpdate: ARFrame) {
         let image: CVPixelBuffer = didUpdate.capturedImage
@@ -637,8 +678,12 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
         if( looking == true ){
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
-                if (mapDataStack.count >= 2) {
-                    mapLoading(maps: mapDataStack, index: indexPath )
+                if (mapDataStack.count >= 1) {
+                    
+                    let bestMap = findMap()
+                    shapeManager.clearShapes()
+                    mapLoading(maps: [bestMap.0], index: bestMap.1)
+                    //mapLoading(maps: mapDataStack, index: indexPath )
                 }
               }
         }
