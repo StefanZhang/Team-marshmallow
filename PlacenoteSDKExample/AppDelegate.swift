@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let x = NSString(format: "%.16f", lat)
         let y = NSString(format: "%.16f", lon)
         
-        let s3 = NSString(format:"%@,%@,%@",x,y)
+        let s3 = NSString(format:"%@,%@",x,y)
         let resultString = s3 as String
         return resultString
     }
