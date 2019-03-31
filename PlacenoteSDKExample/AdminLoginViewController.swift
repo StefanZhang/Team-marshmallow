@@ -25,6 +25,7 @@ class AdminLoginViewController: UIViewController {
         super.viewDidLoad()
         BButton.addTarget(self, action: #selector(GoBackUser), for: .touchUpInside)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        setupnav()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur3")!)
     }
     
@@ -41,16 +42,19 @@ class AdminLoginViewController: UIViewController {
         }
     }
     
-//    func setupnav(){
-//        let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
-//        self.navigationItem.leftBarButtonItem  = logoutBarButtonItem
-//    }
+    func setupnav(){
+        let logoutBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(GoBackUser))
+        self.navigationItem.leftBarButtonItem  = logoutBarButtonItem
+    }
     
     @objc func GoBackUser(){
         print("Here!")
 //        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
 //        let vc = storyBoard.instantiateViewController(withIdentifier: "Where_To")
 //        self.present(vc, animated: true, completion: nil)
+        
+//        let wheretovc = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerWT")
+//        self.navigationController?.pushViewController(wheretovc!, animated: true)
         
     }
     
