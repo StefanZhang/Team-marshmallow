@@ -433,7 +433,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             if (CheckpointCoreLoc.isEmpty){
-              print("No Checkpoint Dropped for this map")
+              print("No Core Loc Dropped for this map")
             }
             else{
               userdata["CheckpointCoreLoc"] = CheckpointCoreLoc
@@ -1277,16 +1277,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           destination_name_meta = destination_name
           destination_pos = self.SCNV3toString(vec: loc02)
           Dest_Cat_Dict.removeAll()
+
           Dest_Pos_Dict[destination_name_meta] = destination_pos
           Dest_Cat_Dict[destination_name_meta] = destCat
         }
-        
-//        if let category_name = DestinationName_alert.textFields?[1].text {
-//          Dest_Cat_Dict.removeAll()
-//
-//
-//        }
-        
       }))
       
       let height:NSLayoutConstraint = NSLayoutConstraint(item: DestinationName_alert.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.52)

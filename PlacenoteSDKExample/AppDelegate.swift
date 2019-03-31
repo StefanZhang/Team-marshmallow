@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let x = NSString(format: "%.16f", lat)
         let y = NSString(format: "%.16f", lon)
         
-        let s3 = NSString(format:"%@,%@,%@",x,y)
+        let s3 = NSString(format:"%@,%@",x,y)
         let resultString = s3 as String
         return resultString
     }
@@ -369,13 +369,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             MapName_array.append(MapNametemp)
             let userdata = map.1.userdata as? [String:Any]
 
-            
             // ** insert here **
             
             //for ultimate navigation
             
-            let mapLat = newValues[i][0]
-            let mapLon = newValues[i][1]
+            let mapLat = newValues[0][i]
+            let mapLon = newValues[1][i]
             //let mapAlt = map.1.location?.altitude
             let mapLocStr = mapLocToString(lat: mapLat, lon: mapLon)
             MapLocationDict[MapNametemp] = mapLocStr
