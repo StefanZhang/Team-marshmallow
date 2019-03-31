@@ -23,7 +23,7 @@ class AdminLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        BButton.addTarget(self, action: #selector(GoBackUser), for: .touchUpInside)
+        BButton.isHidden = true
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         setupnav()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundBlur3")!)
@@ -48,14 +48,7 @@ class AdminLoginViewController: UIViewController {
     }
     
     @objc func GoBackUser(){
-        print("Here!")
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//        let vc = storyBoard.instantiateViewController(withIdentifier: "Where_To")
-//        self.present(vc, animated: true, completion: nil)
-        
-//        let wheretovc = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerWT")
-//        self.navigationController?.pushViewController(wheretovc!, animated: true)
-        
+        self.BButton.sendActions(for: .touchUpInside)
     }
     
 }
@@ -83,10 +76,12 @@ extension AdminLoginViewController: AWSCognitoIdentityPasswordAuthentication {
                 
                 self.present(alertController, animated: true, completion:  nil)
             } else {
-                self.dismiss(animated: true, completion: {
-                    self.username?.text = nil
-                    self.password?.text = nil
-                })
+                
+                self.navigationController?.popViewController(animated: true)
+                
+                self.username?.text = nil
+                self.password?.text = nil
+              
             }
         }
     }
