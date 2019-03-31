@@ -47,6 +47,7 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         setupView()
         setupScene()
         
