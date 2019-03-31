@@ -331,24 +331,25 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         var resCpV3Str = ""
         for i in 0..<CpCL.count {
             let cp = CpCL[i]
-            let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
-
-//            dump(cpLocation) //8 digits after decimal
-            let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
-
-//            let lat1 = Float(cp.split(separator: ",")[0])
-//            let long1 = Float(cp.split(separator: ",")[1])
-//
-//            let lat2 = MapToLoad.1.location?.latitude
-//            let long2 = MapToLoad.1.location?.longitude
             
-            //DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
-            let dis = cpLocation.distance(from: mapLoaction)
-            //dump(dis)
-            if (dis < minDistance) {
-                minDistance = dis
-                resCpV3Str = CpV3[i]
-            }
+//            let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
+//
+//            let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
+//            let dis = cpLocation.distance(from: mapLoaction)
+//            //dump(dis)
+            
+            let lat1 = Float(cp.split(separator: ",")[0])
+            let long1 = Float(cp.split(separator: ",")[1])
+
+            let lat2 = MapToLoad.1.location?.latitude
+            let long2 = MapToLoad.1.location?.longitude
+            
+            DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
+            
+//            if (dis < minDistance) {
+//                minDistance = dis
+//                resCpV3Str = CpV3[i]
+//            }
         }
         if (resCpV3Str != "" ) {
             let x = Double(resCpV3Str.split(separator: ",")[0])
@@ -372,7 +373,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat3) * cos(lat4)
         let c = 2 * atan2f(sqrtf(a), sqrtf(1-a))
         
-        dump(6371 * c)
+        dump(6371008 * c)
     }
     
     func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
