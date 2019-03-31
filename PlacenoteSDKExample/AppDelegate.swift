@@ -375,6 +375,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let mapLat = newValues[0][i]
             let mapLon = newValues[1][i]
+            i = i+1
             //let mapAlt = map.1.location?.altitude
             let mapLocStr = mapLocToString(lat: mapLat, lon: mapLon)
             MapLocationDict[MapNametemp] = mapLocStr

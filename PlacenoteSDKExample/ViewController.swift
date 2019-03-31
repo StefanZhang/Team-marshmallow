@@ -1277,7 +1277,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           destination_name_meta = destination_name
           destination_pos = self.SCNV3toString(vec: loc02)
           Dest_Cat_Dict.removeAll()
-
+          Dest_Pos_Dict.removeAll()
           Dest_Pos_Dict[destination_name_meta] = destination_pos
           Dest_Cat_Dict[destination_name_meta] = destCat
         }
