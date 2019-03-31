@@ -16,6 +16,7 @@ let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
 let userPoolID = "UserPool"
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     class func defaultUserPool() -> AWSCognitoIdentityUserPool {
@@ -139,9 +140,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return total_path
     }
+    func pathOrder(custommaps: [(String, LibPlacenote.MapMetadata)]) -> [Double]
+    {
+        var locations = [[Double]]()
+        for map in custommaps
+        {
+            locations.append([map.1.location!.latitude,map.1.location!.longitude])
+        }
+        
+        var latSplit = 0
+        var longSplit = 0
+        
+        let firstLat = String(locations[0][0])
+        let secLat   = String(locations[1][0])
+        let thLat    = String(locations[2][0])
+        let FLat = Array(firstLat)
+        let SLat = Array(secLat)
+        let TLat = Array(thLat)
+        while FLat[latSplit] == SLat[latSplit] && FLat[latSplit] == TLat[latSplit]
+        {
+            latSplit += 1
+        }
+        var latitude = ""
+        
+        for digit in FLat[latSplit..<FLat.count-1]
+        {
+            latitude += String(digit)
+        }
+        dump(latitude)
+        return locations[0]
+    }
     
     // aStar algorithm for ultimate navigation
     func aStarForMaps(start: Vertex<String>, destination: Vertex<String>) -> Array<Vertex<String>> {
+        let mapinfo = maps
+        let x = pathOrder(custommaps: mapinfo)
         let graphDict = ultimateGraph.adjacencyDict
         
         var keyStrs = [String]()
@@ -162,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for str in keyStrs {
             f[str] = Double.infinity
         }
-        f[start.description] = 1000
+        f[start.description] = 1000 //is this right?
         while frontier.count > 0 {
             
             // current := the node in openSet having the lowest fScore[] value
@@ -173,7 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     frontierMin = fr
                 }
             }
-            let current = frontierMin
+            let current = frontierMin //might be wrong
             
             
             //if current = goal
