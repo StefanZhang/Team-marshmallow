@@ -372,7 +372,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat3) * cos(lat4)
         let c = 2 * atan2f(sqrtf(a), sqrtf(1-a))
         
-        dump(6371 * c)
+        dump(6371008 * c)
     }
     
     func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
