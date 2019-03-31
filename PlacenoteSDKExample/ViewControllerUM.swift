@@ -223,6 +223,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         
         let desMapName = destination[0]
         let initMapName = initialLocation[0]
+        dump("des and init map name")
         dump(desMapName)
         dump(initMapName)
         
@@ -246,10 +247,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             var mapIndexArray = [Int]()
             
             // For every map in the mapStack, find its mapID
+            let mapLocsFloat = appDelegate.pathOrder(custommaps: maps)
             for mapToLoad in mapStack {
                 var mapIndex = 0
                 for map in maps {
-                    let str = mapLocToString(lat: (map.1.location?.latitude)!, lon: (map.1.location?.longitude)!, alt: (map.1.location?.altitude)!)
+                    let str = mapLocToString(lat: mapLocsFloat[0][mapIndex], lon: mapLocsFloat[1][mapIndex])
                     if (str == mapToLoad.description) {
                         mapIDs.append(map.0)
                         mapIndexArray.append(mapIndex)
@@ -375,11 +377,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         dump(6371008 * c)
     }
     
-    func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
+    func mapLocToString(lat: Float, lon: Float) -> String{
         let x = NSString(format: "%.16f", lat)
         let y = NSString(format: "%.16f", lon)
-        let z = NSString(format: "%.16f", alt)
-        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        
+        let s3 = NSString(format:"%@,%@",x,y)
         let resultString = s3 as String
         return resultString
     }

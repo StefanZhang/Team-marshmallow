@@ -27,7 +27,7 @@ var Hash_Node_Dict = [String:SCNNode]()
 var mapname = ""
 
 // destination category
-var destCat = "Bathroom"
+var destCat = "Bathrooms"
 
 //Input destination name from user
 var destination_name_meta = ""
@@ -59,7 +59,7 @@ var Dest_Cat_Dict = [String:String]()
 var CheckpointV3 = [String]()
 var CheckpointCoreLoc = [String]()
 
-let pickerSet = ["Bathroom","Conference Room","Other"]
+let pickerSet = ["Bathrooms","Conference Rooms","Other"]
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
   
