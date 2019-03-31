@@ -223,7 +223,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   //Function to setup the view and setup the AR Scene including options
   func setupView() {
     scnView = self.view as! ARSCNView
-    scnView.showsStatistics = true
+    scnView.showsStatistics = false
     scnView.autoenablesDefaultLighting = true
     scnView.delegate = self
     scnView.session.delegate =  self

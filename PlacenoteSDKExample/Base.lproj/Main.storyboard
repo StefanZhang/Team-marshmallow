@@ -263,9 +263,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Placenote Shape Dropper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-vt-npx" userLabel="Label">
-                                <rect key="frame" x="0.0" y="59" width="375" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Placenote Shape Dropper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-vt-npx" userLabel="Label">
+                                <rect key="frame" x="0.0" y="69" width="375" height="52"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
@@ -440,11 +439,15 @@
                             <constraint firstItem="8zv-3R-00n" firstAttribute="top" secondItem="hwi-h6-3TD" secondAttribute="bottom" constant="31" id="2uZ-gL-2eh"/>
                             <constraint firstItem="8xO-b1-Xq5" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" constant="17" id="889-M7-IEg"/>
                             <constraint firstItem="hwi-h6-3TD" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leadingMargin" constant="17" id="8cf-UJ-lAz"/>
+                            <constraint firstItem="3Xz-vt-npx" firstAttribute="top" secondItem="1sD-4J-uNc" secondAttribute="bottom" constant="25" id="Ah6-6w-p7P"/>
                             <constraint firstItem="hwi-h6-3TD" firstAttribute="top" secondItem="8xO-b1-Xq5" secondAttribute="bottom" constant="9" id="F7C-Ky-7ze"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5Mu-1V-Uq4" secondAttribute="trailing" constant="17" id="KoZ-xP-YmX"/>
+                            <constraint firstItem="3Xz-vt-npx" firstAttribute="leading" secondItem="BrB-h1-WRS" secondAttribute="leading" id="P7g-ed-6UL"/>
                             <constraint firstItem="5Mu-1V-Uq4" firstAttribute="top" secondItem="PfV-zP-Xga" secondAttribute="bottom" constant="9" id="TlM-8X-JIn"/>
                             <constraint firstItem="8zv-3R-00n" firstAttribute="top" secondItem="5Mu-1V-Uq4" secondAttribute="bottom" constant="31" id="c0N-w3-usO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="PfV-zP-Xga" secondAttribute="trailing" constant="17" id="daN-Vh-hgp"/>
+                            <constraint firstAttribute="trailing" secondItem="3Xz-vt-npx" secondAttribute="trailing" id="hOE-HD-we8"/>
+                            <constraint firstItem="3Xz-vt-npx" firstAttribute="top" secondItem="1sD-4J-uNc" secondAttribute="bottom" constant="25" id="i28-DQ-avq"/>
                         </constraints>
                     </view>
                     <connections>
@@ -466,7 +469,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="638" y="224"/>
+            <point key="canvasLocation" x="637.60000000000002" y="223.89162561576356"/>
         </scene>
         <!--Admin Login-->
         <scene sceneID="i1T-e3-Yn3">
@@ -1113,7 +1116,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jyE-gs-TUu"/>
+        <segue reference="0IV-MN-BjX"/>
         <segue reference="0UH-yD-BA7"/>
     </inferredMetricsTieBreakers>
 </document>
