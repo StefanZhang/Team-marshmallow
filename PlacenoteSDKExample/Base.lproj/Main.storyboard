@@ -819,8 +819,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Localization Screen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SA-iN-aE8">
-                                <rect key="frame" x="0.0" y="132" width="375" height="64"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Localization Screen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SA-iN-aE8">
+                                <rect key="frame" x="0.0" y="89" width="375" height="64"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="33k-o8-9e1"/>
@@ -848,7 +848,11 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="h0q-PH-Wxz" firstAttribute="top" secondItem="6zO-yU-zdE" secondAttribute="bottom" constant="111" id="SB1-V4-5v5"/>
+                            <constraint firstItem="3SA-iN-aE8" firstAttribute="top" secondItem="JjW-bB-Uqg" secondAttribute="bottom" constant="45" id="Xag-RR-lr0"/>
                             <constraint firstItem="6zO-yU-zdE" firstAttribute="top" secondItem="4m0-BC-gzx" secondAttribute="bottom" constant="82" id="flh-DN-141"/>
+                            <constraint firstItem="3SA-iN-aE8" firstAttribute="leading" secondItem="jMz-Ut-B5F" secondAttribute="leading" id="iMK-dC-koL"/>
+                            <constraint firstItem="3SA-iN-aE8" firstAttribute="top" secondItem="JjW-bB-Uqg" secondAttribute="bottom" constant="45" id="rh4-Pb-XSE"/>
+                            <constraint firstAttribute="trailing" secondItem="3SA-iN-aE8" secondAttribute="trailing" id="tmg-qt-AA4"/>
                             <constraint firstItem="6zO-yU-zdE" firstAttribute="leading" secondItem="jMz-Ut-B5F" secondAttribute="leadingMargin" constant="122" id="ywh-uL-DjZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6zO-yU-zdE" secondAttribute="trailing" constant="122" id="zY7-Zf-o3Q"/>
                         </constraints>
@@ -1109,7 +1113,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jyE-gs-TUu"/>
+        <segue reference="0IV-MN-BjX"/>
         <segue reference="TTY-d4-17w"/>
     </inferredMetricsTieBreakers>
 </document>
