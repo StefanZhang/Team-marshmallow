@@ -20,7 +20,7 @@
         <!--Where_To-->
         <scene sceneID="bVe-RR-D2g">
             <objects>
-                <viewController title="Where_To" id="Mqg-rI-qeK" customClass="ViewControllerWT" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Where_To" id="Mqg-rI-qeK" customClass="ViewControllerWT" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NdQ-Mc-mGy"/>
                         <viewControllerLayoutGuide type="bottom" id="jMH-Hq-Nbo"/>
@@ -254,7 +254,7 @@
         <!--Admin Mode-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController title="Admin Mode" id="BV1-FR-VrT" customClass="ViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Admin Mode" id="BV1-FR-VrT" customClass="ViewController" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1sD-4J-uNc"/>
                         <viewControllerLayoutGuide type="bottom" id="8zv-3R-00n"/>
@@ -471,7 +471,7 @@
         <!--Admin Login-->
         <scene sceneID="i1T-e3-Yn3">
             <objects>
-                <viewController storyboardIdentifier="adminLoginViewController" title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="adminLoginViewController" title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lKH-oy-C4O"/>
                         <viewControllerLayoutGuide type="bottom" id="rZf-g0-bfU"/>
@@ -612,7 +612,7 @@
         <!--View ControllerFP-->
         <scene sceneID="mHW-F5-Q5P">
             <objects>
-                <viewController id="ZWX-HB-TgX" customClass="ViewControllerFP" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZWX-HB-TgX" customClass="ViewControllerFP" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cSR-lo-9Qr"/>
                         <viewControllerLayoutGuide type="bottom" id="jWm-tQ-fiN"/>
@@ -640,7 +640,7 @@
         <!--Where Are You?-->
         <scene sceneID="Yfy-B0-yDk">
             <objects>
-                <viewController title="Where Are You?" id="fY2-BX-kzM" customClass="ViewControllerWAY" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Where Are You?" id="fY2-BX-kzM" customClass="ViewControllerWAY" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nMf-9V-bNi"/>
                         <viewControllerLayoutGuide type="bottom" id="kce-fy-Uba"/>
@@ -807,7 +807,7 @@
         <!--User Localization-->
         <scene sceneID="fUb-xn-NFD">
             <objects>
-                <viewController title="User Localization" id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="User Localization" id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JjW-bB-Uqg"/>
                         <viewControllerLayoutGuide type="bottom" id="h0q-PH-Wxz"/>
@@ -874,7 +874,7 @@
         <!--View ControllerUM-->
         <scene sceneID="h76-FT-yWu">
             <objects>
-                <viewController id="cls-Gq-Svo" customClass="ViewControllerUM" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cls-Gq-Svo" customClass="ViewControllerUM" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ULT-SA-No7"/>
                         <viewControllerLayoutGuide type="bottom" id="yK4-iT-TCb"/>
@@ -952,13 +952,17 @@
         <!--Navigation Controller-->
         <scene sceneID="jIy-XH-2dj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UtA-jc-sC8" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBarsOnSwipe="YES" id="UtA-jc-sC8" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UqN-8R-30C">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aX1-TS-xUQ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="Mqg-rI-qeK" kind="relationship" relationship="rootViewController" id="qUc-55-s5G"/>
                     </connections>
@@ -970,7 +974,7 @@
         <!--View Controller User Ins-->
         <scene sceneID="bAq-sd-Njz">
             <objects>
-                <viewController id="d7D-sH-9mE" customClass="ViewControllerUserIns" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="d7D-sH-9mE" customClass="ViewControllerUserIns" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UgW-Gv-wkZ"/>
                         <viewControllerLayoutGuide type="bottom" id="aJ5-RO-X7u"/>
@@ -1051,7 +1055,7 @@
         <!--View Controller User Ins-->
         <scene sceneID="2gp-hi-kgd">
             <objects>
-                <viewController id="yf7-GC-vlq" customClass="ViewControllerUserIns" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yf7-GC-vlq" customClass="ViewControllerUserIns" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pVB-G7-gd2"/>
                         <viewControllerLayoutGuide type="bottom" id="9uL-ux-jFK"/>
@@ -1074,7 +1078,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTv-F1-rQB">
                                 <rect key="frame" x="16" y="265" width="343" height="250.66666666666663"/>
-                                <mutableString key="text">Herman Miller is an American company based in Zeeland, Michigan, that produces office furniture, equipment, and home furnishings. Their signature products include the Equa chair, Aeron chair, Noguchi table, Marshmallow sofa, and the Eames Lounge Chair. Herman Miller is credited with the invention of the office cubicle (originally known as the "Action Office II") in 1968 under director of research Robert Propst. Along with their game changing design of the cubicle their innovative products such as the Eames chair and other products that have stood the test of time which has solidified their spot as leaders in the furniture industry for decades.</mutableString>
+                                <string key="text">Herman Miller is an American company based in Zeeland, Michigan, that produces office furniture, equipment, and home furnishings. Their signature products include the Equa chair, Aeron chair, Noguchi table, Marshmallow sofa, and the Eames Lounge Chair. Herman Miller is credited with the invention of the office cubicle (originally known as the "Action Office II") in 1968 under director of research Robert Propst. Along with their game changing design of the cubicle their innovative products such as the Eames chair and other products that have stood the test of time which has solidified their spot as leaders in the furniture industry for decades.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -1115,7 +1119,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0IV-MN-BjX"/>
-        <segue reference="NzB-eX-ef0"/>
-        <segue reference="TTY-d4-17w"/>
+        <segue reference="AsE-Zy-RWk"/>
+        <segue reference="qUc-55-s5G"/>
     </inferredMetricsTieBreakers>
 </document>

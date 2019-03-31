@@ -433,7 +433,7 @@ extension AppDelegate: AWSCognitoIdentityInteractiveAuthenticationDelegate {
         
         DispatchQueue.main.async {
             if(self.loginViewController!.isViewLoaded || self.loginViewController!.view.window == nil) {
-                self.navigationController?.present(self.loginViewController!, animated: true, completion: nil)
+                self.navigationController?.pushViewController(self.loginViewController!, animated: true)
             }
         }
         

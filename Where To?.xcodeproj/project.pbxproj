@@ -57,7 +57,7 @@
 		84EBFE33224C442700E42E8C /* MetaOT-HairIta_0.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MetaOT-HairIta_0.otf"; path = "PlacenoteSDKExample/Meta Font/MetaOT-HairIta_0.otf"; sourceTree = SOURCE_ROOT; };
 		84EBFE36224C468000E42E8C /* MetaOT-Medi_0.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MetaOT-Medi_0.otf"; path = "PlacenoteSDKExample/Meta Font/MetaOT-Medi_0.otf"; sourceTree = SOURCE_ROOT; };
 		8D2EF9CBDC0F285A1BE9E787 /* Pods-PlacenoteSDKExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.debug.xcconfig"; sourceTree = "<group>"; };
-		A28C795F202A46F40052F3FB /* PlacenoteSDKExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlacenoteSDKExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A28C795F202A46F40052F3FB /* Where To?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Where To?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A28C7962202A46F40052F3FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A28C7964202A46F40052F3FB /* ViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		A28C7967202A46F40052F3FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 		A28C7960202A46F40052F3FB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A28C795F202A46F40052F3FB /* PlacenoteSDKExample.app */,
+				A28C795F202A46F40052F3FB /* Where To?.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,9 +185,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A28C795E202A46F40052F3FB /* PlacenoteSDKExample */ = {
+		A28C795E202A46F40052F3FB /* Where To? */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A28C7987202A46F40052F3FB /* Build configuration list for PBXNativeTarget "PlacenoteSDKExample" */;
+			buildConfigurationList = A28C7987202A46F40052F3FB /* Build configuration list for PBXNativeTarget "Where To?" */;
 			buildPhases = (
 				0C372D49EFD197760EAB8441 /* [CP] Check Pods Manifest.lock */,
 				A28C795B202A46F40052F3FB /* Sources */,
@@ -199,9 +199,9 @@
 			);
 			dependencies = (
 			);
-			name = PlacenoteSDKExample;
+			name = "Where To?";
 			productName = PlacenoteSDKExample;
-			productReference = A28C795F202A46F40052F3FB /* PlacenoteSDKExample.app */;
+			productReference = A28C795F202A46F40052F3FB /* Where To?.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -220,7 +220,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A28C795A202A46F40052F3FB /* Build configuration list for PBXProject "PlacenoteSDKExample" */;
+			buildConfigurationList = A28C795A202A46F40052F3FB /* Build configuration list for PBXProject "Where To?" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -233,7 +233,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A28C795E202A46F40052F3FB /* PlacenoteSDKExample */,
+				A28C795E202A46F40052F3FB /* Where To? */,
 			);
 		};
 /* End PBXProject section */
@@ -509,7 +509,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A28C795A202A46F40052F3FB /* Build configuration list for PBXProject "PlacenoteSDKExample" */ = {
+		A28C795A202A46F40052F3FB /* Build configuration list for PBXProject "Where To?" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A28C7985202A46F40052F3FB /* Debug */,
@@ -518,7 +518,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A28C7987202A46F40052F3FB /* Build configuration list for PBXNativeTarget "PlacenoteSDKExample" */ = {
+		A28C7987202A46F40052F3FB /* Build configuration list for PBXNativeTarget "Where To?" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A28C7988202A46F40052F3FB /* Debug */,
