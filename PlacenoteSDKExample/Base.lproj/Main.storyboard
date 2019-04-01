@@ -585,19 +585,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hmCircleLogo_white" translatesAutoresizingMaskIntoConstraints="NO" id="m7O-Tq-oZN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="hmCircleLogo_white" translatesAutoresizingMaskIntoConstraints="NO" id="m7O-Tq-oZN">
                                 <rect key="frame" x="112" y="52" width="150" height="141"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ag-Jr-d3S">
-                                <rect key="frame" x="20" y="257" width="335" height="142.33333333333337"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ag-Jr-d3S">
+                                <rect key="frame" x="20" y="257" width="335" height="142"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="142" id="xr6-lH-aw4"/>
+                                </constraints>
                                 <string key="text">Upon mapping a building, stable feature points work best to ensue maps can be loaded by users in the future. Examples of stable feature points include, but are not limited to: doorways, water fountains, room identifiers, stationary signs, door knobs, and pertruding objects from walls. </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Admin Instructions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9E-ag-8yO">
-                                <rect key="frame" x="0.0" y="201" width="375" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Admin Instructions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9E-ag-8yO">
+                                <rect key="frame" x="23" y="201" width="329.33333333333331" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -605,7 +607,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5fZ-Lr-GUR" firstAttribute="top" secondItem="9Ag-Jr-d3S" secondAttribute="bottom" constant="379" id="05k-0l-byR"/>
                             <constraint firstItem="9Ag-Jr-d3S" firstAttribute="top" secondItem="E9E-ag-8yO" secondAttribute="bottom" constant="8" id="C9n-i5-r0W"/>
+                            <constraint firstItem="9Ag-Jr-d3S" firstAttribute="centerX" secondItem="E9E-ag-8yO" secondAttribute="centerX" id="T3M-Kz-pnL"/>
+                            <constraint firstItem="9Ag-Jr-d3S" firstAttribute="centerX" secondItem="m7O-Tq-oZN" secondAttribute="centerX" id="WCU-5M-3Oq"/>
                             <constraint firstItem="9Ag-Jr-d3S" firstAttribute="leading" secondItem="l9A-lC-EHd" secondAttribute="leadingMargin" constant="4" id="odh-Fw-Z1R"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Ag-Jr-d3S" secondAttribute="trailing" constant="4" id="rpv-rh-oPh"/>
                         </constraints>
