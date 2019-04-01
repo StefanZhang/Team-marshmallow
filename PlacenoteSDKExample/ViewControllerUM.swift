@@ -290,6 +290,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 //                                                    dump(userdata?["CheckpointV3"])
 //                                                    dump(userdata?["CheckpointCoreLoc"])
 //                                                    dump(userdata?["destinationDict"])
+                                                    self.DistanceForCL(lat1: 42.724877977783535, long1: -84.48098220870315, lat2: 42.72504125725732, long2: -84.48139987893819)
                                                     if (self.indexPath != 0) {
                                                         // if not the initial location map, then the startStr should be the first shape you see in the map
                                                         // self.startStr = self.findClosestBC()
@@ -331,25 +332,24 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         var resCpV3Str = ""
         for i in 0..<CpCL.count {
             let cp = CpCL[i]
-            
-//            let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
-//
-//            let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
-//            let dis = cpLocation.distance(from: mapLoaction)
-//            //dump(dis)
-            
-            let lat1 = Float(cp.split(separator: ",")[0])
-            let long1 = Float(cp.split(separator: ",")[1])
+            let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
 
-            let lat2 = MapToLoad.1.location?.latitude
-            let long2 = MapToLoad.1.location?.longitude
+//            dump(cpLocation) //8 digits after decimal
+            let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
+
+//            let lat1 = Float(cp.split(separator: ",")[0])
+//            let long1 = Float(cp.split(separator: ",")[1])
+//
+//            let lat2 = MapToLoad.1.location?.latitude
+//            let long2 = MapToLoad.1.location?.longitude
             
-            DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
-            
-//            if (dis < minDistance) {
-//                minDistance = dis
-//                resCpV3Str = CpV3[i]
-//            }
+            //DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
+            let dis = cpLocation.distance(from: mapLoaction)
+            //dump(dis)
+            if (dis < minDistance) {
+                minDistance = dis
+                resCpV3Str = CpV3[i]
+            }
         }
         if (resCpV3Str != "" ) {
             let x = Double(resCpV3Str.split(separator: ",")[0])
