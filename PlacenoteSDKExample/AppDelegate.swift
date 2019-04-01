@@ -193,7 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             locations.append([map.1.location!.latitude,map.1.location!.longitude])
         }
         
-        var MaxlatSplit = 0
+        var MaxlatSplit = 1000
         var i = 0
         while i < locations.count
         {
@@ -211,7 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 {
                     latSplit += 1
                 }
-                if latSplit > MaxlatSplit
+                if latSplit < MaxlatSplit
                 {
                     MaxlatSplit = latSplit
                 }
@@ -225,23 +225,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func DistanceForCL (lat1: Float, long1: Float, lat2: Float, long2: Float) -> Float{
         let pi = Float.pi
         
-        let dLat = (lat2-lat1) * pi / 180
-        let dLon = (long2-long1) * pi / 180
+        let dLat = abs(lat2-lat1) * pi / 180
+        let dLon = abs(long2-long1) * pi / 180
         
         let lat3 = lat1 * pi / 180
         let lat4 = lat2 * pi / 180
         
         let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat3) * cos(lat4)
-        let c = 2 * atan2f(sqrtf(a), sqrtf(1-a))
+        let c = 2 * atan2f(sqrtf(abs(a/2)), sqrtf(1-abs(a/2)))
         
         dump(6371008 * c)
         return 6371008 * c
     }
     
     // aStar algorithm for ultimate navigation
-    func aStarForMaps(start: Vertex<String>, destination: Vertex<String>) -> Array<Vertex<String>> {
+    func  aStarForMaps(start: Vertex<String>, destination: Vertex<String>) -> Array<Vertex<String>> {
         let mapinfo = maps
-        let x = pathOrder(custommaps: mapinfo)
+        //let x = pathOrder(custommaps: mapinfo)
 
         let graphDict = ultimateGraph.adjacencyDict
         
@@ -253,24 +253,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var out = Array<Vertex<String>>()
         var frontier: Array<Vertex<String>> = [start]
         var cameFrom = Dictionary<String,Vertex<String>> ()
-        var g = Dictionary<String,Float> ()
+        var g = Dictionary<String,Any> ()
         for str in keyStrs {
             g[str] = Float.infinity
         }
         // The cost of going from start to start is zero.
         g[start.description] = Float(0.0)
-        var f = Dictionary<String,Float> ()
+        var f = Dictionary<String,Any> ()
         for str in keyStrs {
             f[str] = Float.infinity
         }
-        f[start.description] = Float(1000) //is this right?
+        
+        dump(start.description)
+        f[String(start.description)] = mapDistance(first: start.description, second: destination.description) //is this right?
         while frontier.count > 0 {
             
             // current := the node in openSet having the lowest fScore[] value
             // current is vertex type
             var frontierMin = frontier[0]
             for fr in frontier{
-                if (f[fr.description] ?? 0 < f[frontierMin.description] ?? 0){
+                if (f[fr.description] as! Float ?? 0.0 < f[frontierMin.description] as! Float ?? 0.0){
                     frontierMin = fr
                 }
             }
@@ -281,7 +283,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if current == destination {
                 //return reconstruct_path(cameFrom, current)
                 //                print("Final G score dictionary")
-                //                print(g)
+                                print(g) // useful for final project
+                                //print(f)
                 return reconstructPathOfMaps(cameFrom: cameFrom, currentVertex: current)
                 
             }
@@ -305,22 +308,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // The distance from start to a neighbor
                 // tentative_gScore := gScore[current] + dist_between(current, neighbor)
-                let tentative_gScore = g[current.description]! + mapDistance(first: current.description, second: neighbor.description)
-                
+                let tentative_gScore = g[current.description]! as! Float + mapDistance(first: current.description, second: neighbor.description)
+
                 //if neighbor not in openSet    // Discover a new node
                 //openSet.Add(neighbor)
-                
+
                 if !frontier.contains(neighbor) {
                     frontier.append(neighbor)
                 }
-                else if (tentative_gScore >= g[neighbor.description]!) {
+                else if (tentative_gScore >= g[neighbor.description]! as! Float) {
                     continue
                 }
-                
+
                 cameFrom[neighbor.description] = current
                 g[neighbor.description] = tentative_gScore
-                f[neighbor.description] = g[neighbor.description]! + mapDistance(first: neighbor.description,second: destination.description)
-                
+                f[neighbor.description] = g[neighbor.description]! as! Float + mapDistance(first: neighbor.description,second: destination.description)
+
             }
         }
         print("Failure")

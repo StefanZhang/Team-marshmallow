@@ -355,7 +355,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       mapTable.isHidden = true
       toggleSliderUI(true, reset: false)
       toggleMappingUI(false)
-      //shapeManager.clearShapes() //creating new map, remove old shapes.
+      shapeManager.clearShapes() //creating new map, remove old shapes.
       
       //Pop up the save map window
       let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
