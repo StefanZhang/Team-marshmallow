@@ -673,7 +673,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="RZp-YH-C88" kind="show" id="woJ-Bv-vkz"/>
+                                    <segue destination="RZp-YH-C88" kind="show" identifier="WAYtoLocalize" id="woJ-Bv-vkz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-jm-FSg" userLabel="BackWAY">
@@ -844,7 +844,6 @@
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="loadedPressed:" destination="RZp-YH-C88" eventType="touchUpInside" id="vkh-W2-3XB"/>
-                                    <segue destination="cls-Gq-Svo" kind="show" identifier="localizedToNav" id="0IV-MN-BjX"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -863,6 +862,7 @@
                     <connections>
                         <outlet property="navView" destination="jMz-Ut-B5F" id="Cdr-hV-Ykv"/>
                         <outlet property="statusLabel" destination="3SA-iN-aE8" id="lWj-3Y-phl"/>
+                        <segue destination="cls-Gq-Svo" kind="show" identifier="localizedToNav" id="4Te-1H-V4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1bd-m8-vPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1116,7 +1116,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0IV-MN-BjX"/>
+        <segue reference="4Te-1H-V4a"/>
         <segue reference="0UH-yD-BA7"/>
     </inferredMetricsTieBreakers>
 </document>
