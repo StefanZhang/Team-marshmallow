@@ -227,6 +227,15 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         // array of locations of maps
         
         mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
+        dump(mapStack) // This is giving end and start map
+        
+        if (mapStack.count == 2) {
+            let temp = mapStack[1]
+            mapStack[1] = mapStack[0]
+            mapStack[0] = temp
+        }
+        
+        dump(mapStack)
 
         maps = appDelegate.maps
         
@@ -391,10 +400,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 //            let des = shapePositions[shapePositions.count-1] // type V3
 //            let desStr = SCNV3toString(vec: des)
             
-            let startStr = initialLocation[1]
+            //let startStr = initialLocation[1]
             //let start = StringToV3(str: startStr) // type V3
             
-            let desStr = destination[1]
+            //let desStr = destination[1]
             //let des = StringToV3(str: desStr) // V3
             
             var startVer = vertices.first
@@ -548,10 +557,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         return false
     }
 //modified this function to work with the findmap
-func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void //changed map to maps
+func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void //changed map to maps
   {
     userLabel.text = "Loading Map"
-    LibPlacenote.instance.loadMap(mapId: self.maps[index].0, //changed maps to self.maps
+    LibPlacenote.instance.loadMap(mapId: map[index].0, //changed maps to self.maps
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
                                       self.mappingStarted = true //extending the map
@@ -573,7 +582,7 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void 
                                        })*/
                                       
                                       //Use metadata acquired from fetchMapList
-                                      let userdata = self.maps[index].1.userdata as? [String:Any] //maps to self.maps
+                                      let userdata = map[index].1.userdata as? [String:Any] //maps to self.maps
                                       // This is placenote originally
                                       //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                       //                                        self.statusLabel.text = "Map Loaded. Look Around"
@@ -593,8 +602,8 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void 
                                       
                                       //self.tapRecognizer?.isEnabled = true
                                     } else if (faulted) {
-                                      print ("Couldnt load map: " + self.maps[index].0)
-                                      self.userLabel.text = "Load error Map Id: " +  self.maps[index].0
+                                      print ("Couldnt load map: " + map[index].0)
+                                      self.userLabel.text = "Load error Map Id: " +  map[index].0
                                     } else {
                                       print ("Progress: " + percentage.description)
                                     }
@@ -660,10 +669,10 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void 
               {
                 if (mapDataStack.count >= 1) {
                     
-                    let bestMap = findMap()
+//                    let bestMap = findMap()
                     shapeManager.clearShapes()
-                    mapLoading(maps: [bestMap.0], index: bestMap.1)
-                    //mapLoading(maps: mapDataStack, index: indexPath )
+//                    mapLoading(maps: [bestMap.0], index: bestMap.1)
+                    mapLoading(map: mapDataStack, index: indexPath )
                 }
               }
         }
