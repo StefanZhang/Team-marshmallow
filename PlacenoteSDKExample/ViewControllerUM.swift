@@ -214,18 +214,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     }
     
     @IBAction func loadMapButton(_ sender: Any) {
-        //print("This is graph info")
-        //dump(appDelegate.allVertices)
-        //dump(appDelegate.ultimateGraph)
-//
-        //dump(destination)
-        //dump(initialLocation)
         
         let desMapName = destination[0]
         let initMapName = initialLocation[0]
-        dump("des and init map name")
-        dump(desMapName)
-        dump(initMapName)
         
         let desMapLoc = appDelegate.MapLocationDict[desMapName]
         let initMapLoc = appDelegate.MapLocationDict[initMapName]
@@ -236,8 +227,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         // array of locations of maps
         
         mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
-        dump(mapStack) // This is giving end and start map
-        
+
         maps = appDelegate.maps
         
         if (!mapStack.isEmpty){
@@ -261,9 +251,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     mapIndex += 1
                 }
             }
-            //dump(mapDataStack)
-            dump(mapIDs)
-            //dump(mapIndexArray)
             
             let length = mapIDs.count
             if (length > 1 ) {
@@ -335,18 +322,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             let cp = CpCL[i]
             let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
 
-//            dump(cpLocation) //8 digits after decimal
             let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
 
-//            let lat1 = Float(cp.split(separator: ",")[0])
-//            let long1 = Float(cp.split(separator: ",")[1])
-//
-//            let lat2 = MapToLoad.1.location?.latitude
-//            let long2 = MapToLoad.1.location?.longitude
-            
-            //DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
             let dis = cpLocation.distance(from: mapLoaction)
-            //dump(dis)
             if (dis < minDistance) {
                 minDistance = dis
                 resCpV3Str = CpV3[i]
