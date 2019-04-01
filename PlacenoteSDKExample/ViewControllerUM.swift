@@ -27,8 +27,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var seconds = 0
     private var maxSizeReached = false
     
+    
     //Zhenru
-    var newNodes = [SCNNode]()
+    var cloestNodeLoc = SCNVector3(0,0,0)
     
     //Information passed from WT and WAY
     // First element is mapName, second element is V3
@@ -96,6 +97,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var ptViz: FeaturePointVisualizer? = nil;
     
     private var looking = false
+    private var lookingForCloestBC = false
+    
     private var planesVizAnchors = [ARAnchor]();
     private var planesVizNodes = [UUID: SCNNode]();
     
@@ -281,16 +284,20 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                 let userdata = mapdata.1.userdata as? [String:Any]
                                                 
                                                 if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-                                                    self.userLabel.text = "Map Loaded. Look Around" + String(length) + String(self.indexPath)
+                                                    self.userLabel.text = "Map Loaded. Look Around"
                                                     self.looking = true
-                                                    self.indexPath += 1
+                                                    
+                                                    
 //                                                    print("This is checkpoint info")
 //                                                    dump(userdata?["CheckpointV3"])
 //                                                    dump(userdata?["CheckpointCoreLoc"])
 //                                                    dump(userdata?["destinationDict"])
-                                                    if (self.indexPath != 0) {
+                                                    if (self.indexPath != 0 && self.nodeDistance(first: self.cloestNodeLoc, second: SCNVector3(0,0,0)) < 0.0001 ) {
                                                         // if not the initial location map, then the startStr should be the first shape you see in the map
-                                                        // self.startStr = self.findClosestBC()
+                                                        self.lookingForCloestBC = true
+                                                        //self.startStr = self.SCNV3toString(vec: self.cloestNodeLoc)
+                                                        self.userLabel.text = "Localized. Showing shortest path"
+                                                        self.desStr = self.destination[1]
                                                     }
                                                     if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil && self.destination[0] != self.initialLocation[0]) {
                                                         self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
@@ -300,6 +307,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                     }
                                                     else {
                                                         self.userLabel.text = "The map does not contain Checkpoints"
+                                                    }
+                                                    
+                                                    if (self.indexPath < length){
+                                                        self.indexPath += 1
                                                     }
                                                     
                                                 }
@@ -522,11 +533,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     {
                         let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
                         // This processPosition only works if mappingStatus is running
-                        
-//                        print("This is distance")
-//                        dump(camera_pos)
-//                        dump(pose)
-//                        dump(nodeDistance(first: pose, second: node.position ) )
 
                         if (nodeDistance(first: pose, second: node.position ) < 2)
                         {
@@ -657,7 +663,7 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
         let image: CVPixelBuffer = didUpdate.capturedImage
         let pose: matrix_float4x4 = didUpdate.camera.transform
         // Gets the current amount of feature points in a frame
-        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y,pose.columns.3.z)
+        var camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y,pose.columns.3.z)
 //        dump(looking)
 //        print("Start")
 //        dump(camLoc)
@@ -665,14 +671,31 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
 //        dump(userScene.rootNode.worldPosition)
         
         if( looking == true ){
+            if (LibPlacenote.instance.getMappingStatus() == LibPlacenote.MappingStatus.running && lookingForCloestBC) {
+                userLabel.text = "Finding closest breadcrumb ..."
+                camLoc = LibPlacenote.instance.processPosition(pose: camLoc)
+                var minDistance = Float(100.0)
+                for nodeLoc in shapeManager.getShapePositions() {
+                    let nodeDis = nodeDistance(first: nodeLoc, second: camLoc)
+                    if (nodeDis < minDistance) {
+                        minDistance = nodeDis
+                        cloestNodeLoc = nodeLoc
+                    }
+                    
+                }
+                startStr = SCNV3toString(vec: cloestNodeLoc)
+                lookingForCloestBC = false
+                userLabel.text = "Closest breadcrumb found"
+            }
+            
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
                 if (mapDataStack.count >= 1) {
-                    
+                    userLabel.text = "Load Next Map"
 //                    let bestMap = findMap()
                     shapeManager.clearShapes()
 //                    mapLoading(maps: [bestMap.0], index: bestMap.1)
-                    mapLoading(map: mapDataStack, index: indexPath )
+                    //mapLoading(map: mapDataStack, index: indexPath )
                 }
               }
         }
