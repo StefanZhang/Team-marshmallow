@@ -453,8 +453,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         uploadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
           if (completed) {
             print ("Uploaded!")
+            
+            // Clear the buffere after one map is done mapping
             Dest_Cat_Dict.removeAll()
             Dest_Pos_Dict.removeAll()
+            
             self.fileTransferLabel.text = ""
           } else if (faulted) {
             print ("Couldnt upload map")

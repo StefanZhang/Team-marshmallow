@@ -942,7 +942,7 @@
         <!--Navigation Controller-->
         <scene sceneID="jIy-XH-2dj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBarsOnSwipe="YES" id="UtA-jc-sC8" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UtA-jc-sC8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UqN-8R-30C">
@@ -1109,6 +1109,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4Te-1H-V4a"/>
-        <segue reference="0UH-yD-BA7"/>
+        <segue reference="qUc-55-s5G"/>
     </inferredMetricsTieBreakers>
 </document>
