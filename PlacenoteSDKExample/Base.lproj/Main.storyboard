@@ -20,7 +20,7 @@
         <!--Where_To-->
         <scene sceneID="bVe-RR-D2g">
             <objects>
-                <viewController storyboardIdentifier="Whereto" title="Where_To" id="Mqg-rI-qeK" customClass="ViewControllerWT" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Whereto" title="Where_To" id="Mqg-rI-qeK" customClass="ViewControllerWT" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NdQ-Mc-mGy"/>
                         <viewControllerLayoutGuide type="bottom" id="jMH-Hq-Nbo"/>
@@ -254,7 +254,7 @@
         <!--Admin Mode-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController storyboardIdentifier="viewcontroller" title="Admin Mode" id="BV1-FR-VrT" customClass="ViewController" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewcontroller" title="Admin Mode" id="BV1-FR-VrT" customClass="ViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1sD-4J-uNc"/>
                         <viewControllerLayoutGuide type="bottom" id="8zv-3R-00n"/>
@@ -474,7 +474,7 @@
         <!--Admin Login-->
         <scene sceneID="i1T-e3-Yn3">
             <objects>
-                <viewController storyboardIdentifier="adminLoginViewController" title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="adminLoginViewController" title="Admin Login" id="4HW-9K-1nR" customClass="AdminLoginViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lKH-oy-C4O"/>
                         <viewControllerLayoutGuide type="bottom" id="rZf-g0-bfU"/>
@@ -618,7 +618,7 @@
         <!--View ControllerFP-->
         <scene sceneID="mHW-F5-Q5P">
             <objects>
-                <viewController id="ZWX-HB-TgX" customClass="ViewControllerFP" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZWX-HB-TgX" customClass="ViewControllerFP" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cSR-lo-9Qr"/>
                         <viewControllerLayoutGuide type="bottom" id="jWm-tQ-fiN"/>
@@ -646,7 +646,7 @@
         <!--Where Are You?-->
         <scene sceneID="Yfy-B0-yDk">
             <objects>
-                <viewController title="Where Are You?" id="fY2-BX-kzM" customClass="ViewControllerWAY" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Where Are You?" id="fY2-BX-kzM" customClass="ViewControllerWAY" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nMf-9V-bNi"/>
                         <viewControllerLayoutGuide type="bottom" id="kce-fy-Uba"/>
@@ -813,7 +813,7 @@
         <!--User Localization-->
         <scene sceneID="fUb-xn-NFD">
             <objects>
-                <viewController title="User Localization" id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="User Localization" id="RZp-YH-C88" customClass="UserLocalizationViewController" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JjW-bB-Uqg"/>
                         <viewControllerLayoutGuide type="bottom" id="h0q-PH-Wxz"/>
@@ -864,7 +864,7 @@
         <!--View ControllerUM-->
         <scene sceneID="h76-FT-yWu">
             <objects>
-                <viewController id="cls-Gq-Svo" customClass="ViewControllerUM" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cls-Gq-Svo" customClass="ViewControllerUM" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ULT-SA-No7"/>
                         <viewControllerLayoutGuide type="bottom" id="yK4-iT-TCb"/>
@@ -939,6 +939,24 @@
             </objects>
             <point key="canvasLocation" x="3037.5999999999999" y="-741.87192118226608"/>
         </scene>
+        <!--View ControllerHERE-->
+        <scene sceneID="7R0-On-5qp">
+            <objects>
+                <viewController id="SYT-Bl-Tfz" customClass="ViewControllerHERE" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eCA-0n-5OZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="PvK-eM-5e7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HSj-mv-BEZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ddS-Z6-PG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4297" y="-742"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="jIy-XH-2dj">
             <objects>
@@ -964,7 +982,7 @@
         <!--View Controller User Ins-->
         <scene sceneID="bAq-sd-Njz">
             <objects>
-                <viewController id="d7D-sH-9mE" customClass="ViewControllerUserIns" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="d7D-sH-9mE" customClass="ViewControllerUserIns" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UgW-Gv-wkZ"/>
                         <viewControllerLayoutGuide type="bottom" id="aJ5-RO-X7u"/>
@@ -1045,7 +1063,7 @@
         <!--View Controller User Ins-->
         <scene sceneID="2gp-hi-kgd">
             <objects>
-                <viewController id="yf7-GC-vlq" customClass="ViewControllerUserIns" customModule="Where_To_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yf7-GC-vlq" customClass="ViewControllerUserIns" customModule="PlacenoteSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pVB-G7-gd2"/>
                         <viewControllerLayoutGuide type="bottom" id="9uL-ux-jFK"/>
