@@ -16,6 +16,7 @@ let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
 let userPoolID = "UserPool"
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     class func defaultUserPool() -> AWSCognitoIdentityUserPool {
@@ -79,11 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pool.delegate = self
     }
     
-    func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
+    func mapLocToString(lat: Float, lon: Float) -> String{
         let x = NSString(format: "%.16f", lat)
         let y = NSString(format: "%.16f", lon)
-        let z = NSString(format: "%.16f", alt)
-        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        
+        let s3 = NSString(format:"%@,%@",x,y)
         let resultString = s3 as String
         return resultString
     }
@@ -140,8 +141,108 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return total_path
     }
     
+    func generateLatitude(firstindex: Int) -> ([Float])
+    {
+        var mapLatitudes = [Float]()
+        for map in maps
+        {
+            let latt = String(map.1.location!.latitude)
+            let latt22 = Array(latt)
+            var latitude = ""
+            for digit in latt22[firstindex..<latt22.count-1]
+            {
+                latitude += String(digit)
+            }
+            mapLatitudes.append(Float(latitude)!)
+        }
+        return mapLatitudes
+    }
+    
+    func generateLongitude(firstindex: Int) -> ([Float])
+    {
+        var mapLongitude = [Float]()
+        for map in maps
+        {
+            let latt = String(map.1.location!.longitude)
+            let latt22 = Array(latt)
+            var latitude = ""
+            for digit in latt22[firstindex..<latt22.count-1]
+            {
+                latitude += String(digit)
+            }
+            mapLongitude.append(Float(latitude)!)
+        }
+        return mapLongitude
+    }
+    
+    func pathOrder(custommaps: [(String, LibPlacenote.MapMetadata)]) -> ([[Float]])
+    {
+
+        let MaxlatSplit  = getmaxSplit(mymaps: custommaps, latOrLong: 0)
+        let MaxlongSplit = getmaxSplit(mymaps: custommaps, latOrLong: 1)
+
+        return [generateLatitude(firstindex: MaxlatSplit), generateLongitude(firstindex: MaxlongSplit)]
+        
+
+    }
+    
+    func getmaxSplit(mymaps: [(String, LibPlacenote.MapMetadata)], latOrLong: Int) -> Int {
+        var locations = [[Double]]()
+        for map in mymaps
+        {
+            locations.append([map.1.location!.latitude,map.1.location!.longitude])
+        }
+        
+        var MaxlatSplit = 1000
+        var i = 0
+        while i < locations.count
+        {
+            var latSplit = 0
+            
+            let latitude = String(locations[i][latOrLong])
+            let Lat1 = Array(latitude)
+            
+            if i + 1 < locations.count
+            {
+                let latitude2 = String(locations[i+1][latOrLong])
+                let Lat2 = Array(latitude2)
+                
+                while Lat1[latSplit] == Lat2[latSplit]
+                {
+                    latSplit += 1
+                }
+                if latSplit < MaxlatSplit
+                {
+                    MaxlatSplit = latSplit
+                }
+            }
+            i += 1
+        }
+        return MaxlatSplit
+    }
+    
+    
+    func DistanceForCL (lat1: Float, long1: Float, lat2: Float, long2: Float) -> Float{
+        let pi = Float.pi
+        
+        let dLat = abs(lat2-lat1) * pi / 180
+        let dLon = abs(long2-long1) * pi / 180
+        
+        let lat3 = lat1 * pi / 180
+        let lat4 = lat2 * pi / 180
+        
+        let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat3) * cos(lat4)
+        let c = 2 * atan2f(sqrtf(abs(a/2)), sqrtf(1-abs(a/2)))
+        
+        dump(6371008 * c)
+        return 6371008 * c
+    }
+    
     // aStar algorithm for ultimate navigation
-    func aStarForMaps(start: Vertex<String>, destination: Vertex<String>) -> Array<Vertex<String>> {
+    func  aStarForMaps(start: Vertex<String>, destination: Vertex<String>) -> Array<Vertex<String>> {
+        let mapinfo = maps
+        //let x = pathOrder(custommaps: mapinfo)
+
         let graphDict = ultimateGraph.adjacencyDict
         
         var keyStrs = [String]()
@@ -152,35 +253,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var out = Array<Vertex<String>>()
         var frontier: Array<Vertex<String>> = [start]
         var cameFrom = Dictionary<String,Vertex<String>> ()
-        var g = Dictionary<String,Double> ()
+        var g = Dictionary<String,Any> ()
         for str in keyStrs {
-            g[str] = Double.infinity
+            g[str] = Float.infinity
         }
         // The cost of going from start to start is zero.
-        g[start.description] = 0.0
-        var f = Dictionary<String,Double> ()
+        g[start.description] = Float(0.0)
+        var f = Dictionary<String,Any> ()
         for str in keyStrs {
-            f[str] = Double.infinity
+            f[str] = Float.infinity
         }
-        f[start.description] = 1000
+        
+        dump(start.description)
+        f[String(start.description)] = mapDistance(first: start.description, second: destination.description) //is this right?
         while frontier.count > 0 {
             
             // current := the node in openSet having the lowest fScore[] value
             // current is vertex type
             var frontierMin = frontier[0]
             for fr in frontier{
-                if (f[fr.description] ?? 0 < f[frontierMin.description] ?? 0){
+                if (f[fr.description] as! Float ?? 0.0 < f[frontierMin.description] as! Float ?? 0.0){
                     frontierMin = fr
                 }
             }
-            let current = frontierMin
+            let current = frontierMin //might be wrong
             
             
             //if current = goal
             if current == destination {
                 //return reconstruct_path(cameFrom, current)
                 //                print("Final G score dictionary")
-                //                print(g)
+                                print(g) // useful for final project
+                                //print(f)
                 return reconstructPathOfMaps(cameFrom: cameFrom, currentVertex: current)
                 
             }
@@ -204,42 +308,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // The distance from start to a neighbor
                 // tentative_gScore := gScore[current] + dist_between(current, neighbor)
-                let tentative_gScore = g[current.description]! + mapDistance(first: current.description, second: neighbor.description)
-                
+                let tentative_gScore = g[current.description]! as! Float + mapDistance(first: current.description, second: neighbor.description)
+
                 //if neighbor not in openSet    // Discover a new node
                 //openSet.Add(neighbor)
-                
+
                 if !frontier.contains(neighbor) {
                     frontier.append(neighbor)
                 }
-                else if (tentative_gScore >= g[neighbor.description]!) {
+                else if (tentative_gScore >= g[neighbor.description]! as! Float) {
                     continue
                 }
-                
+
                 cameFrom[neighbor.description] = current
                 g[neighbor.description] = tentative_gScore
-                f[neighbor.description] = g[neighbor.description]! + mapDistance(first: neighbor.description,second: destination.description)
-                
+                f[neighbor.description] = g[neighbor.description]! as! Float + mapDistance(first: neighbor.description,second: destination.description)
+
             }
         }
         print("Failure")
         return Array<Vertex<String>>()
     }
     
-    func mapDistance(first:String, second: String) -> Double {
+    func mapDistance(first:String, second: String) -> Float {
         let strArray = first.split(separator: ",")
         let strArray2 = second.split(separator: ",")
-        let x1 = Double(strArray[0]) ?? 0.0
-        let y1 = Double(strArray[1]) ?? 0.0
+        let x1 = Float(strArray[0]) ?? 0.0
+        let y1 = Float(strArray[1]) ?? 0.0
         //let z1 = Double(strArray[2]) ?? 0.0
-        let x2 = Double(strArray2[0]) ?? 0.0
-        let y2 = Double(strArray2[1]) ?? 0.0
+        let x2 = Float(strArray2[0]) ?? 0.0
+        let y2 = Float(strArray2[1]) ?? 0.0
         //let z2 = Double(strArray2[2]) ?? 0.0
-        
-        let firstCD = CLLocation(latitude: x1, longitude: y1)
-        let secondCD = CLLocation(latitude: x2, longitude: y2)
-        
-        let distance = firstCD.distance(from: secondCD)
+        let distance = DistanceForCL(lat1: x1, long1: y1, lat2: x2, long2: y2)
+//
+//        let firstCD = CLLocation(latitude: x1, longitude: y1)
+//        let secondCD = CLLocation(latitude: x2, longitude: y2)
+//
+//        let distance = firstCD.distance(from: secondCD)
         return distance
     }
     
@@ -260,17 +365,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var Name_DestinationDict = [String:String]() //temp container
         var Destination_CatDict = [String:String]() // temp container
         var Destination_PosDict = [String:String]() //temp container
-        
+        var i = 0
+        let newValues = pathOrder(custommaps: maps)
         for map in maps{
             let MapNametemp = map.1.name ?? ""
             MapName_array.append(MapNametemp)
             let userdata = map.1.userdata as? [String:Any]
 
+            // ** insert here **
+            
             //for ultimate navigation
-            let mapLat = map.1.location?.latitude
-            let mapLon = map.1.location?.longitude
-            let mapAlt = map.1.location?.altitude
-            let mapLocStr = mapLocToString(lat: mapLat!, lon: mapLon!, alt: mapAlt!)
+            
+            let mapLat = newValues[0][i]
+            let mapLon = newValues[1][i]
+            i = i+1
+            //let mapAlt = map.1.location?.altitude
+            let mapLocStr = mapLocToString(lat: mapLat, lon: mapLon)
             MapLocationDict[MapNametemp] = mapLocStr
             
             Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["DefaultDest" : "N/A"]

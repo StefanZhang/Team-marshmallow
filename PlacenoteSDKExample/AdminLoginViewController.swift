@@ -76,10 +76,12 @@ extension AdminLoginViewController: AWSCognitoIdentityPasswordAuthentication {
                 
                 self.present(alertController, animated: true, completion:  nil)
             } else {
-                self.dismiss(animated: true, completion: {
-                    self.username?.text = nil
-                    self.password?.text = nil
-                })
+                
+                self.navigationController?.popViewController(animated: true)
+                
+                self.username?.text = nil
+                self.password?.text = nil
+              
             }
         }
     }

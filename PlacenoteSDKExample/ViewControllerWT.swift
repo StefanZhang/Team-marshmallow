@@ -42,7 +42,7 @@ class ViewControllerWT: UIViewController, UITableViewDelegate, UITableViewDataSo
         SetUpLeftNaviBar() // shows navigation bar
         SetUpRightNaviBar()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        pickerData = ["All Places","Bathroom","Conference Room","Other"] // types of places, hardcoded (for now)
+        pickerData = ["All Places","Bathrooms","Conference Rooms","Other"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places
         // setup delegates and data sources
         tableView.dataSource = self

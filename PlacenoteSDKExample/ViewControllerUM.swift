@@ -27,8 +27,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var seconds = 0
     private var maxSizeReached = false
     
+    
     //Zhenru
-    var newNodes = [SCNNode]()
+    var cloestNodeLoc = SCNVector3(0,0,0)
     
     //Information passed from WT and WAY
     // First element is mapName, second element is V3
@@ -96,6 +97,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var ptViz: FeaturePointVisualizer? = nil;
     
     private var looking = false
+    private var lookingForCloestBC = false
+    
     private var planesVizAnchors = [ARAnchor]();
     private var planesVizNodes = [UUID: SCNNode]();
     
@@ -214,17 +217,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     }
     
     @IBAction func loadMapButton(_ sender: Any) {
-        //print("This is graph info")
-        //dump(appDelegate.allVertices)
-        //dump(appDelegate.ultimateGraph)
-//
-        //dump(destination)
-        //dump(initialLocation)
         
         let desMapName = destination[0]
         let initMapName = initialLocation[0]
-        dump(desMapName)
-        dump(initMapName)
         
         let desMapLoc = appDelegate.MapLocationDict[desMapName]
         let initMapLoc = appDelegate.MapLocationDict[initMapName]
@@ -237,6 +232,14 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
         dump(mapStack) // This is giving end and start map
         
+        if (mapStack.count == 2) {
+            let temp = mapStack[1]
+            mapStack[1] = mapStack[0]
+            mapStack[0] = temp
+        }
+        
+        dump(mapStack)
+
         maps = appDelegate.maps
         
         if (!mapStack.isEmpty){
@@ -246,10 +249,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             var mapIndexArray = [Int]()
             
             // For every map in the mapStack, find its mapID
+            let mapLocsFloat = appDelegate.pathOrder(custommaps: maps)
             for mapToLoad in mapStack {
                 var mapIndex = 0
                 for map in maps {
-                    let str = mapLocToString(lat: (map.1.location?.latitude)!, lon: (map.1.location?.longitude)!, alt: (map.1.location?.altitude)!)
+                    let str = mapLocToString(lat: mapLocsFloat[0][mapIndex], lon: mapLocsFloat[1][mapIndex])
                     if (str == mapToLoad.description) {
                         mapIDs.append(map.0)
                         mapIndexArray.append(mapIndex)
@@ -259,9 +263,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     mapIndex += 1
                 }
             }
-            //dump(mapDataStack)
-            dump(mapIDs)
-            //dump(mapIndexArray)
             
             let length = mapIDs.count
             if (length > 1 ) {
@@ -283,17 +284,20 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                 let userdata = mapdata.1.userdata as? [String:Any]
                                                 
                                                 if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
-                                                    self.userLabel.text = "Map Loaded. Look Around" + String(length) + String(self.indexPath)
+                                                    self.userLabel.text = "Map Loaded. Look Around"
                                                     self.looking = true
-                                                    self.indexPath += 1
+                                                    
+                                                    
 //                                                    print("This is checkpoint info")
 //                                                    dump(userdata?["CheckpointV3"])
 //                                                    dump(userdata?["CheckpointCoreLoc"])
 //                                                    dump(userdata?["destinationDict"])
-                                                    self.DistanceForCL(lat1: 42.724877977783535, long1: -84.48098220870315, lat2: 42.72504125725732, long2: -84.48139987893819)
-                                                    if (self.indexPath != 0) {
+                                                    if (self.indexPath != 0 && self.nodeDistance(first: self.cloestNodeLoc, second: SCNVector3(0,0,0)) < 0.0001 ) {
                                                         // if not the initial location map, then the startStr should be the first shape you see in the map
-                                                        // self.startStr = self.findClosestBC()
+                                                        self.lookingForCloestBC = true
+                                                        //self.startStr = self.SCNV3toString(vec: self.cloestNodeLoc)
+                                                        self.userLabel.text = "Localized. Showing shortest path"
+                                                        self.desStr = self.destination[1]
                                                     }
                                                     if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil && self.destination[0] != self.initialLocation[0]) {
                                                         self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
@@ -303,6 +307,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                     }
                                                     else {
                                                         self.userLabel.text = "The map does not contain Checkpoints"
+                                                    }
+                                                    
+                                                    if (self.indexPath < length){
+                                                        self.indexPath += 1
                                                     }
                                                     
                                                 }
@@ -334,18 +342,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
             let cp = CpCL[i]
             let cpLocation = CLLocation(latitude: Double(cp.split(separator: ",")[0])!, longitude: Double(cp.split(separator: ",")[1])!)
 
-//            dump(cpLocation) //8 digits after decimal
             let mapLoaction = CLLocation(latitude: (MapToLoad.1.location?.latitude)!, longitude: (MapToLoad.1.location?.longitude)!)
 
-//            let lat1 = Float(cp.split(separator: ",")[0])
-//            let long1 = Float(cp.split(separator: ",")[1])
-//
-//            let lat2 = MapToLoad.1.location?.latitude
-//            let long2 = MapToLoad.1.location?.longitude
-            
-            //DistanceForCL(lat1: lat1!, long1: long1!, lat2: Float(lat2!), long2: Float(long2!))
             let dis = cpLocation.distance(from: mapLoaction)
-            //dump(dis)
             if (dis < minDistance) {
                 minDistance = dis
                 resCpV3Str = CpV3[i]
@@ -376,11 +375,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         dump(6371008 * c)
     }
     
-    func mapLocToString(lat: Double, lon: Double, alt: Double) -> String{
+    func mapLocToString(lat: Float, lon: Float) -> String{
         let x = NSString(format: "%.16f", lat)
         let y = NSString(format: "%.16f", lon)
-        let z = NSString(format: "%.16f", alt)
-        let s3 = NSString(format:"%@,%@,%@",x,y,z)
+        
+        let s3 = NSString(format:"%@,%@",x,y)
         let resultString = s3 as String
         return resultString
     }
@@ -412,10 +411,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 //            let des = shapePositions[shapePositions.count-1] // type V3
 //            let desStr = SCNV3toString(vec: des)
             
-            let startStr = initialLocation[1]
+            //let startStr = initialLocation[1]
             //let start = StringToV3(str: startStr) // type V3
             
-            let desStr = destination[1]
+            //let desStr = destination[1]
             //let des = StringToV3(str: desStr) // V3
             
             var startVer = vertices.first
@@ -534,11 +533,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                     {
                         let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
                         // This processPosition only works if mappingStatus is running
-                        
-//                        print("This is distance")
-//                        dump(camera_pos)
-//                        dump(pose)
-//                        dump(nodeDistance(first: pose, second: node.position ) )
 
                         if (nodeDistance(first: pose, second: node.position ) < 2)
                         {
@@ -568,11 +562,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         }
         return false
     }
-    
-func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
+//modified this function to work with the findmap
+func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void //changed map to maps
   {
     userLabel.text = "Loading Map"
-    LibPlacenote.instance.loadMap(mapId: maps[index].0,
+    LibPlacenote.instance.loadMap(mapId: map[index].0, //changed maps to self.maps
                                   downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                                     if (completed) {
                                       self.mappingStarted = true //extending the map
@@ -594,7 +588,7 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
                                        })*/
                                       
                                       //Use metadata acquired from fetchMapList
-                                      let userdata = maps[index].1.userdata as? [String:Any]
+                                      let userdata = map[index].1.userdata as? [String:Any] //maps to self.maps
                                       // This is placenote originally
                                       //                                      if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                       //                                        self.statusLabel.text = "Map Loaded. Look Around"
@@ -614,8 +608,8 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
                                       
                                       //self.tapRecognizer?.isEnabled = true
                                     } else if (faulted) {
-                                      print ("Couldnt load map: " + self.maps[index].0)
-                                      self.userLabel.text = "Load error Map Id: " +  self.maps[index].0
+                                      print ("Couldnt load map: " + map[index].0)
+                                      self.userLabel.text = "Load error Map Id: " +  map[index].0
                                     } else {
                                       print ("Progress: " + percentage.description)
                                     }
@@ -623,12 +617,53 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
     )
     
   }
+    
+    func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
+    {
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
+        var currentLocation: CLLocation!
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+            
+            currentLocation = locManager.location
+            
+        }
+        var distance = 100.00
+        let x1 = currentLocation.coordinate.longitude
+        let y1 = currentLocation.coordinate.latitude
+        var nextMap = self.maps[0]
+        var counter = 0
+        var index = 0
+        for map in self.maps
+        {
+            
+            let x2 = map.1.location?.longitude
+            let y2 = map.1.location?.latitude
+            if x2 != nil
+            {
+                let xDistance = x2! - x1
+                let yDistance = y2! - y1
+                
+                if sqrt(xDistance * xDistance + yDistance * yDistance) < distance
+                {
+                    distance = sqrt(xDistance * xDistance + yDistance * yDistance)
+                    nextMap = map
+                    index = counter
+                }
+            }
+            counter = counter + 1
+        }
+        return (nextMap, index)
+    }
+    
     //Provides a newly captured camera image and accompanying AR information to the delegate.
     func session(_ session: ARSession, didUpdate: ARFrame) {
         let image: CVPixelBuffer = didUpdate.capturedImage
         let pose: matrix_float4x4 = didUpdate.camera.transform
         // Gets the current amount of feature points in a frame
-        let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y,pose.columns.3.z)
+        var camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y,pose.columns.3.z)
 //        dump(looking)
 //        print("Start")
 //        dump(camLoc)
@@ -636,10 +671,31 @@ func mapLoading(maps: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void
 //        dump(userScene.rootNode.worldPosition)
         
         if( looking == true ){
+            if (LibPlacenote.instance.getMappingStatus() == LibPlacenote.MappingStatus.running && lookingForCloestBC) {
+                userLabel.text = "Finding closest breadcrumb ..."
+                camLoc = LibPlacenote.instance.processPosition(pose: camLoc)
+                var minDistance = Float(100.0)
+                for nodeLoc in shapeManager.getShapePositions() {
+                    let nodeDis = nodeDistance(first: nodeLoc, second: camLoc)
+                    if (nodeDis < minDistance) {
+                        minDistance = nodeDis
+                        cloestNodeLoc = nodeLoc
+                    }
+                    
+                }
+                startStr = SCNV3toString(vec: cloestNodeLoc)
+                lookingForCloestBC = false
+                userLabel.text = "Closest breadcrumb found"
+            }
+            
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
-                if (mapDataStack.count >= 2) {
-                    mapLoading(maps: mapDataStack, index: indexPath )
+                if (mapDataStack.count >= 1) {
+                    userLabel.text = "Load Next Map"
+//                    let bestMap = findMap()
+                    shapeManager.clearShapes()
+//                    mapLoading(maps: [bestMap.0], index: bestMap.1)
+                    //mapLoading(map: mapDataStack, index: indexPath )
                 }
               }
         }

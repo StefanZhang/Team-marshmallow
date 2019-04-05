@@ -332,7 +332,7 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
                                                 self.foundBreadCrumb = self.getClosestBC(camlocVec: self.camLoc)
                                             
                                                 // Adding a button for this functionality for now
-                                                //self.performSegue(withIdentifier: "localizedToNav", sender:self)
+                                                self.performSegue(withIdentifier: "localizedToNav", sender: self)
                                               
                                                 
                                             }
@@ -341,22 +341,6 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
                                             }
                                             LibPlacenote.instance.startSession(extend: true)
 
-
-//                                            if (self.reportDebug) {
-//                                                LibPlacenote.instance.startReportRecord (uploadProgressCb: ({(completed: Bool, faulted: Bool, percentage: Float) -> Void in
-//                                                    if (completed) {
-//                                                        self.statusLabel.text = "Dataset Upload Complete"
-//                                                        self.fileTransferLabel.text = ""
-//                                                    } else if (faulted) {
-//                                                        self.statusLabel.text = "Dataset Upload Faulted"
-//                                                        self.fileTransferLabel.text = ""
-//                                                    } else {
-//                                                        self.fileTransferLabel.text = "Dataset Upload: " + String(format: "%.3f", percentage) + "/1.0"
-//                                                    }
-//                                                })
-//                                                )
-//                                                print ("Started Debug Report")
-//                                            }
 
                                             //self.tapRecognizer?.isEnabled = true
                                         } else if (faulted) {
@@ -443,6 +427,12 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
             viewControllerUM?.initialLocation = result
         }
     }
+
+}
+
+// END OF FILE
+
+
 //
 //    // Finds out if the user is at a checkpoint or not (must be at least 1 object placed in the map to work)
 //    func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
@@ -552,5 +542,3 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        lastLocation = locations.last
 //    }
-
-}

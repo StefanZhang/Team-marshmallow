@@ -27,7 +27,7 @@ var Hash_Node_Dict = [String:SCNNode]()
 var mapname = ""
 
 // destination category
-var destCat = "Bathroom"
+var destCat = "Bathrooms"
 
 //Input destination name from user
 var destination_name_meta = ""
@@ -59,7 +59,7 @@ var Dest_Cat_Dict = [String:String]()
 var CheckpointV3 = [String]()
 var CheckpointCoreLoc = [String]()
 
-let pickerSet = ["Bathroom","Conference Room","Other"]
+let pickerSet = ["Bathrooms","Conference Rooms","Other"]
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
   
@@ -223,7 +223,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   //Function to setup the view and setup the AR Scene including options
   func setupView() {
     scnView = self.view as! ARSCNView
-    scnView.showsStatistics = true
+    scnView.showsStatistics = false
     scnView.autoenablesDefaultLighting = true
     scnView.delegate = self
     scnView.session.delegate =  self
@@ -329,7 +329,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       // enable BC dropping
       canDropBC = true
       LibPlacenote.instance.stopSession()
-      
       LibPlacenote.instance.startSession()
       
       if (reportDebug) {
@@ -355,7 +354,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       mapTable.isHidden = true
       toggleSliderUI(true, reset: false)
       toggleMappingUI(false)
-      //shapeManager.clearShapes() //creating new map, remove old shapes.
+      shapeManager.clearShapes() //creating new map, remove old shapes.
       
       //Pop up the save map window
       let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
@@ -380,7 +379,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       
       let shapeArray = self.shapeManager.getShapeArray()
       
-      print("Saving Map")
       statusLabel.text = "Saving Map"
       mappingStarted = false
       LibPlacenote.instance.saveMap(
@@ -433,7 +431,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             }
             
             if (CheckpointCoreLoc.isEmpty){
-              print("No Checkpoint Dropped for this map")
+              print("No Core Loc Dropped for this map")
             }
             else{
               userdata["CheckpointCoreLoc"] = CheckpointCoreLoc
@@ -455,6 +453,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         uploadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
           if (completed) {
             print ("Uploaded!")
+            
+            // Clear the buffere after one map is done mapping
+            Dest_Cat_Dict.removeAll()
+            Dest_Pos_Dict.removeAll()
+            
             self.fileTransferLabel.text = ""
           } else if (faulted) {
             print ("Couldnt upload map")
@@ -473,9 +476,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       toggleMappingUI(true) //hide mapping UI
       canDropBC = false
     }
-     updateGraph()
     
-    
+    updateGraph()
   }
   
   @IBAction func pickMap(_ sender: Any) {
@@ -493,9 +495,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       toggleMappingUI(true) //hided mapping options
       planeDetSelection.isOn = false
       planeDetection = false
-      dump(self.shapeManager.getShapePositions())
       configureSession()
-      //dump(self.shapeManager.getShapePositions())
       return
     }
     
@@ -1209,32 +1209,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         
         CheckpointV3.append(cp_str)
         CheckpointCoreLoc.append(currentCLStr)
-        
       }
-      
-      
-//      // Testing
-//      let dest = graph.adjacencyDict.keys.randomElement()
-//      if dest != graph.adjacencyDict.keys.first {
-//        let out = graph.aStar(start: graph.adjacencyDict.keys.first!, destination: dest!)
-//        dump(out)
-//        var outArray = ""
-//
-//        for vertex in out{
-//          outArray = outArray+":"+vertex.description
-//          print(outArray)
-//        }
-//        outArray.append("Start" + (graph.adjacencyDict.keys.first?.description)!)
-//        outArray.append("End" + ((dest?.description)!))
-//
-//        let alert = UIAlertController(title: "Out", message: outArray, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-//          NSLog("The \"OK\" alert occured.")
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-        //
-//      }
-      
       
     }
     
@@ -1257,10 +1232,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         textField.placeholder = "Enter Destination name:"
       })
       
-//      DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
-//        textField.placeholder = "Enter Category:"
-//      })
-      
       //Create a frame (placeholder/wrapper) for the picker and then create the picker
       let pickerFrame: CGRect = CGRect(x: 35, y: 170, width: 200, height: 140) // CGRectMake(left, top, width, height) - left and top are like margins
       let picker: UIPickerView = UIPickerView(frame: pickerFrame)
@@ -1276,17 +1247,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
           Destination_array.append(destination_name) // Append to the destination array
           destination_name_meta = destination_name
           destination_pos = self.SCNV3toString(vec: loc02)
-          Dest_Cat_Dict.removeAll()
           Dest_Pos_Dict[destination_name_meta] = destination_pos
           Dest_Cat_Dict[destination_name_meta] = destCat
         }
-        
-//        if let category_name = DestinationName_alert.textFields?[1].text {
-//          Dest_Cat_Dict.removeAll()
-//
-//
-//        }
-        
       }))
       
       let height:NSLayoutConstraint = NSLayoutConstraint(item: DestinationName_alert.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.52)
