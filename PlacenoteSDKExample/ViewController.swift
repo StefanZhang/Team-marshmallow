@@ -65,6 +65,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {return 1}
   
+  func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    var pickerLabel: UILabel? = (view as? UILabel)
+    if pickerLabel == nil {
+      pickerLabel = UILabel()
+      pickerLabel?.font = UIFont(name: "Ariel", size: 20)
+      pickerLabel?.textAlignment = .center
+    }
+    pickerLabel?.text = pickerSet[row]
+    return pickerLabel!
+  }
+  
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {return pickerSet.count}
   
   // this function returns
