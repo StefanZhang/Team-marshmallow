@@ -72,6 +72,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       pickerLabel?.font = UIFont(name: "Ariel", size: 20)
       pickerLabel?.textAlignment = .center
     }
+    pickerLabel?.text = pickerSet[row]
     return pickerLabel!
   }
   
