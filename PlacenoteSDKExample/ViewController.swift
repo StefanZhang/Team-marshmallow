@@ -59,11 +59,22 @@ var Dest_Cat_Dict = [String:String]()
 var CheckpointV3 = [String]()
 var CheckpointCoreLoc = [String]()
 
-let pickerSet = ["Bathrooms","Conference Rooms","Other"]
+let pickerSet = ["All Places","Bathrooms","Campsite","Coats","Collaboration Area","Concierge","Conference Rooms","Courtyard","Customer Expierence","Entry","Mail/Print/Copy/Fax","Lockers","Phone Room","Project Room","Refreshments","Shelter","Other"] // types of places, hardcoded (for now)
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {return 1}
+  
+  func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    var pickerLabel: UILabel? = (view as? UILabel)
+    if pickerLabel == nil {
+      pickerLabel = UILabel()
+      pickerLabel?.font = UIFont(name: "Ariel", size: 20)
+      pickerLabel?.textAlignment = .center
+    }
+    pickerLabel?.text = pickerSet[row]
+    return pickerLabel!
+  }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {return pickerSet.count}
   
