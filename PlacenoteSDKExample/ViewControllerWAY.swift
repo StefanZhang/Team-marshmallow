@@ -36,7 +36,7 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
         self.segmentedControl.isHidden = true
         SetUpNaviBar() // shows navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        pickerData = ["All Places","Bathrooms","Conference Rooms","Other"] // types of places, hardcoded (for now)
+        pickerData = ["All Places","Bathrooms","Campsite","Coats","Collaboration Area","Concierge","Conference Rooms","Courtyard","Customer Expierence","Entry","Mail/Print/Copy/Fax","Lockers","Phone Room","Project Room","Refreshments","Shelter","Other"] // types of places, hardcoded (for now)
         tempArray.sort() // sorts list of places
         // setup delegates and data sources
         tableView.dataSource = self
@@ -228,6 +228,7 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
     // when picker view function is changed
     // filters the main table view
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        tableView.isUserInteractionEnabled = true
         print(pickerData[row])
         var tempDict = appDelegate.getCategoryDict()
         if (pickerData[row] == "All Places"){ // used to display all places
@@ -240,7 +241,8 @@ class ViewControllerWAY: UIViewController, UITableViewDelegate, UITableViewDataS
             }
             else{
                 print("places dont exist")
-                self.setPlaceArray(Array(Set(self.appDelegate.getDestinationName())))
+                self.setPlaceArray(["No Places Found"])
+                tableView.isUserInteractionEnabled = false
             }
         }
     }
