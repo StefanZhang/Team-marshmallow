@@ -124,7 +124,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        userView.debugOptions = [SCNDebugOptions.showFeaturePoints]
         
         setupView()
         setupScene()
