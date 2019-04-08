@@ -25,6 +25,8 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
     
     @IBOutlet var navView: ARSCNView!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var btnStart: UIButton!
+    
     
     
     //AR Scene
@@ -61,6 +63,8 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         LibPlacenote.instance.multiDelegate += self;
         
         LibPlacenote.instance.fetchMapList(listCb: onMapList)
+        
+        //self.btnStart.isHidden = true ________________________________________________________________________________________________________________ un comment this to hide button
         
     }
     
@@ -428,6 +432,30 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         }
     }
 
+    override func viewDidAppear(_ animated: Bool){
+        // sends to other view controller after it finds closest map
+        
+//        let locManager = CLLocationManager()
+//        locManager.requestWhenInUseAuthorization()
+//        var currentLocation: CLLocation!
+//        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+//            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+//            currentLocation = locManager.location
+//        }
+//        var counter = 0
+//        weak var timer: Timer?
+//        // loops every second to see if user can be localized
+//        timer = Timer.scheduledTimer(withTimeInterval: 1.0,
+//                                        repeats: true) {
+//                                        theTimer in
+//                                        counter += 1
+//                                        print(counter)
+//                                        if currentLocation.coordinate.longitude != nil {
+//                                            self.startPressed(self)
+//                                        }
+//
+//        }
+    }
 }
 
 // END OF FILE

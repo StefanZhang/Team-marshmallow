@@ -26,6 +26,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var minutes = 0
     private var seconds = 0
     private var maxSizeReached = false
+    // added by john
+    // outlets to buttons
+    @IBOutlet weak var btnLoad: UIButton!
+    @IBOutlet weak var btnShow: UIButton!
     
     
     //Zhenru
@@ -138,6 +142,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         
+        // hide buttons
+        self.btnLoad.isHidden = true
+        self.btnShow.isHidden = true
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self;
