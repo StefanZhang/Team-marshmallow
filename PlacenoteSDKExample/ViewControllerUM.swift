@@ -528,6 +528,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                 let tre = node.geometry?.description
                 if(tre != nil)
                 {
+
                     let T = Array(tre!)[4]
                     if( T == "B") // Then this node is the checkpoint
                     {
@@ -553,6 +554,32 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                             self.present(alert, animated: true, completion: nil)
                             self.looking = false
                             return true
+                        }
+                    }
+                    // Check for close to destination
+                    else{
+                        if(desStr == destination[0]){ //check if user is at the final map
+                            let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
+                            
+                            if (nodeDistance(first: pose, second: node.position) < 2.0)
+                            {
+                                let alert = UIAlertController(title: "Alert", message: "You have arrived", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                    switch action.style{
+                                    case .default:
+                                        print("default")
+                                        
+                                    case .cancel:
+                                        print("cancel")
+                                        
+                                    case .destructive:
+                                        print("destructive")
+                                        
+                                    }}))
+                                self.present(alert, animated: true, completion: nil)
+                                
+                                return true
+                            }
                         }
                     }
                     
