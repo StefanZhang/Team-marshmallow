@@ -538,6 +538,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                 let tre = node.geometry?.description
                 if(tre != nil)
                 {
+
                     let T = Array(tre!)[4]
                     if( T == "B") // Then this node is the checkpoint
                     {
@@ -565,6 +566,34 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                             return true
                         }
                     }
+                    // Check for close to destination
+                    
+                    if(desStr == destination[1]){ //check if user is at the final map
+                        let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
+                        
+                        var temp = StringToV3(str: destination[1])
+
+                        if (nodeDistance(first: pose, second: temp) < 2)
+                        {
+                            let alert = UIAlertController(title: "Alert", message: "You have arrived", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                switch action.style{
+                                case .default:
+                                    print("default")
+                                    
+                                case .cancel:
+                                    print("cancel")
+                                    
+                                case .destructive:
+                                    print("destructive")
+                                    
+                                }}))
+                            self.present(alert, animated: true, completion: nil)
+                            
+                            return true
+                        }
+                    }
+                    
                     
                 }
                 
@@ -705,7 +734,7 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
             
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
-                if (mapDataStack.count >= 1) {
+                if (mapDataStack.count > 1) {
                     userLabel.text = "Load Next Map"
                     shapeManager.clearShapes()
                     self.loadMapButton(self)
