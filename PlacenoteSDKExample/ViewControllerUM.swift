@@ -278,7 +278,12 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                 }
             }
             
+            
+            
             let length = mapIDs.count
+            if (indexPath == length){
+                self.indexPath = 0
+            }
             if (length > 1 ) {
                 // when there are more than one map to load, i.e. des and initloc are in different maps, then find checkpoint inside the first map
                 
@@ -325,9 +330,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                     
                                                     if (self.indexPath < length){
                                                         self.indexPath += 1
-                                                    }
-                                                    else if (self.indexPath == length){
-                                                        self.indexPath = 0
                                                     }
                                                     
                                                 }
