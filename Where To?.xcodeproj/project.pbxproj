@@ -48,6 +48,7 @@
 		842D53B2221E62FE00A4DBF7 /* UserLocalizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D53B1221E62FE00A4DBF7 /* UserLocalizationViewController.swift */; };
 		843AA8F2221377070070EF03 /* ViewControllerWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843AA8F1221377070070EF03 /* ViewControllerWT.swift */; };
 		8487E28822483BBC00A54F24 /* MetaOT-Black_0.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8487E28722483BBC00A54F24 /* MetaOT-Black_0.otf */; };
+		84ACBF0C225BF12500FDFE60 /* ViewControllerHere2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ACBF0B225BF12500FDFE60 /* ViewControllerHere2.swift */; };
 		84EBFE34224C442700E42E8C /* MetaOT-HairIta_0.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84EBFE33224C442700E42E8C /* MetaOT-HairIta_0.otf */; };
 		84EBFE37224C468000E42E8C /* MetaOT-Medi_0.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84EBFE36224C468000E42E8C /* MetaOT-Medi_0.otf */; };
 		84FA508522512F37005B430A /* ViewControllerUM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84274A302244339E00683F8E /* ViewControllerUM.swift */; };
@@ -109,6 +110,7 @@
 		843AA8F1221377070070EF03 /* ViewControllerWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWT.swift; sourceTree = "<group>"; };
 		8487E28722483BBC00A54F24 /* MetaOT-Black_0.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MetaOT-Black_0.otf"; path = "PlacenoteSDKExample/Meta Font/MetaOT-Black_0.otf"; sourceTree = SOURCE_ROOT; };
 		84AC01DD2257A2FA001B60C6 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; name = art.scnassets; path = "/Users/cse498/Desktop/Team-marshmallow/PlacenoteSDKExample/art.scnassets"; sourceTree = "<absolute>"; };
+		84ACBF0B225BF12500FDFE60 /* ViewControllerHere2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerHere2.swift; sourceTree = "<group>"; };
 		84EBFE33224C442700E42E8C /* MetaOT-HairIta_0.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MetaOT-HairIta_0.otf"; path = "PlacenoteSDKExample/Meta Font/MetaOT-HairIta_0.otf"; sourceTree = SOURCE_ROOT; };
 		84EBFE36224C468000E42E8C /* MetaOT-Medi_0.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MetaOT-Medi_0.otf"; path = "PlacenoteSDKExample/Meta Font/MetaOT-Medi_0.otf"; sourceTree = SOURCE_ROOT; };
 		8D2EF9CBDC0F285A1BE9E787 /* Pods-PlacenoteSDKExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacenoteSDKExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlacenoteSDKExample/Pods-PlacenoteSDKExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				2524EEEC2242B1CB00C5DC81 /* UIViewHelper.swift */,
 				25B5F7C12246AB60006B9FD9 /* ViewControllerUserIns.swift */,
 				2507ACA6224AC7A1007512D5 /* ViewControllerFP.swift */,
+				84ACBF0B225BF12500FDFE60 /* ViewControllerHere2.swift */,
 			);
 			path = PlacenoteSDKExample;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A955DBA0221EE784005603EF /* ViewControllerWAY.swift in Sources */,
+				84ACBF0C225BF12500FDFE60 /* ViewControllerHere2.swift in Sources */,
 				A9BA5F07220107EA00998DFB /* Graphable.swift in Sources */,
 				84FA508522512F37005B430A /* ViewControllerUM.swift in Sources */,
 				841987002202696000404F88 /* NavigationNode.swift in Sources */,
