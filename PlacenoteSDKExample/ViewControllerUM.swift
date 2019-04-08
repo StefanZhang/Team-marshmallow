@@ -31,6 +31,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     //Zhenru
     var cloestNodeLoc = SCNVector3(0,0,0)
     
+    var pressShowPath = false
+    var closestNodeFound = false
     //Information passed from WT and WAY
     // First element is mapName, second element is V3
     var destination : [String] = []
@@ -57,6 +59,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                 seconds = calendar.component(.second, from: date)
                 self.newMapfound = false
                 userLabel.text = "Move Slowly And Stay Within 3 Feet Of Features"
+                if (pressShowPath == true) {
+                    pressShowPath = false
+                    self.showPathButton(self)
+                }
             }
             else if localizationStarted {
                 userLabel.text = "Map Found!"
@@ -118,7 +124,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        userView.debugOptions = [SCNDebugOptions.showFeaturePoints]
         
         setupView()
         setupScene()
@@ -170,7 +176,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureSession();
-        
+        pressShowPath = true
+        self.loadMapButton(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -286,7 +293,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                 if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                                     self.userLabel.text = "Map Loaded. Look Around"
                                                     self.looking = true
-                                                    
+                                                    //self.pressShowPath = true
                                                     
 //                                                    print("This is checkpoint info")
 //                                                    dump(userdata?["CheckpointV3"])
@@ -311,6 +318,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                     
                                                     if (self.indexPath < length){
                                                         self.indexPath += 1
+                                                    }
+                                                    else if (self.indexPath == length){
+                                                        self.indexPath = 0
                                                     }
                                                     
                                                 }
@@ -696,7 +706,10 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
 //        dump(camLoc)
 //        dump(userScene.rootNode.position)
 //        dump(userScene.rootNode.worldPosition)
-        
+//        if (pressShowPath == true) {
+//            pressShowPath = false
+//            //self.showPathButton(self)
+//        }
         if( looking == true ){
             if (LibPlacenote.instance.getMappingStatus() == LibPlacenote.MappingStatus.running && lookingForCloestBC) {
                 userLabel.text = "Finding closest breadcrumb ..."
@@ -713,16 +726,16 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
                 startStr = SCNV3toString(vec: cloestNodeLoc)
                 lookingForCloestBC = false
                 userLabel.text = "Closest breadcrumb found"
+                //closestNodeFound = true
+                pressShowPath = true
             }
             
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
                 if (mapDataStack.count >= 1) {
                     userLabel.text = "Load Next Map"
-//                    let bestMap = findMap()
                     shapeManager.clearShapes()
-//                    mapLoading(maps: [bestMap.0], index: bestMap.1)
-                    //mapLoading(map: mapDataStack, index: indexPath )
+                    self.loadMapButton(self)
                 }
               }
         }

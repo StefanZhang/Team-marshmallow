@@ -59,11 +59,22 @@ var Dest_Cat_Dict = [String:String]()
 var CheckpointV3 = [String]()
 var CheckpointCoreLoc = [String]()
 
-let pickerSet = ["Bathrooms","Conference Rooms","Other"]
+let pickerSet = ["All Places","Bathrooms","Campsite","Coats","Collaboration Area","Concierge","Conference Rooms","Courtyard","Customer Expierence","Entry","Mail/Print/Copy/Fax","Lockers","Phone Room","Project Room","Refreshments","Shelter","Other"] // types of places, hardcoded (for now)
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UITableViewDelegate, UITableViewDataSource, PNDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {return 1}
+  
+  func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    var pickerLabel: UILabel? = (view as? UILabel)
+    if pickerLabel == nil {
+      pickerLabel = UILabel()
+      pickerLabel?.font = UIFont(name: "Ariel", size: 20)
+      pickerLabel?.textAlignment = .center
+    }
+    pickerLabel?.text = pickerSet[row]
+    return pickerLabel!
+  }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {return pickerSet.count}
   
@@ -357,7 +368,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       shapeManager.clearShapes() //creating new map, remove old shapes.
       
       //Pop up the save map window
-      let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertControllerStyle.alert)
+      let MapName_alert = UIAlertController(title: "Enter Name of the map!", message: " ", preferredStyle: UIAlertController.Style.alert)
       
       MapName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
         textField.placeholder = "Enter Map name:"
@@ -593,7 +604,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     let map = self.maps[indexPath.row]
     var cell:UITableViewCell? = mapTable.dequeueReusableCell(withIdentifier: map.0)
     if cell==nil {
-      cell =  UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: map.0)
+      cell =  UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: map.0)
     }
     cell?.textLabel?.text = map.0
     
@@ -701,8 +712,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   }
   
   //Delete Row and its corresponding map
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    if (editingStyle == UITableViewCellEditingStyle.delete) {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if (editingStyle == UITableViewCell.EditingStyle.delete) {
       statusLabel.text = "Deleting Map:" + maps[indexPath.row].0
       LibPlacenote.instance.deleteMap(mapId: maps[indexPath.row].0, deletedCb: {(deleted: Bool) -> Void in
         if (deleted) {
@@ -1226,7 +1237,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         shapeManager.spawnNewDestination(position_1: loc02)
 
       //Pop up the drop destination window
-      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination and select Category", message: "Name the destination so it is unique, then scroll to select the category the destination falls under.", preferredStyle: UIAlertControllerStyle.alert)
+      let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination and select Category", message: "Name the destination so it is unique, then scroll to select the category the destination falls under.", preferredStyle: UIAlertController.Style.alert)
 
       DestinationName_alert.addTextField(configurationHandler: {(textField: UITextField!) in
         textField.placeholder = "Enter Destination name:"
@@ -1252,7 +1263,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         }
       }))
       
-      let height:NSLayoutConstraint = NSLayoutConstraint(item: DestinationName_alert.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.52)
+      let height:NSLayoutConstraint = NSLayoutConstraint(item: DestinationName_alert.view, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.52)
       DestinationName_alert.view.addConstraint(height)
       self.present(DestinationName_alert, animated: true, completion: nil)
 
