@@ -944,11 +944,12 @@
                         <outlet property="btnShow" destination="3Ce-Tq-mjh" id="v15-7H-QzE"/>
                         <outlet property="userLabel" destination="0Vq-gL-EuW" id="7Xv-Pm-lWF"/>
                         <outlet property="userView" destination="WWt-hb-12Z" id="hUM-UP-mSr"/>
+                        <segue destination="SYT-Bl-Tfz" kind="show" identifier="navToArrive" id="DYE-Qo-4dC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I5w-dO-NPC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3037.5999999999999" y="-741.87192118226608"/>
+            <point key="canvasLocation" x="3071" y="-743"/>
         </scene>
         <!--View Controller Here2-->
         <scene sceneID="7R0-On-5qp">
@@ -1172,6 +1173,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="DYE-Qo-4dC"/>
         <segue reference="4Te-1H-V4a"/>
         <segue reference="Nax-gN-Rgt"/>
     </inferredMetricsTieBreakers>

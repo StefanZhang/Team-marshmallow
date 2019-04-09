@@ -246,7 +246,8 @@ class UserLocalizationViewController: UIViewController, ARSCNViewDelegate, ARSes
         let image: CVPixelBuffer = didUpdate.capturedImage
         var pose: matrix_float4x4 = didUpdate.camera.transform
         pose = LibPlacenote.instance.processPose(pose: pose)
-        camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+        //camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
+        camLoc = pose.position()
         
         // There was navigation/breadcrumb dropping here in OG viewController
 
