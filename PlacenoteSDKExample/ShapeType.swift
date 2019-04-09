@@ -46,6 +46,16 @@ public enum ShapeType:Int {
       geometry = SCNPyramid(width:0.5, height:0.5, length:0.5)
     case ShapeType.Torus:
       geometry = SCNTorus(ringRadius:1.0, pipeRadius:0.1)
+//    case ShapeType.Arrow:
+//        let scene = SCNScene(named: "art.scnassets/arrow2.scn")!
+//        scene.
+//        let node = scene.rootNode
+//        dump(node.childNodes)
+//        let child = node.childNode(withName: "arrow_root", recursively: true)
+//        child.
+//        dump(child)
+//        geometry = child!.geometry!
+
     case ShapeType.Box: //
       fallthrough
     default:
