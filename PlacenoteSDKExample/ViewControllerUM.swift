@@ -584,6 +584,10 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
 
                         if (nodeDistance(first: pose, second: temp) < 2)
                         {
+                            // UN COMMENT THIS TO TEST PUSHING YOU HAVE ARRIVED VIEWCONTROLLER
+//                            let ViewControllerObj = self.storyboard?.instantiateViewController(withIdentifier: "ViewControllerHere2") as? ViewControllerHere2
+//                            self.navigationController?.pushViewController(ViewControllerObj!, animated: true)
+                            
                             let alert = UIAlertController(title: "Alert", message: "You have arrived", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 switch action.style{
