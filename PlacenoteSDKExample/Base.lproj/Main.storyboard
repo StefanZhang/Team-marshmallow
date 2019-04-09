@@ -863,7 +863,7 @@
                         <outlet property="btnStart" destination="6zO-yU-zdE" id="cAC-79-jZp"/>
                         <outlet property="navView" destination="jMz-Ut-B5F" id="Cdr-hV-Ykv"/>
                         <outlet property="statusLabel" destination="3SA-iN-aE8" id="lWj-3Y-phl"/>
-                        <segue destination="cls-Gq-Svo" kind="show" identifier="localizedToNav" id="4Te-1H-V4a"/>
+                        <segue destination="cls-Gq-Svo" kind="show" identifier="localizedToNav" animates="NO" id="4Te-1H-V4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1bd-m8-vPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1045,32 +1045,32 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Instructions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcB-iD-glE">
-                                <rect key="frame" x="0.0" y="201" width="375" height="47.666666666666657"/>
+                                <rect key="frame" x="0.0" y="201" width="375" height="37.333333333333343"/>
                                 <fontDescription key="fontDescription" name="MetaOT-Medi" family="Meta OT" pointSize="32"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TsK-xM-MqM">
-                                <rect key="frame" x="20" y="256.66666666666669" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="246.33333333333334" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Select your destination, (this is the place that you want to go to) then click GO." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZS-ad-iBQ">
-                                <rect key="frame" x="16" y="256.66666666666669" width="343" height="40.666666666666686"/>
+                                <rect key="frame" x="16" y="246.33333333333334" width="343" height="40.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DgS-vJ-uJg">
-                                <rect key="frame" x="16" y="305.33333333333331" width="339" height="101.66666666666669"/>
+                                <rect key="frame" x="16" y="295" width="339" height="101.66666666666669"/>
                                 <string key="text">2. If you know where you are OR if you know what is close to you select this location as the starting point then click I'm here, if you don't know where you are just select the I don't know button.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DL3-5T-9ah">
-                                <rect key="frame" x="16" y="415" width="339" height="81.333333333333314"/>
+                                <rect key="frame" x="16" y="404.66666666666669" width="339" height="81.333333333333314"/>
                                 <string key="text">3. Wait for the maps to load, then follow the breadcrumbs until they lead you to a checkpoint (box) or your destination (pyramid).</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1172,7 +1172,7 @@
         <image name="hmCircleLogo_white" width="1888" height="1888"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jyE-gs-TUu"/>
+        <segue reference="4Te-1H-V4a"/>
         <segue reference="Nax-gN-Rgt"/>
     </inferredMetricsTieBreakers>
 </document>
