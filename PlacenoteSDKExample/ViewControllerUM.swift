@@ -12,6 +12,7 @@ import CoreLocation
 import PlacenoteSDK
 import SceneKit
 
+
 class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,PNDelegate, CLLocationManagerDelegate {
     
     //Status variables to track the state of the app with respect to libPlacenote
@@ -24,7 +25,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     private var newMapfound = false
     private var hour    = 0
     private var minutes = 0
-    private var seconds = 0
+    private var seconds = 100000
     private var maxSizeReached = false
     // added by john
     // outlets to buttons
@@ -45,6 +46,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     var startStr = ""
     var desStr = ""
     
+
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     // For PNDelegate function
@@ -56,11 +59,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         if prevStatus != LibPlacenote.MappingStatus.running && currStatus == LibPlacenote.MappingStatus.running { //just localized draw shapes you've retrieved
             print ("Just localized, drawing view")
             shapeManager.drawView(parent: userScene.rootNode) //just localized redraw the shapes
-            
+            seconds = calendar.component(.second, from: date)
             if mappingStarted {
-                hour = calendar.component(.hour, from: date)
-                minutes = calendar.component(.minute, from: date)
-                seconds = calendar.component(.second, from: date)
+
                 self.newMapfound = false
                 userLabel.text = "Move Slowly And Stay Within 3 Feet Of Features"
                 if (pressShowPath == true) {
@@ -241,6 +242,8 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         let desVertex = getVertexByLoc(mapLoc: desMapLoc!)
         let initVertex = getVertexByLoc(mapLoc: initMapLoc!)
         
+        
+
         // array of locations of maps
         
         mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
@@ -305,6 +308,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                 if (self.shapeManager.loadShapeArray(shapeArray: userdata?["shapeArray"] as? [[String: [String: String]]])) {
                                                     self.userLabel.text = "Map Loaded. Look Around"
                                                     self.looking = true
+                                                    // Goes into the calculation for the max size
                                                     //self.pressShowPath = true
                                                     
 //                                                    print("This is checkpoint info")
@@ -317,6 +321,11 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                                                         //self.startStr = self.SCNV3toString(vec: self.cloestNodeLoc)
                                                         self.userLabel.text = "Localized. Showing shortest path"
                                                         self.desStr = self.destination[1]
+                                                        var date = Date()
+                                                        var calendar = Calendar.current
+                                                        self.hour = calendar.component(.hour, from: date)
+                                                        self.minutes = calendar.component(.minute, from: date)
+                                                        self.seconds = calendar.component(.second, from: date)
                                                     }
                                                     if (userdata?["CheckpointV3"] != nil && userdata?["CheckpointCoreLoc"] != nil && self.destination[0] != self.initialLocation[0]) {
                                                         self.CheckpointCoreLoc = userdata?["CheckpointCoreLoc"] as! [String]
@@ -744,7 +753,17 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
                 //closestNodeFound = true
                 pressShowPath = true
             }
-            
+            var date2 = Date()
+            var calendar2 = Calendar.current
+            var currentTime = calendar2.component(.second, from: date2)
+            dump(currentTime)
+            dump(self.seconds)
+            if currentTime < self.seconds
+            {
+                currentTime += 60
+            }
+            if currentTime >= (self.seconds + 5)
+            {
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
                 if (mapDataStack.count > 1) {
@@ -753,6 +772,7 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
                     self.loadMapButton(self)
                 }
               }
+            }
         }
         if (!LibPlacenote.instance.initialized()) {
             print("SDK is not initialized")
