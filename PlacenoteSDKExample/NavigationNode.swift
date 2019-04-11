@@ -36,28 +36,28 @@ class NavigationNode {
     
     func generateBreadCrumb(pos01: SCNVector3) -> SCNNode{
         let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: ShapeType.Sphere)
-        geometry.materials.first?.diffuse.contents = UIColor.red
+        geometry.materials.first?.diffuse.contents = UIColor.blue
         let geometryNode = SCNNode(geometry: geometry)
         geometryNode.position = pos01
-        geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
         return geometryNode
     }
     
     func generateCheckpoint(vector_pos: SCNVector3) -> SCNNode{
         let geometry: SCNGeometry = ShapeType.generateGeometry(s_type: ShapeType.Box)
-        geometry.materials.first?.diffuse.contents = UIColor.red
+        geometry.materials.first?.diffuse.contents = UIColor.blue
         let checkpointNode = SCNNode(geometry: geometry)
         checkpointNode.position = vector_pos
-        checkpointNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        checkpointNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
         return checkpointNode
     }
     
     func generateDestination(pos01: SCNVector3) -> SCNNode{
         let geometry:SCNGeometry = ShapeType.generateGeometry(s_type: ShapeType.Pyramid) //meters
-        geometry.materials.first?.diffuse.contents = UIColor.red
+        geometry.materials.first?.diffuse.contents = UIColor.lightGray
         let geometryNode = SCNNode(geometry: geometry)
         geometryNode.position = pos01
-        geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray
         return geometryNode
     }
     

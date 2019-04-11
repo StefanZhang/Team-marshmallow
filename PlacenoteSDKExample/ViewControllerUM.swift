@@ -555,7 +555,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                         let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
                         // This processPosition only works if mappingStatus is running
 
-                        if (nodeDistance(first: pose, second: node.position ) < 2)
+                        if (nodeDistance(first: pose, second: node.position ) < 1.5)
                         {
                             let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in

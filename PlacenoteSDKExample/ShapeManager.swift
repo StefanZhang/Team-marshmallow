@@ -159,10 +159,11 @@ class ShapeManager {
     let shapeType: ShapeType = ShapeType.Sphere
     
     // Draw new breadcrumbs lower
-//    let lower = SCNVector3(0.0,0.8,0.0)
-//    var position2 = subtraction(left: position1, right: lower)
+    let lower = SCNVector3(0.0,0.8,0.0)
+    var position2 = subtraction(left: position1, right: lower)
     
-    placeCrumb(pos_1: position1, type: shapeType)
+    
+    placeCrumb(pos_1: position2, type: shapeType)
   }
     
   func spawnNewCheckpoint(position_01: SCNVector3){
