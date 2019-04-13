@@ -5,7 +5,7 @@
 //  Created by Team Herman Miller on 3/21/19.
 //  Copyright © 2019 Vertical. All rights reserved.
 //
-
+//  View Controller for
 import UIKit
 import ARKit
 import CoreLocation
@@ -245,7 +245,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         
 
         // array of locations of maps
-        
+        // Works for two maps 100% of the time any more than two are not gaurenteed
         mapStack = appDelegate.aStarForMaps(start: initVertex, destination: desVertex)
         dump(mapStack) // This is giving end and start map
         
@@ -549,23 +549,26 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     }
 
 
-    // MARK: - ARSessionDelegate
+    // This is the function that looks at the node you are closest to and tells you if its the checkpoint you're walking towards or your destination
     func getClosetNode(camera_pos: SCNVector3, map: AdjacencyList<String>) -> Bool{
+        
+        // If there are shapes in the current map
         if shapeManager.getShapePositions().count > 0 {
             for node in shapeManager.getShapeNodes()
             {
-                let tre = node.geometry?.description
-                if(tre != nil)
+                let node_type = node.geometry?.description
+                if(node_type != nil)
                 {
 
-                    let T = Array(tre!)[4]
-                    if( T == "B") // Then this node is the checkpoint
+                    let type_name = Array(node_type!)[4]
+                    if( type_name == "B") // Then this node is the checkpoint with type Box
                     {
                         let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
                         // This processPosition only works if mappingStatus is running
 
-                        if (nodeDistance(first: pose, second: node.position ) < 1.5)
+                        if (nodeDistance(first: pose, second: node.position ) < 1)
                         {
+                            // Tells the user they are at a checkpoint
                             let alert = UIAlertController(title: "Alert", message: "At checkpoint", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 switch action.style{
@@ -585,7 +588,7 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                             return true
                         }
                     }
-                    // Check for close to destination
+                    // Check to see if the user is close to destination
                     
                     if(desStr == destination[1]){ //check if user is at the final map
                         let pose = LibPlacenote.instance.processPosition(pose: camera_pos)
@@ -596,21 +599,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
                         {
                             // UN COMMENT THIS TO TEST PUSHING YOU HAVE ARRIVED VIEWCONTROLLER
                             self.performSegue(withIdentifier: "navToArrive", sender: self)
-
-//                            let alert = UIAlertController(title: "Alert", message: "You have arrived", preferredStyle: .alert)
-//                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-//                                switch action.style{
-//                                case .default:
-//                                    print("default")
-//
-//                                case .cancel:
-//                                    print("cancel")
-//
-//                                case .destructive:
-//                                    print("destructive")
-//
-//                                }}))
-//                            self.present(alert, animated: true, completion: nil)
                             
                             return true
                         }
@@ -623,7 +611,9 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
         }
         return false
     }
-//modified this function to work with the findmap
+    
+    
+//modified this function to work with the mapStack, it loads the next map in the List given the index in the list and the list itself
 func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void //changed map to maps
   {
     userLabel.text = "Loading Map"
@@ -678,7 +668,7 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
     )
     
   }
-    
+    // This function finds the closest map to you but in often inaccurate due the precison of Core Location
     func findMap() -> ((String, LibPlacenote.MapMetadata), Int)
     {
         let locManager = CLLocationManager()
@@ -734,6 +724,7 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
 //            pressShowPath = false
 //            //self.showPathButton(self)
 //        }
+        // If you are currently looking for a new map find closest breadcrumb
         if( looking == true ){
             if (LibPlacenote.instance.getMappingStatus() == LibPlacenote.MappingStatus.running && lookingForCloestBC) {
                 userLabel.text = "Finding closest breadcrumb ..."
@@ -753,22 +744,27 @@ func mapLoading(map: [(String, LibPlacenote.MapMetadata)], index: Int) -> Void /
                 //closestNodeFound = true
                 pressShowPath = true
             }
-            var date2 = Date()
-            var calendar2 = Calendar.current
+            
+            let date2 = Date()
+            let calendar2 = Calendar.current
             var currentTime = calendar2.component(.second, from: date2)
-            dump(currentTime)
-            dump(self.seconds)
+            
+            // This is here to ensure that when the time cycles back that it will still be a greater value
             if currentTime < self.seconds
             {
                 currentTime += 60
             }
-            if currentTime >= (self.seconds + 5)
+            // if it's been 6 seconds since you loaded the map start looking for the next checkpoint
+            if currentTime >= (self.seconds + 6)
             {
+                //gives the alert for when you're at a checkpoint
+                // Graph is no longer needed but was kept in case future implementation requires it
               if (getClosetNode(camera_pos: camLoc, map: graph))
               {
                 if (mapDataStack.count > 1) {
                     userLabel.text = "Load Next Map"
                     shapeManager.clearShapes()
+                    // loads the next map in the stack
                     self.loadMapButton(self)
                 }
               }

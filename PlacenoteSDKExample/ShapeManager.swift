@@ -82,8 +82,7 @@ class ShapeManager {
     return shapeArray
   }
 
-  // Load shape array
-    // This is where Matthew needs to get all the nodes from
+
   func loadShapeArray(shapeArray: [[String: [String: String]]]?) -> Bool {
     clearShapes()
     if (shapeArray == nil) {
@@ -139,7 +138,8 @@ class ShapeManager {
     shapeTypes.removeAll()
     dump(String(shapeTypes.count) + " Shape types count" )
     print("Here are all the children: ")
-    //
+    
+    // This should never be uncommented it makes the shapes load in weird locations
 //    for child in scnScene.rootNode.childNodes{
 //        child.removeFromParentNode()
 //    }
@@ -181,46 +181,6 @@ class ShapeManager {
     return SCNVector3Make(left.x - right.x, left.y - right.y, left.z - right.z)
   }
     
-/*
-  func generateCheckpoint(vector_pos: SCNVector3) -> SCNNode{
-    let geometry: SCNGeometry =  SCNBox(width: 0.2, height: 0.3, length: 0.4, chamferRadius: 1.0)  //ShapeType.generateGeometry(s_type: ShapeType.Box)
-    geometry.materials.first?.diffuse.contents = UIColor.red
-    let checkpointNode = SCNNode(geometry: geometry)
-    checkpointNode.position = vector_pos
-    checkpointNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-    return checkpointNode
-  }
-    
-  
-
-//  func generateBreadCrumb(pos01: SCNVector3, pos02: SCNVector3) -> SCNNode{
-//    let geometry:SCNGeometry = SCNSphere(radius: 0.1) //meters
-//    geometry.materials.first?.diffuse.contents = UIColor.red
-//    let geometryNode = SCNNode(geometry: geometry)
-//    geometryNode.position = subtraction(left:pos01,right:pos02)
-//    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-//    return geometryNode
-//  }
-    
-    func generateBreadCrumb(pos01: SCNVector3) -> SCNNode{
-        let geometry:SCNGeometry = SCNSphere(radius: 0.2) //ShapeType.generateGeometry(s_type: ShapeType.Sphere)
-        geometry.materials.first?.diffuse.contents = UIColor.red
-        let geometryNode = SCNNode(geometry: geometry)
-        geometryNode.position = pos01
-        geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-        return geometryNode
-    }
-    
-  func generateDestination(pos01: SCNVector3) -> SCNNode{
-    let geometry:SCNGeometry = SCNPyramid(width: 0.1, height: 0.3, length: 0.4)//ShapeType.generateGeometry(s_type: ShapeType.Pyramid) //meters
-    geometry.materials.first?.diffuse.contents = UIColor.red
-    let geometryNode = SCNNode(geometry: geometry)
-    geometryNode.position = pos01
-    geometryNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-    return geometryNode
-    }
-    
-*/
   func placeCheck(checkpoint_pos: SCNVector3, type: ShapeType){
     //let boxNode: SCNNode = generateCheckpoint(vector_pos: checkpoint_pos)
     let boxNode = NavigationNode(number: 2.0, Stype: type, position: checkpoint_pos)

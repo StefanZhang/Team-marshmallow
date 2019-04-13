@@ -3,9 +3,11 @@
 //  Shape Dropper (Placenote SDK iOS Sample)
 //
 //  Created by Prasenjit Mukherjee on 2017-09-01.
-//  Copyright © 2017 Vertical AI. All rights reserved.
+//  Copyright © 2017 Vertical AI. All rights reserved. (Placenote)
 //
-// Test for github
+// The View Controller for the Admin Mode
+//
+
 
 import UIKit
 import CoreLocation
@@ -123,7 +125,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
   private var reportDebug: Bool = false
   private var maxRadiusSearch: Float = 500.0 //m
   private var currRadiusSearch: Float = 0.0 //m
+  
+  // True only when the user walks into a new map (here if wanted to map stich in admin mode)
   private var newMapfound = false
+  
+  // Initializes the time used in the max map size calculation
   private var hour    = 0
   private var minutes = 0
   private var seconds = 0
@@ -243,6 +249,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     mapTable.isHidden = true //hide the map list until 'Load Map' is clicked
     filterSlider.isContinuous = false
     toggleSliderUI(true, reset: true) //hide the radius search UI, reset values as we are initializating
+    
+    // used for debugging purposes
     //scnView.debugOptions = ARSCNDebugOptions.showFeaturePoints
     //scnView.debugOptions = ARSCNDebugOptions.showWorldOrigin
   }
@@ -281,6 +289,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       print ("Just localized, drawing view")
       shapeManager.drawView(parent: scnScene.rootNode) //just localized redraw the shapes
       if mappingStarted {
+        // Gets assigned the moment the admin starts mapping
         hour = calendar.component(.hour, from: date)
         minutes = calendar.component(.minute, from: date)
         seconds = calendar.component(.second, from: date)
@@ -746,39 +755,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let pose = LibPlacenote.instance.processPose(pose: result.worldTransform)
       //shapeManager.spawnRandomShape(position: pose.position())
       
-      
-      
-// Generate Sphere according to camera's location
-//      let frame = scnView.session.currentFrame
-//      let camera = frame?.camera
-//      let loc = camera?.transform
-//      let loc01 = loc?.columns.3
-//      let x = loc01?.x
-//      var y = loc01?.y
-//      //let y2 = y? - 0.5 ?? 0.0
-//      let z = loc01?.z
-//      let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
-//      let loc03 = SCNVector3(x: 0,y: 1.5,z: 0)
-//      dump(loc02)
-//
-//      let ball = SCNSphere(radius: 0.02)
-//      var node = SCNNode(geometry: ball)
-//      node.position = SCNVector3(0,-0.5,0)
-//      scnView.pointOfView?.addChildNode(node)
-//      dump(scnView.pointOfView?.position)
-//
-//      let loc = pose.columns.3
-//      let loc01 = SCNVector3(loc.x,loc.y,loc.z)
-//      dump(loc01 )
-//
-//
-//      shapeManager.spawnNewBreadCrumb(position1: loc02, position2: loc03)
-//
-//      scnView.scene.rootNode.addChildNode(generateBreadCrumb(loc02: loc02, loc03: loc03))
-//      dump(pose.position())
-      
-      //dump( self.shapeManager.getShapePositions() ) //Matt commented this out
-    }
+      }
     
     
     
@@ -850,12 +827,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     let pose: matrix_float4x4 = didUpdate.camera.transform
     
-    //Zhenru This is original
+
     //let camLoc = SCNVector3(pose.columns.3.x,pose.columns.3.y-0.8,pose.columns.3.z)
     let camLoc = pose.position()
     if shapeManager.getShapeNodes().count > 0
     {
       let firstnode = shapeManager.getShapeNodes()[0]
+      // Gets the current time to compare to the initial time
       date = Date()
       calendar = Calendar.current
       var mappingTime = calendar.component(.minute, from: date)
@@ -875,6 +853,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       // If the Admin has been walking for an excessive amount of time this will tell them to stop and make a new map
       if self.shapeManager.getShapeNodes().count > maxcrumbCount || maxTime || nodeDistance(first: camLoc, second: firstnode.position) > 45
       {
+        // If they just passed the threshold and its still set to false, alert then set to true
         if maxSizeReached == false
         {
           // Makes the user turn around to get the feature points in the frame
