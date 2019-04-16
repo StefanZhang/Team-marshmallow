@@ -1215,6 +1215,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let loc02 = SCNVector3(x ?? 0,y ?? 0,z ?? 0)
         shapeManager.spawnNewDestination(position_1: loc02)
 
+        var dup = false
+      
       //Pop up the drop destination window
       let DestinationName_alert = UIAlertController(title: "Enter Name of the Destination and select Category", message: "Name the destination so it is unique, then scroll to select the category the destination falls under.", preferredStyle: UIAlertController.Style.alert)
 
@@ -1234,11 +1236,34 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       DestinationName_alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
         
         if let destination_name = DestinationName_alert.textFields?[0].text {
-          Destination_array.append(destination_name) // Append to the destination array
-          destination_name_meta = destination_name
-          destination_pos = self.SCNV3toString(vec: loc02)
-          Dest_Pos_Dict[destination_name_meta] = destination_pos
-          Dest_Cat_Dict[destination_name_meta] = destCat
+          dup = false
+          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+          let destnames = appDelegate.getDestinationName()
+          
+          for name in destnames{
+            if name == destination_name {
+              // If Duplicate Destination Name found!
+              dup = true
+              // Raise another alert
+              let dupName_alert = UIAlertController(title: "Duplicate Destination Name Found!", message: "Please name the destination with a different name.", preferredStyle: UIAlertController.Style.alert)
+              let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                UIAlertAction in
+                self.present(DestinationName_alert, animated: true, completion: nil)
+              }
+              
+              dupName_alert.addAction(okAction)
+              self.present(dupName_alert, animated: true, completion: nil)
+            }
+          }
+          
+          // If No duplicate found:
+          if (!dup){
+            Destination_array.append(destination_name) // Append to the destination array
+            destination_name_meta = destination_name
+            destination_pos = self.SCNV3toString(vec: loc02)
+            Dest_Pos_Dict[destination_name_meta] = destination_pos
+            Dest_Cat_Dict[destination_name_meta] = destCat
+          }
         }
       }))
       
