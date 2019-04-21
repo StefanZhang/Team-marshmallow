@@ -19,19 +19,19 @@ After a stack of the maps have been found, we need to generate a shortest path o
 In summary, if the initial location and destination are in the same map, then we only need to generate the shortest path of breadcrumbs once and display the shapes. However, if they are in different maps, then a path of maps will be found, and in all but the last map, we generate the shortest path of breadcrumbs from the closest breadcrumb to the best checkpoint. The best checkpoint was selected based on the checkpoints and maps' CoreLocation.
 
 Admin Mode:
-
 The file for the admin can be found in the ViewController.swift file. What the admin does is ______
 
 The login of admin need to be click on the side bar menu, and then click the admin login. The front end side bar menu implementation is taking care by the class MenuLauncherWT, MenuCellWT and BaseCell. MenuLauncherWT as a launcher class gets called once the button being clicked in ViewControllerWT, the reason we create a seperate class for this is to reduce the code in the ViewcontrollerWT, and indeed solve the "Fat ViewController" issue, and easier to debug in case something went wrong. In MenuLauncherWT, ShowMenu() display menu with specific coordinates and animation, HandleDismiss() handles the fade out animation. collectionView() handles menu selection, layout of the cells and number of cells in the menu bar. BaseCell class the parent cell of all cells, MenuCellWT is the customized Cell for Menu, inherite from BaseCell. MenuCellWT add label, icon and constraint to the menu cell.
 
 Once the login button is clicked.........................
 
-
-  Loadmap- 
-  This is used when an Admin wants to load an existing map to edit. Once the load map button is pressed a tableview of all the maps will be loaded. After a map is selected from the table all of the metadata from the Placenote cloud is loaded. The metadata contains: PlaceID, Time Created, Place Name, Place Size, along with user data. User data includes the dictionary of destinations  all of the categories for the destinations, the coordinates for the map, the coordiantes for the checkpoints, the coordinates for the destinations.
+  Load Map-
+  Once the load map button is pressed a table of all the maps that are the currently on placenote's cloud are displayed. To load a map, all of the metadata from placenote's cloud is downloaded. The shapes including: breadcrumbs, checkpoints, destinations are loaded based on their location to the world origin when the admin saves the map. 
 
   Destinations-
-  The Admin has the ability to drop places known as destinations. After they press the button, line 1206 in ViewController.swift is    invoked. First what this does is goes to the ShapeManager.swift file and creates a subclass (Destination node) from the root class Navigaton Node. The shape type (pyramid), the size, the color and location when pressed can be configured here. Next, it opens an alert box for the admin to type in the destination name and type. After the information has been input, all of the  metadata regarding the destination including location and map it is inside of, is saved to the json that is sent to the Placenote cloud.
+  The Admin has the ability to drop places known as destinations. After they press the button, line 1206 in ViewController.swift is    invoked. First what this does is goes to the ShapeManager.swift file and creates a subclass (Destination node) from the root class Navigaton Node. The shape type (pyramid), the size, the color and location when pressed can be configured here.
+
+  Next, it opens an alert box for the admin to type in the destination name and type. After the information has been input, all of the  metadata regarding the destination including location and map it is inside of, is saved to the json that is sent to the Placenote cloud.
 This all happens if there is no duplicate destination already in the storage. If there is a duplicate then the destination will not be able to be saved.
   
   Checkpoint-
