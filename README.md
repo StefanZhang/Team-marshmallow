@@ -24,3 +24,14 @@ The file for the admin can be found in the ViewController.swift file. What the a
 The login of admin need to be click on the side bar menu, and then click the admin login. The front end side bar menu implementation is taking care by the class MenuLauncherWT, MenuCellWT and BaseCell. MenuLauncherWT as a launcher class gets called once the button being clicked in ViewControllerWT, the reason we create a seperate class for this is to reduce the code in the ViewcontrollerWT, and indeed solve the "Fat ViewController" issue, and easier to debug in case something went wrong. In MenuLauncherWT, ShowMenu() display menu with specific coordinates and animation, HandleDismiss() handles the fade out animation. collectionView() handles menu selection, layout of the cells and number of cells in the menu bar. BaseCell class the parent cell of all cells, MenuCellWT is the customized Cell for Menu, inherite from BaseCell. MenuCellWT add label, icon and constraint to the menu cell.
 
 Once the login button is clicked.........................
+
+
+  Destinations-
+  The Admin has the ability to drop places known as destinations. After they press the button, line 1206 in ViewController.swift is    invoked. First what this does is goes to the ShapeManager.swift file and creates a subclass (Destination node) from the root class Navigaton Node. The shape type (pyramid), the size, the color and location when pressed can be configured here.
+
+  Next, it opens an alert box for the admin to type in the destination name and type. After the information has been input, all of the  metadata regarding the destination including location and map it is inside of, is saved to the json that is sent to the Placenote cloud.
+This all happens if there is no duplicate destination already in the storage. If there is a duplicate then the destination will not be able to be saved.
+  
+  Checkpoint-
+  The Admin also has the ability to drop checkpoints. Checkpoints are a crucial part of the navigation process for the user. They are the main component for the MAP STITCHING component (more information can be found in user mode step 3). Once the admin presses the checkpoint button, line 1169 in ViewController.swift is invoked. This drops a checkpoint similar to how a destination is dropped except a few extra steps are taken. When a checkpoint is dropped its' core location is also stored in order to find out which checkpoint the user should navigate to in the MapStack. 
+
