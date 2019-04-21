@@ -1,6 +1,11 @@
 Official Documentation for WhereTo?
 
-WhereTo is an iOS application that utilizes Apple's ARKit library and the PlaceNoteSDK. The parts of the application include the user mode and the Admin mode.
+WhereTo is an iOS application that utilizes Apple's ARKit library and the PlaceNoteSDK. 
+Placenote explaination can be found here: https://placenote.com/
+
+This application is split into four parts: front-end, back-end, user mode, and admin mode. 
+
+Front end:
 
 The Admin does the bulk of the work for the application while the user side is meant to follow the instructions that the Admin has layed out.
 
