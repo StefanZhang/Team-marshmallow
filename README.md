@@ -20,3 +20,7 @@ In summary, if the initial location and destination are in the same map, then we
 
 Admin Mode:
 The file for the admin can be found in the ViewController.swift file. What the admin does is ______
+
+The login of admin need to be click on the side bar menu, and then click the admin login. The front end side bar menu implementation is taking care by the class MenuLauncherWT, MenuCellWT and BaseCell. MenuLauncherWT as a launcher class gets called once the button being clicked in ViewControllerWT, the reason we create a seperate class for this is to reduce the code in the ViewcontrollerWT, and indeed solve the "Fat ViewController" issue, and easier to debug in case something went wrong. In MenuLauncherWT, ShowMenu() display menu with specific coordinates and animation, HandleDismiss() handles the fade out animation. collectionView() handles menu selection, layout of the cells and number of cells in the menu bar. BaseCell class the parent cell of all cells, MenuCellWT is the customized Cell for Menu, inherite from BaseCell. MenuCellWT add label, icon and constraint to the menu cell.
+
+Once the login button is clicked.........................
