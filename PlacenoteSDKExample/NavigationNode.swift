@@ -4,7 +4,7 @@
 //
 //  Created by Team Herman Miller on 1/30/19.
 //  Copyright © 2019 Vertical. All rights reserved.
-//
+//  This is the class we made as the base class for all navigation nodes
 
 import Foundation
 import SceneKit
