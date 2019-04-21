@@ -366,21 +366,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var Destination_CatDict = [String:String]() // temp container
         var Destination_PosDict = [String:String]() //temp container
         var i = 0
-        let newValues = pathOrder(custommaps: maps)
+        
+        // if there are more than one map, rewrite the CoreLocation of the map
+        var newValues = [[Float]]()
+        if (maps.count > 1) {
+            var newValues = pathOrder(custommaps: maps)
+        }
+        
         for map in maps{
             let MapNametemp = map.1.name ?? ""
             MapName_array.append(MapNametemp)
             let userdata = map.1.userdata as? [String:Any]
 
-            // ** insert here **
-            
             //for ultimate navigation
+            // if less than than one map, use the original CoreLocation
+            var mapLat = map.1.location?.latitude
+            var mapLon = map.1.location?.longitude
             
-            let mapLat = newValues[0][i]
-            let mapLon = newValues[1][i]
-            i = i+1
+            // if more than than one map, use the original CoreLocation
+            if (!newValues.isEmpty) {
+                mapLat = Double(newValues[0][i])
+                mapLon = Double(newValues[1][i])
+                i = i+1
+            }
+            
             //let mapAlt = map.1.location?.altitude
-            let mapLocStr = mapLocToString(lat: mapLat, lon: mapLon)
+            let mapLocStr = mapLocToString(lat: Float(mapLat ?? 0.0), lon: Float(mapLon ?? 0.0))
             MapLocationDict[MapNametemp] = mapLocStr
             
             Name_DestinationDict = userdata!["destinationDict"] as? Dictionary<String, String> ?? ["DefaultDest" : "N/A"]
