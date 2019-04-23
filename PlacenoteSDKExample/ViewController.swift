@@ -885,7 +885,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
       let adjLocs = self.shapeManager.checkAdjacent(selfPos: camLoc, distance: distance) // Type vector3
       if(adjLocs.isEmpty){
         
-        // Zhenru
         //let shapeLoc = LibPlacenote.instance.processPose(pose: pose)
         shapeManager.spawnNewBreadCrumb(position1: camLoc) //Original
         //shapeManager.spawnNewBreadCrumb(position1: shapeLoc.position())
@@ -902,7 +901,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //      dump(nearestShapes)
     }
 
-    //Zhenru commented it
     // part one recognize that you are at a checkpoint
 //    if (newMapfound == false && canDropBC == false)  /// Comment to work, uncomment to test
 //    {

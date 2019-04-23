@@ -32,8 +32,6 @@ class ViewControllerUM: UIViewController, ARSCNViewDelegate, ARSessionDelegate,P
     @IBOutlet weak var btnLoad: UIButton!
     @IBOutlet weak var btnShow: UIButton!
     
-    
-    //Zhenru
     var cloestNodeLoc = SCNVector3(0,0,0)
     
     var pressShowPath = false

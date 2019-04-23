@@ -8,7 +8,6 @@
 
 import Foundation
 
-//// Going to sort all the maps outputted by Zhenru with this and load them in order
 //func quickmapsort<T: Comparable>(_ a: [T]) -> [T] {
 //    guard a.count > 1 else { return a }
 //
